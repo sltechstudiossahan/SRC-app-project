@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduTrack Pro - Teacher Platform</title>
     
-    <!-- CORRECT Firebase SDKs - Using older stable version -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -585,6 +585,68 @@
             color: #94a3b8;
             margin: 5px 0;
         }
+
+        /* New Styles for Period Alerts */
+        .period-alert {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid #6366f1;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); }
+        }
+
+        .period-alert h3 {
+            color: #6366f1;
+            margin-bottom: 10px;
+        }
+
+        .period-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-input {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .whatsapp-input input {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+        }
+
+        .language-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .dashboard-homework {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -688,6 +750,25 @@
             </div>
         </header>
 
+        <!-- Period Alert Banner (Shows when period ends) -->
+        <div id="periodAlert" class="period-alert" style="display: none;">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <i class="fas fa-bell" style="font-size: 24px; color: #6366f1;"></i>
+                <div>
+                    <h3 id="periodAlertTitle">Period Ended</h3>
+                    <p id="periodAlertMessage">Class 10A - Mathematics</p>
+                </div>
+                <div style="margin-left: auto; display: flex; gap: 10px;">
+                    <button class="action-btn success" onclick="showHomeworkInput()">
+                        <i class="fas fa-check"></i> Yes, Add Homework
+                    </button>
+                    <button class="action-btn" onclick="dismissAlert()">
+                        <i class="fas fa-times"></i> No Homework
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
             <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard">
@@ -705,12 +786,15 @@
             <div class="nav-tab" onclick="switchTab('timetable')" id="tab-timetable">
                 <i class="fas fa-calendar"></i> Timetable
             </div>
+            <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp">
+                <i class="fab fa-whatsapp"></i> WhatsApp Groups
+            </div>
         </div>
 
         <!-- Class Selector -->
         <div class="class-selector" id="classSelector"></div>
 
-        <!-- Dashboard Section -->
+        <!-- Dashboard Section (Now with Homework Platform) -->
         <div id="dashboard-section" class="content-section active">
             <div class="card">
                 <div class="card-title">
@@ -733,6 +817,38 @@
                         <h2 id="averageMarks">0%</h2>
                         <p style="color: #94a3b8;">Class Average</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- Homework Platform in Dashboard -->
+            <div class="dashboard-homework">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-book"></i>
+                        <h3>Quick Homework - <span id="dashboardSelectedClass">Class 10A</span></h3>
+                    </div>
+
+                    <div class="whatsapp-input">
+                        <input type="text" id="whatsappGroupLink" placeholder="WhatsApp Group Link (optional)">
+                        <span class="language-indicator" id="languageIndicator">English 🇺🇸</span>
+                    </div>
+
+                    <textarea id="dashboardHomeworkContent" placeholder="Type homework details here... (Speak in English or Sinhala - auto detected)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
+
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button class="action-btn primary" onclick="startSmartVoiceInput()" id="voiceBtn">
+                            <i class="fas fa-microphone"></i> Smart Voice (ඕනෑම භාෂාවක්)
+                        </button>
+                        <button class="action-btn" onclick="sendDashboardHomework()">
+                            <i class="fab fa-whatsapp"></i> Send Now
+                        </button>
+                        <button class="action-btn" onclick="scheduleDashboardHomework()">
+                            <i class="fas fa-clock"></i> Schedule
+                        </button>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">
+                        <i class="fas fa-info-circle"></i> Speak in English or Sinhala - language auto-detected
+                    </p>
                 </div>
             </div>
         </div>
@@ -874,7 +990,7 @@
             </div>
         </div>
 
-        <!-- Homework Section -->
+        <!-- Homework Section (Separate Tab) -->
         <div id="homework-section" class="content-section">
             <div class="card">
                 <div class="card-title">
@@ -882,19 +998,27 @@
                     <h3>Send Homework to <span id="selectedClassForHomework">Class 10A</span></h3>
                 </div>
 
-                <textarea id="homeworkContent" placeholder="Type homework details here..." style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
+                <div class="whatsapp-input">
+                    <input type="text" id="homeworkWhatsAppGroup" placeholder="WhatsApp Group Link (e.g., https://chat.whatsapp.com/...)">
+                    <span class="language-indicator" id="homeworkLanguageIndicator">English 🇺🇸</span>
+                </div>
+
+                <textarea id="homeworkContent" placeholder="Type homework details here... (Speak in English or Sinhala - auto detected)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
 
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="action-btn" onclick="startVoiceInput()">
-                        <i class="fas fa-microphone"></i> Voice Input
+                    <button class="action-btn primary" onclick="startSmartVoiceInputHomework()" id="homeworkVoiceBtn">
+                        <i class="fas fa-microphone"></i> Smart Voice (ඕනෑම භාෂාවක්)
                     </button>
-                    <button class="action-btn primary" onclick="sendHomework()">
+                    <button class="action-btn" onclick="sendHomework()">
                         <i class="fab fa-whatsapp"></i> Send to WhatsApp Group
                     </button>
                     <button class="action-btn" onclick="scheduleHomework()">
                         <i class="fas fa-clock"></i> Schedule for 3:00 PM
                     </button>
                 </div>
+                <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">
+                    <i class="fas fa-info-circle"></i> Language auto-detected: English or Sinhala
+                </p>
             </div>
         </div>
 
@@ -904,6 +1028,7 @@
                 <div class="card-title">
                     <i class="fas fa-calendar-alt"></i>
                     <h3>Upload Your Timetable</h3>
+                    <p style="color: #94a3b8; font-size: 14px; margin-left: 20px;">Periods: 7:50 AM - 1:00 PM (8 periods)</p>
                 </div>
 
                 <div class="upload-area" onclick="document.getElementById('timetableInput').click()">
@@ -928,25 +1053,43 @@
                 </button>
             </div>
         </div>
+
+        <!-- WhatsApp Groups Section (New) -->
+        <div id="whatsapp-section" class="content-section">
+            <div class="card">
+                <div class="card-title">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>WhatsApp Groups Configuration</h3>
+                </div>
+
+                <p style="color: #94a3b8; margin-bottom: 20px;">Add WhatsApp group links for each class to send homework automatically.</p>
+
+                <div id="whatsappGroupsList">
+                    <!-- Will be populated dynamically -->
+                </div>
+
+                <button class="action-btn primary" onclick="saveWhatsAppGroups()" style="margin-top: 20px;">
+                    <i class="fas fa-save"></i> Save All Groups
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
         // ============================================
         // 🔥 FIREBASE CONFIGURATION - REPLACE WITH YOUR KEYS
         // ============================================
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCl1HnHVpgyAvmfAqff6KUM7tJqc_45u-k",
-  authDomain: "edutrack-pro-eeb6f.firebaseapp.com",
-  projectId: "edutrack-pro-eeb6f",
-  storageBucket: "edutrack-pro-eeb6f.firebasestorage.app",
-  messagingSenderId: "1009233045568",
-  appId: "1:1009233045568:web:eeeb4d9c4dc597f8c757a5",
-  measurementId: "G-MGTHN6Q0HK"
-};
-        // ============================================
-        // INITIALIZE FIREBASE (COMPAT VERSION - NO EXPORT ERRORS)
-        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCl1HnHVpgyAvmfAqff6KUM7tJqc_45u-k",
+            authDomain: "edutrack-pro-eeb6f.firebaseapp.com",
+            projectId: "edutrack-pro-eeb6f",
+            storageBucket: "edutrack-pro-eeb6f.firebasestorage.app",
+            messagingSenderId: "1009233045568",
+            appId: "1:1009233045568:web:eeeb4d9c4dc597f8c757a5",
+            measurementId: "G-MGTHN6Q0HK"
+        };
+        
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         
         // Global variables
@@ -955,6 +1098,189 @@ const firebaseConfig = {
         const classes = ['10A', '10B', '11A', '11B'];
         let students = {};
         let extractedTimetable = null;
+        let whatsappGroups = {};
+        
+        // Period timings (7:50 AM to 1:00 PM - 8 periods)
+        const periodTimings = [
+            { period: 1, start: '7:50', end: '8:35', name: 'Period 1' },
+            { period: 2, start: '8:35', end: '9:20', name: 'Period 2' },
+            { period: 3, start: '9:20', end: '10:05', name: 'Period 3' },
+            { period: 4, start: '10:05', end: '10:50', name: 'Period 4' },
+            { period: 5, start: '10:50', end: '11:35', name: 'Period 5' },
+            { period: 6, start: '11:35', end: '12:20', name: 'Period 6' },
+            { period: 7, start: '12:20', end: '13:00', name: 'Period 7' }
+        ];
+
+        // ============================================
+        // AUTO LANGUAGE DETECTION VOICE INPUT
+        // ============================================
+        let currentLanguage = 'en-US';
+        let isListening = false;
+
+        function startSmartVoiceInput() {
+            startVoiceInputWithDetection('dashboardHomeworkContent');
+        }
+
+        function startSmartVoiceInputHomework() {
+            startVoiceInputWithDetection('homeworkContent');
+        }
+
+        function startVoiceInputWithDetection(textareaId) {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showError('Voice input not supported. Please use Chrome.');
+                return;
+            }
+
+            if (isListening) {
+                showError('Already listening...');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+
+            // Enable continuous listening and interim results
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 1;
+
+            // Try both English and Sinhala
+            recognition.lang = 'si-LK'; // Start with Sinhala, but will auto-detect
+
+            let finalTranscript = '';
+            let currentTranscript = '';
+
+            recognition.onstart = function() {
+                isListening = true;
+                document.getElementById('voiceBtn')?.classList.add('listening');
+                document.getElementById('homeworkVoiceBtn')?.classList.add('listening');
+                showSuccess('Listening... Speak in English or Sinhala');
+            };
+
+            recognition.onresult = function(event) {
+                let interimTranscript = '';
+                
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    
+                    // Auto-detect language based on characters
+                    const hasSinhala = /[\u0D80-\u0DFF]/.test(transcript);
+                    const language = hasSinhala ? 'si-LK' : 'en-US';
+                    
+                    // Update language indicator
+                    const indicator = document.getElementById('languageIndicator');
+                    const homeworkIndicator = document.getElementById('homeworkLanguageIndicator');
+                    
+                    if (indicator) {
+                        indicator.innerHTML = hasSinhala ? 'සිංහල 🇱🇰' : 'English 🇺🇸';
+                        indicator.style.background = hasSinhala ? 'rgba(139, 92, 246, 0.2)' : 'rgba(99, 102, 241, 0.2)';
+                    }
+                    
+                    if (homeworkIndicator) {
+                        homeworkIndicator.innerHTML = hasSinhala ? 'සිංහල 🇱🇰' : 'English 🇺🇸';
+                        homeworkIndicator.style.background = hasSinhala ? 'rgba(139, 92, 246, 0.2)' : 'rgba(99, 102, 241, 0.2)';
+                    }
+                    
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript + ' ';
+                    } else {
+                        interimTranscript += transcript;
+                    }
+                }
+
+                // Update textarea with current transcript
+                document.getElementById(textareaId).value = finalTranscript + interimTranscript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech error:', event.error);
+                showError('Voice input error: ' + event.error);
+                isListening = false;
+            };
+
+            recognition.onend = function() {
+                isListening = false;
+                document.getElementById('voiceBtn')?.classList.remove('listening');
+                document.getElementById('homeworkVoiceBtn')?.classList.remove('listening');
+                
+                if (finalTranscript) {
+                    showSuccess('Voice input completed!');
+                }
+            };
+
+            recognition.start();
+        }
+
+        // ============================================
+        // PERIOD ALERT SYSTEM
+        // ============================================
+
+        function checkPeriodEnd() {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes
+
+            periodTimings.forEach(period => {
+                const [startHour, startMin] = period.start.split(':').map(Number);
+                const [endHour, endMin] = period.end.split(':').map(Number);
+                
+                const endTime = endHour * 60 + endMin;
+                const timeDiff = currentTime - endTime;
+
+                // Check if period just ended (within last 5 minutes)
+                if (timeDiff >= 0 && timeDiff < 5 && currentTeacher?.timetable) {
+                    // Find what class teacher has this period
+                    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    const today = dayNames[now.getDay()];
+                    
+                    const todaysSchedule = currentTeacher.timetable.find(day => day.day === today);
+                    
+                    if (todaysSchedule) {
+                        const periodKey = `period${period.period}`;
+                        const classForPeriod = todaysSchedule[periodKey];
+                        
+                        // Only show alert if teacher has a class (not "Free")
+                        if (classForPeriod && !classForPeriod.includes('Free')) {
+                            showPeriodAlert(period.period, classForPeriod);
+                        }
+                    }
+                }
+            });
+        }
+
+        function showPeriodAlert(periodNumber, className) {
+            const alertDiv = document.getElementById('periodAlert');
+            document.getElementById('periodAlertTitle').textContent = `Period ${periodNumber} Ended`;
+            document.getElementById('periodAlertMessage').textContent = `${className} - Any homework?`;
+            
+            // Set current class to this class
+            const classMatch = className.match(/(10A|10B|11A|11B)/);
+            if (classMatch) {
+                currentClass = classMatch[0];
+                updateClassSelector();
+                document.getElementById('dashboardSelectedClass').textContent = `Class ${currentClass}`;
+                document.getElementById('selectedClassForHomework').textContent = `Class ${currentClass}`;
+            }
+            
+            alertDiv.style.display = 'block';
+            
+            // Play notification sound
+            playNotificationSound();
+        }
+
+        function playNotificationSound() {
+            const audio = new Audio('data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCB//HwAAAqQA');
+            audio.play().catch(e => console.log('Audio play failed:', e));
+        }
+
+        function dismissAlert() {
+            document.getElementById('periodAlert').style.display = 'none';
+        }
+
+        function showHomeworkInput() {
+            document.getElementById('periodAlert').style.display = 'none';
+            document.getElementById('dashboardHomeworkContent').focus();
+            showSuccess(`Adding homework for Class ${currentClass}`);
+        }
 
         // ============================================
         // AUTHENTICATION FUNCTIONS
@@ -1000,20 +1326,23 @@ const firebaseConfig = {
                 btn.innerHTML = '<span class="loading-spinner"></span> Creating...';
                 btn.disabled = true;
                 
-                // Create user with email and password
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
                 
-                // Save teacher data to Firestore
                 await firebase.firestore().collection('teachers').doc(user.uid).set({
                     full_name: name,
                     email: email,
-                    created_at: firebase.firestore.FieldValue.serverTimestamp()
+                    created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                    whatsapp_groups: {
+                        '10A': '',
+                        '10B': '',
+                        '11A': '',
+                        '11B': ''
+                    }
                 });
                 
                 showSuccess('Account created successfully! Please login.');
                 
-                // Clear form and switch to login
                 document.getElementById('registerName').value = '';
                 document.getElementById('registerEmail').value = '';
                 document.getElementById('registerPassword').value = '';
@@ -1079,13 +1408,25 @@ const firebaseConfig = {
                     currentTeacher = {
                         id: user.uid,
                         full_name: user.email.split('@')[0],
-                        email: user.email
+                        email: user.email,
+                        whatsapp_groups: {
+                            '10A': '',
+                            '10B': '',
+                            '11A': '',
+                            '11B': ''
+                        }
                     };
                     await firebase.firestore().collection('teachers').doc(user.uid).set({
                         full_name: currentTeacher.full_name,
                         email: currentTeacher.email,
-                        created_at: firebase.firestore.FieldValue.serverTimestamp()
+                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+                        whatsapp_groups: currentTeacher.whatsapp_groups
                     });
+                }
+                
+                // Load WhatsApp groups
+                if (currentTeacher.whatsapp_groups) {
+                    whatsappGroups = currentTeacher.whatsapp_groups;
                 }
                 
                 document.getElementById('teacherNameDisplay').textContent = currentTeacher.full_name;
@@ -1100,15 +1441,25 @@ const firebaseConfig = {
                 displayStudentsTable();
                 displayMarksTable();
                 updateDashboard();
+                displayWhatsAppGroups();
                 
                 if (currentTeacher.timetable) {
                     displaySavedTimetable(currentTeacher.timetable);
                 }
+                
+                // Start period checking (every minute)
+                setInterval(checkPeriodEnd, 60000);
+                // Check immediately
+                checkPeriodEnd();
+                
+            } else {
+                document.getElementById('loginPage').style.display = 'flex';
+                document.getElementById('mainApp').style.display = 'none';
             }
         });
 
         // ============================================
-        // STUDENT MANAGEMENT
+        // STUDENT MANAGEMENT (Keep existing functions)
         // ============================================
 
         async function loadStudents() {
@@ -1144,6 +1495,7 @@ const firebaseConfig = {
             document.getElementById('selectedClassForStudents').textContent = `Class ${currentClass}`;
             document.getElementById('selectedClassForMarks').textContent = `Class ${currentClass}`;
             document.getElementById('selectedClassForHomework').textContent = `Class ${currentClass}`;
+            document.getElementById('dashboardSelectedClass').textContent = `Class ${currentClass}`;
         }
 
         async function selectClass(className) {
@@ -1159,6 +1511,7 @@ const firebaseConfig = {
             document.getElementById('selectedClassForStudents').textContent = `Class ${className}`;
             document.getElementById('selectedClassForMarks').textContent = `Class ${className}`;
             document.getElementById('selectedClassForHomework').textContent = `Class ${className}`;
+            document.getElementById('dashboardSelectedClass').textContent = `Class ${className}`;
             
             displayStudentsTable();
             displayMarksTable();
@@ -1243,7 +1596,7 @@ const firebaseConfig = {
         }
 
         // ============================================
-        // MARKS MANAGEMENT
+        // MARKS MANAGEMENT (Keep existing functions)
         // ============================================
 
         function displayMarksTable() {
@@ -1374,11 +1727,11 @@ const firebaseConfig = {
             
             setTimeout(() => {
                 extractedTimetable = [
-                    { day: 'Monday', period1: 'Math 10A', period2: 'Physics 11A', period3: 'Free', period4: 'Math 10B' },
-                    { day: 'Tuesday', period1: 'Physics 11B', period2: 'Math 10A', period3: 'Free', period4: 'Physics 11A' },
-                    { day: 'Wednesday', period1: 'Math 10B', period2: 'Free', period3: 'Physics 11A', period4: 'Math 10A' },
-                    { day: 'Thursday', period1: 'Free', period2: 'Math 10B', period3: 'Physics 11B', period4: 'Free' },
-                    { day: 'Friday', period1: 'Physics 11A', period2: 'Math 10A', period3: 'Math 10B', period4: 'Physics 11B' }
+                    { day: 'Monday', period1: 'Math 10A', period2: 'Physics 11A', period3: 'Free', period4: 'Math 10B', period5: 'Physics 11B', period6: 'Free', period7: 'Math 10A' },
+                    { day: 'Tuesday', period1: 'Physics 11B', period2: 'Math 10A', period3: 'Free', period4: 'Physics 11A', period5: 'Math 10B', period6: 'Free', period7: 'Physics 11A' },
+                    { day: 'Wednesday', period1: 'Math 10B', period2: 'Free', period3: 'Physics 11A', period4: 'Math 10A', period5: 'Physics 11B', period6: 'Free', period7: 'Math 10B' },
+                    { day: 'Thursday', period1: 'Free', period2: 'Math 10B', period3: 'Physics 11B', period4: 'Free', period5: 'Math 10A', period6: 'Physics 11A', period7: 'Free' },
+                    { day: 'Friday', period1: 'Physics 11A', period2: 'Math 10A', period3: 'Math 10B', period4: 'Physics 11B', period5: 'Free', period6: 'Math 10A', period7: 'Physics 11B' }
                 ];
                 
                 displayExtractedTimetable(extractedTimetable);
@@ -1396,10 +1749,13 @@ const firebaseConfig = {
                 card.className = 'timetable-card';
                 card.innerHTML = `
                     <h4>${day.day}</h4>
-                    <p><i class="fas fa-clock"></i> Period 1: ${day.period1}</p>
-                    <p><i class="fas fa-clock"></i> Period 2: ${day.period2}</p>
-                    <p><i class="fas fa-clock"></i> Period 3: ${day.period3}</p>
-                    <p><i class="fas fa-clock"></i> Period 4: ${day.period4}</p>
+                    <p><i class="fas fa-clock"></i> 7:50-8:35: ${day.period1}</p>
+                    <p><i class="fas fa-clock"></i> 8:35-9:20: ${day.period2}</p>
+                    <p><i class="fas fa-clock"></i> 9:20-10:05: ${day.period3}</p>
+                    <p><i class="fas fa-clock"></i> 10:05-10:50: ${day.period4}</p>
+                    <p><i class="fas fa-clock"></i> 10:50-11:35: ${day.period5}</p>
+                    <p><i class="fas fa-clock"></i> 11:35-12:20: ${day.period6}</p>
+                    <p><i class="fas fa-clock"></i> 12:20-13:00: ${day.period7}</p>
                 `;
                 grid.appendChild(card);
             });
@@ -1479,30 +1835,50 @@ const firebaseConfig = {
         // HOMEWORK FUNCTIONS
         // ============================================
 
+        function sendDashboardHomework() {
+            const homework = document.getElementById('dashboardHomeworkContent').value;
+            sendHomeworkToWhatsApp(homework, currentClass);
+        }
+
         function sendHomework() {
             const homework = document.getElementById('homeworkContent').value;
+            sendHomeworkToWhatsApp(homework, currentClass);
+        }
+
+        function sendHomeworkToWhatsApp(homework, className) {
             if (!homework) {
                 showError('Please enter homework details');
                 return;
             }
-            showSuccess(`Homework sent to Class ${currentClass} WhatsApp group!`);
-            document.getElementById('homeworkContent').value = '';
-        }
-
-        function startVoiceInput() {
-            if (!('webkitSpeechRecognition' in window)) {
-                showError('Voice input not supported. Please use Chrome.');
-                return;
+            
+            // Get WhatsApp group link
+            const groupLink = whatsappGroups[className] || 
+                             document.getElementById('whatsappGroupLink')?.value ||
+                             document.getElementById('homeworkWhatsAppGroup')?.value;
+            
+            if (groupLink) {
+                // Open WhatsApp group link
+                window.open(groupLink, '_blank');
+                showSuccess(`Opening WhatsApp group for Class ${className}`);
+            } else {
+                showSuccess(`Homework ready for Class ${className} (Copy and paste to WhatsApp)`);
             }
             
-            const recognition = new webkitSpeechRecognition();
-            recognition.lang = 'en-US';
-            
-            recognition.onresult = function(event) {
-                document.getElementById('homeworkContent').value = event.results[0][0].transcript;
-            };
-            
-            recognition.start();
+            // Clear inputs
+            document.getElementById('dashboardHomeworkContent').value = '';
+            if (document.getElementById('homeworkContent')) {
+                document.getElementById('homeworkContent').value = '';
+            }
+        }
+
+        function scheduleDashboardHomework() {
+            const homework = document.getElementById('dashboardHomeworkContent').value;
+            if (!homework) {
+                showError('Please enter homework details');
+                return;
+            }
+            showSuccess(`Scheduled for 3:00 PM to Class ${currentClass}`);
+            document.getElementById('dashboardHomeworkContent').value = '';
         }
 
         function scheduleHomework() {
@@ -1513,6 +1889,55 @@ const firebaseConfig = {
             }
             showSuccess(`Scheduled for 3:00 PM to Class ${currentClass}`);
             document.getElementById('homeworkContent').value = '';
+        }
+
+        // ============================================
+        // WHATSAPP GROUPS MANAGEMENT
+        // ============================================
+
+        function displayWhatsAppGroups() {
+            const container = document.getElementById('whatsappGroupsList');
+            container.innerHTML = '';
+            
+            classes.forEach(className => {
+                const groupDiv = document.createElement('div');
+                groupDiv.style.marginBottom = '20px';
+                groupDiv.style.padding = '15px';
+                groupDiv.style.background = 'rgba(255,255,255,0.03)';
+                groupDiv.style.borderRadius = '10px';
+                
+                groupDiv.innerHTML = `
+                    <label style="display: block; margin-bottom: 8px; color: #a5b4fc;">
+                        <i class="fab fa-whatsapp"></i> Class ${className} WhatsApp Group
+                    </label>
+                    <input type="text" id="whatsapp_${className}" value="${whatsappGroups[className] || ''}" 
+                           placeholder="https://chat.whatsapp.com/..." 
+                           style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px; color: white;">
+                    <p style="color: #94a3b8; font-size: 12px; margin-top: 5px;">
+                        <i class="fas fa-info-circle"></i> Enter the WhatsApp group invite link
+                    </p>
+                `;
+                
+                container.appendChild(groupDiv);
+            });
+        }
+
+        async function saveWhatsAppGroups() {
+            const updatedGroups = {};
+            
+            classes.forEach(className => {
+                const input = document.getElementById(`whatsapp_${className}`);
+                if (input) {
+                    updatedGroups[className] = input.value;
+                }
+            });
+            
+            await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({
+                whatsapp_groups: updatedGroups
+            });
+            
+            whatsappGroups = updatedGroups;
+            showSuccess('WhatsApp groups saved successfully!');
         }
 
         // ============================================
@@ -1529,6 +1954,7 @@ const firebaseConfig = {
             if (tab === 'students') displayStudentsTable();
             else if (tab === 'marks') displayMarksTable();
             else if (tab === 'dashboard') updateDashboard();
+            else if (tab === 'whatsapp') displayWhatsAppGroups();
         }
 
         function updateDashboard() {
@@ -1568,9 +1994,15 @@ const firebaseConfig = {
         window.processTimetable = processTimetable;
         window.saveTimetableToDatabase = saveTimetableToDatabase;
         window.sendHomework = sendHomework;
-        window.startVoiceInput = startVoiceInput;
+        window.sendDashboardHomework = sendDashboardHomework;
         window.scheduleHomework = scheduleHomework;
+        window.scheduleDashboardHomework = scheduleDashboardHomework;
         window.switchTab = switchTab;
+        window.startSmartVoiceInput = startSmartVoiceInput;
+        window.startSmartVoiceInputHomework = startSmartVoiceInputHomework;
+        window.dismissAlert = dismissAlert;
+        window.showHomeworkInput = showHomeworkInput;
+        window.saveWhatsAppGroups = saveWhatsAppGroups;
     </script>
 </body>
 </html>
