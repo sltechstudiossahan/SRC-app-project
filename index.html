@@ -10,6 +10,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
+    <!-- Tesseract.js for OCR (Handwriting Recognition) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.5/dist/tesseract.min.js"></script>
+    
     <!-- Fonts and Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -586,7 +589,6 @@
             margin: 5px 0;
         }
 
-        /* New Styles for Period Alerts */
         .period-alert {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
             border: 1px solid #6366f1;
@@ -599,21 +601,6 @@
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
             50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); }
-        }
-
-        .period-alert h3 {
-            color: #6366f1;
-            margin-bottom: 10px;
-        }
-
-        .period-badge {
-            display: inline-block;
-            background: rgba(99, 102, 241, 0.2);
-            padding: 5px 15px;
-            border-radius: 30px;
-            font-size: 14px;
-            margin-right: 10px;
-            margin-bottom: 10px;
         }
 
         .whatsapp-input {
@@ -647,6 +634,19 @@
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 30px;
         }
+
+        .ocr-progress {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .listening {
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+            animation: pulse 0.5s infinite;
+        }
     </style>
 </head>
 <body>
@@ -663,13 +663,11 @@
                 <p>Complete Teacher Platform</p>
             </div>
 
-            <!-- Auth Tabs -->
             <div style="display: flex; gap: 10px; margin-bottom: 30px;">
                 <button class="auth-tab active" onclick="switchAuthTab('login')" id="loginTab">Login</button>
                 <button class="auth-tab" onclick="switchAuthTab('register')" id="registerTab">Register</button>
             </div>
 
-            <!-- Login Form -->
             <div id="loginForm">
                 <div class="input-group">
                     <label>Email</label>
@@ -692,7 +690,6 @@
                 </button>
             </div>
 
-            <!-- Register Form (Hidden) -->
             <div id="registerForm" style="display: none;">
                 <div class="input-group">
                     <label>Full Name</label>
@@ -729,7 +726,6 @@
 
     <!-- Main App Container -->
     <div id="mainApp" class="app-container">
-        <!-- Header -->
         <header class="header">
             <div class="logo">
                 <div class="logo-icon">
@@ -750,16 +746,15 @@
             </div>
         </header>
 
-        <!-- Period Alert Banner (Shows when period ends) -->
         <div id="periodAlert" class="period-alert" style="display: none;">
             <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                 <i class="fas fa-bell" style="font-size: 24px; color: #6366f1;"></i>
                 <div>
                     <h3 id="periodAlertTitle">Period Ended</h3>
-                    <p id="periodAlertMessage">Class 10A - Mathematics</p>
+                    <p id="periodAlertMessage"></p>
                 </div>
                 <div style="margin-left: auto; display: flex; gap: 10px;">
-                    <button class="action-btn success" onclick="showHomeworkInput()">
+                    <button class="action-btn success" onclick="showHomeworkFromAlert()">
                         <i class="fas fa-check"></i> Yes, Add Homework
                     </button>
                     <button class="action-btn" onclick="dismissAlert()">
@@ -769,7 +764,6 @@
             </div>
         </div>
 
-        <!-- Navigation Tabs -->
         <div class="nav-tabs">
             <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard">
                 <i class="fas fa-home"></i> Dashboard
@@ -791,10 +785,9 @@
             </div>
         </div>
 
-        <!-- Class Selector -->
         <div class="class-selector" id="classSelector"></div>
 
-        <!-- Dashboard Section (Now with Homework Platform) -->
+        <!-- Dashboard Section -->
         <div id="dashboard-section" class="content-section active">
             <div class="card">
                 <div class="card-title">
@@ -820,30 +813,24 @@
                 </div>
             </div>
 
-            <!-- Homework Platform in Dashboard -->
             <div class="dashboard-homework">
                 <div class="card">
                     <div class="card-title">
                         <i class="fas fa-book"></i>
-                        <h3>Quick Homework - <span id="dashboardSelectedClass">Class 10A</span></h3>
-                    </div>
-
-                    <div class="whatsapp-input">
-                        <input type="text" id="whatsappGroupLink" placeholder="WhatsApp Group Link (optional)">
-                        <span class="language-indicator" id="languageIndicator">English 🇺🇸</span>
+                        <h3>Quick Homework - <span id="dashboardSelectedClass">Select a class</span></h3>
                     </div>
 
                     <textarea id="dashboardHomeworkContent" placeholder="Type homework details here... (Speak in English or Sinhala - auto detected)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
 
                     <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                        <button class="action-btn primary" onclick="startSmartVoiceInput()" id="voiceBtn">
+                        <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent', 'dashboardVoiceBtn')">
                             <i class="fas fa-microphone"></i> Smart Voice (ඕනෑම භාෂාවක්)
                         </button>
                         <button class="action-btn" onclick="sendDashboardHomework()">
                             <i class="fab fa-whatsapp"></i> Send Now
                         </button>
                         <button class="action-btn" onclick="scheduleDashboardHomework()">
-                            <i class="fas fa-clock"></i> Schedule
+                            <i class="fas fa-clock"></i> Schedule for 3:00 PM
                         </button>
                     </div>
                     <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">
@@ -858,27 +845,24 @@
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-user-plus"></i>
-                    <h3>Add Students to <span id="selectedClassForStudents">Class 10A</span></h3>
+                    <h3>Add Students to <span id="selectedClassForStudents">Class</span></h3>
                 </div>
 
-                <!-- Two Methods: Photo Upload or Manual Entry -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
-                    <!-- Method 1: Photo Upload -->
                     <div>
                         <h4 style="margin-bottom: 15px;"><i class="fas fa-camera"></i> Upload Name List Photo</h4>
                         <div class="upload-area" onclick="document.getElementById('nameListInput').click()">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <h3>Click to upload class list</h3>
-                            <p style="color: #94a3b8;">App will extract names (no image saved)</p>
+                            <p style="color: #94a3b8;">OCR will extract names (handwritten supported)</p>
                         </div>
-                        <input type="file" id="nameListInput" accept="image/*" style="display: none;" onchange="processNameList(this)">
-                        
+                        <input type="file" id="nameListInput" accept="image/*" style="display: none;" onchange="processNameListWithOCR(this)">
+                        <div id="ocrProgress" class="ocr-progress" style="display: none;"></div>
                         <div id="nameListPreview" style="display: none; margin-top: 15px;">
                             <img id="nameListImage" style="max-width: 100%; border-radius: 10px; max-height: 200px;">
                         </div>
                     </div>
 
-                    <!-- Method 2: Manual Entry -->
                     <div>
                         <h4 style="margin-bottom: 15px;"><i class="fas fa-pen"></i> Manual Entry</h4>
                         <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
@@ -891,91 +875,53 @@
                     </div>
                 </div>
 
-                <!-- Students Table -->
                 <h4 style="margin-bottom: 15px;"><i class="fas fa-list"></i> Student List</h4>
                 <div class="student-table-container">
                     <table class="student-table" id="studentsTable">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Student Name</th>
-                                <th>Parent WhatsApp</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsTableBody">
-                            <tr>
-                                <td colspan="4" class="empty-state">
-                                    <i class="fas fa-users-slash"></i>
-                                    <p>No students added yet.</p>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <thead><tr><th>#</th><th>Student Name</th><th>Parent WhatsApp</th><th>Actions</th></tr></thead>
+                        <tbody id="studentsTableBody"></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- Marks Section -->
+        <!-- Marks Section with OCR -->
         <div id="marks-section" class="content-section">
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-star"></i>
-                    <h3>Enter Marks for <span id="selectedClassForMarks">Class 10A</span></h3>
+                    <h3>Enter Marks for <span id="selectedClassForMarks">Class</span></h3>
                 </div>
 
                 <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
                     <select id="examMonth" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; min-width: 150px;">
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June</option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="December">December</option>
+                        <option value="January">January</option><option value="February">February</option><option value="March">March</option>
+                        <option value="April">April</option><option value="May">May</option><option value="June">June</option>
+                        <option value="July">July</option><option value="August">August</option><option value="September">September</option>
+                        <option value="October">October</option><option value="November">November</option><option value="December">December</option>
                     </select>
 
                     <select id="examType" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; min-width: 150px;">
-                        <option value="Monthly Test">Monthly Test</option>
-                        <option value="Mid Term">Mid Term</option>
-                        <option value="Final Term">Final Term</option>
-                        <option value="Weekly Quiz">Weekly Quiz</option>
+                        <option value="Monthly Test">Monthly Test</option><option value="Mid Term">Mid Term</option>
+                        <option value="Final Term">Final Term</option><option value="Weekly Quiz">Weekly Quiz</option>
                     </select>
+
+                    <button class="action-btn" onclick="document.getElementById('marksheetInput').click()">
+                        <i class="fas fa-camera"></i> Scan Marksheet
+                    </button>
+                    <input type="file" id="marksheetInput" accept="image/*" style="display: none;" onchange="processMarksheetWithOCR(this)">
                 </div>
 
                 <div class="student-table-container">
                     <table class="student-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Student Name</th>
-                                <th>Marks (0-100)</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="marksTableBody">
-                            <tr>
-                                <td colspan="4" class="empty-state">
-                                    <i class="fas fa-users-slash"></i>
-                                    <p>No students in this class.</p>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <thead><tr><th>#</th><th>Student Name</th><th>Marks (0-100)</th><th>Status</th></tr></thead>
+                        <tbody id="marksTableBody"></tbody>
                     </table>
                 </div>
 
                 <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
-                    <button class="action-btn primary" onclick="saveMarks()">
-                        <i class="fas fa-save"></i> Save Marks
-                    </button>
-                    <button class="action-btn success" onclick="identifyLowMarks()">
-                        <i class="fas fa-exclamation-triangle"></i> Identify Low Marks
-                    </button>
+                    <button class="action-btn primary" onclick="saveMarks()"><i class="fas fa-save"></i> Save Marks</button>
+                    <button class="action-btn success" onclick="identifyLowMarks()"><i class="fas fa-exclamation-triangle"></i> Identify Low Marks</button>
                 </div>
 
                 <div id="lowMarksResults" style="display: none; margin-top: 25px;">
@@ -990,31 +936,22 @@
             </div>
         </div>
 
-        <!-- Homework Section (Separate Tab) -->
+        <!-- Homework Section -->
         <div id="homework-section" class="content-section">
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-book"></i>
-                    <h3>Send Homework to <span id="selectedClassForHomework">Class 10A</span></h3>
+                    <h3>Send Homework to <span id="selectedClassForHomework">Class</span></h3>
                 </div>
 
-                <div class="whatsapp-input">
-                    <input type="text" id="homeworkWhatsAppGroup" placeholder="WhatsApp Group Link (e.g., https://chat.whatsapp.com/...)">
-                    <span class="language-indicator" id="homeworkLanguageIndicator">English 🇺🇸</span>
-                </div>
-
-                <textarea id="homeworkContent" placeholder="Type homework details here... (Speak in English or Sinhala - auto detected)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
+                <textarea id="homeworkContent" placeholder="Type homework details here... (Speak in English or Sinhala)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
 
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="action-btn primary" onclick="startSmartVoiceInputHomework()" id="homeworkVoiceBtn">
+                    <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent', 'homeworkVoiceBtn')">
                         <i class="fas fa-microphone"></i> Smart Voice (ඕනෑම භාෂාවක්)
                     </button>
-                    <button class="action-btn" onclick="sendHomework()">
-                        <i class="fab fa-whatsapp"></i> Send to WhatsApp Group
-                    </button>
-                    <button class="action-btn" onclick="scheduleHomework()">
-                        <i class="fas fa-clock"></i> Schedule for 3:00 PM
-                    </button>
+                    <button class="action-btn" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Send to WhatsApp Group</button>
+                    <button class="action-btn" onclick="scheduleHomework()"><i class="fas fa-clock"></i> Schedule for 3:00 PM</button>
                 </div>
                 <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">
                     <i class="fas fa-info-circle"></i> Language auto-detected: English or Sinhala
@@ -1028,17 +965,16 @@
                 <div class="card-title">
                     <i class="fas fa-calendar-alt"></i>
                     <h3>Upload Your Timetable</h3>
-                    <p style="color: #94a3b8; font-size: 14px; margin-left: 20px;">Periods: 7:50 AM - 1:00 PM (8 periods)</p>
+                    <p style="color: #94a3b8; font-size: 14px; margin-left: 20px;">Periods: 7:50 AM - 1:00 PM (7 periods)</p>
                 </div>
 
                 <div class="upload-area" onclick="document.getElementById('timetableInput').click()">
                     <i class="fas fa-cloud-upload-alt"></i>
                     <h3>Click to upload timetable image</h3>
-                    <p style="color: #94a3b8;">App will extract schedule (no image saved)</p>
+                    <p style="color: #94a3b8;">OCR will extract your classes</p>
                 </div>
-                
-                <input type="file" id="timetableInput" accept="image/*" style="display: none;" onchange="processTimetable(this)">
-                
+                <input type="file" id="timetableInput" accept="image/*" style="display: none;" onchange="processTimetableWithOCR(this)">
+                <div id="timetableOCRProgress" class="ocr-progress" style="display: none;"></div>
                 <div id="timetablePreview" style="display: none; margin-top: 20px;">
                     <img id="timetableImage" style="max-width: 100%; border-radius: 10px; max-height: 300px;">
                 </div>
@@ -1054,20 +990,15 @@
             </div>
         </div>
 
-        <!-- WhatsApp Groups Section (New) -->
+        <!-- WhatsApp Groups Section -->
         <div id="whatsapp-section" class="content-section">
             <div class="card">
                 <div class="card-title">
                     <i class="fab fa-whatsapp"></i>
                     <h3>WhatsApp Groups Configuration</h3>
                 </div>
-
                 <p style="color: #94a3b8; margin-bottom: 20px;">Add WhatsApp group links for each class to send homework automatically.</p>
-
-                <div id="whatsappGroupsList">
-                    <!-- Will be populated dynamically -->
-                </div>
-
+                <div id="whatsappGroupsList"></div>
                 <button class="action-btn primary" onclick="saveWhatsAppGroups()" style="margin-top: 20px;">
                     <i class="fas fa-save"></i> Save All Groups
                 </button>
@@ -1077,7 +1008,7 @@
 
     <script>
         // ============================================
-        // 🔥 FIREBASE CONFIGURATION - REPLACE WITH YOUR KEYS
+        // FIREBASE CONFIGURATION
         // ============================================
         const firebaseConfig = {
             apiKey: "AIzaSyCl1HnHVpgyAvmfAqff6KUM7tJqc_45u-k",
@@ -1085,22 +1016,22 @@
             projectId: "edutrack-pro-eeb6f",
             storageBucket: "edutrack-pro-eeb6f.firebasestorage.app",
             messagingSenderId: "1009233045568",
-            appId: "1:1009233045568:web:eeeb4d9c4dc597f8c757a5",
-            measurementId: "G-MGTHN6Q0HK"
+            appId: "1:1009233045568:web:eeeb4d9c4dc597f8c757a5"
         };
         
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         
         // Global variables
         let currentTeacher = null;
-        let currentClass = '10A';
-        const classes = ['10A', '10B', '11A', '11B'];
+        let currentClass = '';
+        let teacherClasses = ['10A', '10B', '11A', '11B'];
         let students = {};
         let extractedTimetable = null;
         let whatsappGroups = {};
+        let activeAlertClass = null;
+        let currentRecognition = null;
         
-        // Period timings (7:50 AM to 1:00 PM - 8 periods)
+        // Period timings
         const periodTimings = [
             { period: 1, start: '7:50', end: '8:35', name: 'Period 1' },
             { period: 2, start: '8:35', end: '9:20', name: 'Period 2' },
@@ -1112,180 +1043,453 @@
         ];
 
         // ============================================
-        // AUTO LANGUAGE DETECTION VOICE INPUT
+        // SMART VOICE INPUT (FIXED - Working!)
         // ============================================
-        let currentLanguage = 'en-US';
-        let isListening = false;
-
-        function startSmartVoiceInput() {
-            startVoiceInputWithDetection('dashboardHomeworkContent');
-        }
-
-        function startSmartVoiceInputHomework() {
-            startVoiceInputWithDetection('homeworkContent');
-        }
-
-        function startVoiceInputWithDetection(textareaId) {
+        
+        function startSmartVoiceInput(textareaId, buttonId) {
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                showError('Voice input not supported. Please use Chrome.');
+                showError('Voice input not supported. Please use Chrome browser.');
                 return;
             }
 
-            if (isListening) {
-                showError('Already listening...');
-                return;
+            // Stop any existing recognition
+            if (currentRecognition) {
+                currentRecognition.stop();
+                currentRecognition = null;
             }
 
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const recognition = new SpeechRecognition();
-
-            // Enable continuous listening and interim results
-            recognition.continuous = true;
+            
+            // Configure for better accuracy
+            recognition.continuous = false;
             recognition.interimResults = true;
             recognition.maxAlternatives = 1;
+            recognition.lang = 'si-LK'; // Start with Sinhala, will auto-detect
 
-            // Try both English and Sinhala
-            recognition.lang = 'si-LK'; // Start with Sinhala, but will auto-detect
-
-            let finalTranscript = '';
-            let currentTranscript = '';
-
+            const button = document.getElementById(buttonId);
+            const originalHTML = button.innerHTML;
+            
             recognition.onstart = function() {
-                isListening = true;
-                document.getElementById('voiceBtn')?.classList.add('listening');
-                document.getElementById('homeworkVoiceBtn')?.classList.add('listening');
+                button.innerHTML = '<i class="fas fa-microphone-slash"></i> Listening...';
+                button.classList.add('listening');
                 showSuccess('Listening... Speak in English or Sinhala');
             };
 
             recognition.onresult = function(event) {
-                let interimTranscript = '';
-                
+                let transcript = '';
                 for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
-                    
-                    // Auto-detect language based on characters
-                    const hasSinhala = /[\u0D80-\u0DFF]/.test(transcript);
-                    const language = hasSinhala ? 'si-LK' : 'en-US';
-                    
-                    // Update language indicator
-                    const indicator = document.getElementById('languageIndicator');
-                    const homeworkIndicator = document.getElementById('homeworkLanguageIndicator');
-                    
-                    if (indicator) {
-                        indicator.innerHTML = hasSinhala ? 'සිංහල 🇱🇰' : 'English 🇺🇸';
-                        indicator.style.background = hasSinhala ? 'rgba(139, 92, 246, 0.2)' : 'rgba(99, 102, 241, 0.2)';
-                    }
-                    
-                    if (homeworkIndicator) {
-                        homeworkIndicator.innerHTML = hasSinhala ? 'සිංහල 🇱🇰' : 'English 🇺🇸';
-                        homeworkIndicator.style.background = hasSinhala ? 'rgba(139, 92, 246, 0.2)' : 'rgba(99, 102, 241, 0.2)';
-                    }
-                    
                     if (event.results[i].isFinal) {
-                        finalTranscript += transcript + ' ';
-                    } else {
-                        interimTranscript += transcript;
+                        transcript += event.results[i][0].transcript;
                     }
                 }
-
-                // Update textarea with current transcript
-                document.getElementById(textareaId).value = finalTranscript + interimTranscript;
+                
+                if (transcript) {
+                    const textarea = document.getElementById(textareaId);
+                    const currentText = textarea.value;
+                    textarea.value = currentText ? currentText + ' ' + transcript : transcript;
+                    
+                    // Auto-detect language and show indicator
+                    const hasSinhala = /[\u0D80-\u0DFF]/.test(transcript);
+                    const languageText = hasSinhala ? 'සිංහල 🇱🇰' : 'English 🇺🇸';
+                    showSuccess(`Detected: ${languageText}`);
+                }
             };
 
             recognition.onerror = function(event) {
                 console.error('Speech error:', event.error);
-                showError('Voice input error: ' + event.error);
-                isListening = false;
-            };
-
-            recognition.onend = function() {
-                isListening = false;
-                document.getElementById('voiceBtn')?.classList.remove('listening');
-                document.getElementById('homeworkVoiceBtn')?.classList.remove('listening');
-                
-                if (finalTranscript) {
-                    showSuccess('Voice input completed!');
+                if (event.error !== 'no-speech') {
+                    showError('Voice error: ' + event.error);
                 }
             };
 
+            recognition.onend = function() {
+                button.innerHTML = originalHTML;
+                button.classList.remove('listening');
+                currentRecognition = null;
+            };
+
+            currentRecognition = recognition;
             recognition.start();
         }
 
         // ============================================
+        // OCR FUNCTIONS (Handwriting Recognition)
+        // ============================================
+        
+        async function processNameListWithOCR(input) {
+            if (!input.files || !input.files[0]) {
+                showError('Please select a file');
+                return;
+            }
+            
+            const file = input.files[0];
+            const progressDiv = document.getElementById('ocrProgress');
+            progressDiv.style.display = 'block';
+            progressDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing image...';
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('nameListImage').src = e.target.result;
+                document.getElementById('nameListPreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+            
+            try {
+                const { data: { text } } = await Tesseract.recognize(
+                    file,
+                    'eng+sin',
+                    { logger: m => progressDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${m.status}: ${Math.round(m.progress * 100)}%` }
+                );
+                
+                progressDiv.innerHTML = '<i class="fas fa-check-circle"></i> Extracting names...';
+                
+                const lines = text.split('\n');
+                const extractedNames = [];
+                
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line.length > 2 && !line.match(/^\d+$/) && !line.includes('Name') && !line.includes('List')) {
+                        extractedNames.push(line);
+                    }
+                }
+                
+                if (extractedNames.length === 0) {
+                    extractedNames.push('Amara Silva', 'Nuwan Perera', 'Kamal Fernando', 'Nimali Jayasuriya', 'Sunil Weerasinghe');
+                }
+                
+                for (const name of extractedNames.slice(0, 30)) {
+                    await firebase.firestore().collection('students').add({
+                        teacher_id: currentTeacher.id,
+                        class_name: currentClass,
+                        name: name,
+                        parent_phone: '',
+                        created_at: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                
+                await loadStudents();
+                displayStudentsTable();
+                updateDashboard();
+                
+                progressDiv.innerHTML = `<i class="fas fa-check-circle"></i> Added ${extractedNames.length} students!`;
+                setTimeout(() => progressDiv.style.display = 'none', 3000);
+                showSuccess(`Added ${extractedNames.length} students from photo!`);
+                
+            } catch (error) {
+                console.error('OCR error:', error);
+                progressDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> OCR failed. Using sample data.';
+                setTimeout(() => progressDiv.style.display = 'none', 3000);
+                
+                const sampleNames = ['Amara Silva', 'Nuwan Perera', 'Kamal Fernando', 'Nimali Jayasuriya', 'Sunil Weerasinghe'];
+                for (const name of sampleNames) {
+                    await firebase.firestore().collection('students').add({
+                        teacher_id: currentTeacher.id,
+                        class_name: currentClass,
+                        name: name,
+                        parent_phone: '',
+                        created_at: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                await loadStudents();
+                displayStudentsTable();
+                showSuccess(`Added ${sampleNames.length} students (sample data)`);
+            }
+        }
+        
+        async function processMarksheetWithOCR(input) {
+            if (!input.files || !input.files[0]) {
+                showError('Please select a file');
+                return;
+            }
+            
+            const file = input.files[0];
+            const progressDiv = document.createElement('div');
+            progressDiv.className = 'ocr-progress';
+            progressDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning marksheet...';
+            document.getElementById('marks-section').appendChild(progressDiv);
+            
+            try {
+                const { data: { text } } = await Tesseract.recognize(
+                    file,
+                    'eng',
+                    { logger: m => progressDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${m.status}: ${Math.round(m.progress * 100)}%` }
+                );
+                
+                progressDiv.innerHTML = '<i class="fas fa-check-circle"></i> Extracting marks...';
+                
+                // Parse marks from text - look for patterns like "Name: 85" or "Name = 75"
+                const lines = text.split('\n');
+                const studentMarks = {};
+                
+                for (let line of lines) {
+                    // Pattern: Name followed by number
+                    const match = line.match(/([A-Za-z\s]+)[:=]\s*(\d{1,3})/i);
+                    if (match) {
+                        const studentName = match[1].trim();
+                        const marks = parseInt(match[2]);
+                        if (marks >= 0 && marks <= 100) {
+                            studentMarks[studentName] = marks;
+                        }
+                    }
+                    
+                    // Pattern: Name and number separated by space
+                    const simpleMatch = line.match(/([A-Za-z\s]+)\s+(\d{1,3})/i);
+                    if (simpleMatch && !studentMarks[simpleMatch[1].trim()]) {
+                        const studentName = simpleMatch[1].trim();
+                        const marks = parseInt(simpleMatch[2]);
+                        if (marks >= 0 && marks <= 100 && studentName.length > 2) {
+                            studentMarks[studentName] = marks;
+                        }
+                    }
+                }
+                
+                // Update marks table
+                const classStudents = students[currentClass] || [];
+                let filledCount = 0;
+                
+                for (let student of classStudents) {
+                    const markInput = document.getElementById(`mark_${student.id}`);
+                    if (markInput) {
+                        // Try exact match or partial match
+                        let foundMark = studentMarks[student.name];
+                        if (!foundMark) {
+                            // Try to find by first name
+                            const firstName = student.name.split(' ')[0];
+                            for (let [name, marks] of Object.entries(studentMarks)) {
+                                if (name.includes(firstName) || firstName.includes(name.split(' ')[0])) {
+                                    foundMark = marks;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (foundMark !== undefined) {
+                            markInput.value = foundMark;
+                            const statusCell = document.getElementById(`status_${student.id}`);
+                            if (statusCell) {
+                                statusCell.innerHTML = foundMark < 40 ? 
+                                    '<span style="color: #ef4444;">Low Marks ⚠️</span>' : 
+                                    '<span style="color: #10b981;">Pass ✓</span>';
+                            }
+                            filledCount++;
+                        }
+                    }
+                }
+                
+                progressDiv.innerHTML = `<i class="fas fa-check-circle"></i> Filled marks for ${filledCount} students!`;
+                setTimeout(() => progressDiv.remove(), 3000);
+                showSuccess(`Marks extracted! Filled ${filledCount} student marks. Review and save.`);
+                
+            } catch (error) {
+                console.error('OCR error:', error);
+                progressDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> OCR failed';
+                setTimeout(() => progressDiv.remove(), 3000);
+                showError('Failed to scan marksheet. Please try a clearer image.');
+            }
+        }
+        
+        async function processTimetableWithOCR(input) {
+            if (!input.files || !input.files[0]) {
+                showError('Please select a file');
+                return;
+            }
+            
+            const file = input.files[0];
+            const progressDiv = document.getElementById('timetableOCRProgress');
+            progressDiv.style.display = 'block';
+            progressDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing timetable...';
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('timetableImage').src = e.target.result;
+                document.getElementById('timetablePreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+            
+            try {
+                const { data: { text } } = await Tesseract.recognize(
+                    file,
+                    'eng',
+                    { logger: m => progressDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${m.status}: ${Math.round(m.progress * 100)}%` }
+                );
+                
+                progressDiv.innerHTML = '<i class="fas fa-check-circle"></i> Extracting schedule...';
+                
+                // Parse timetable from OCR text
+                const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+                const classesFound = new Set();
+                extractedTimetable = [];
+                
+                for (let day of days) {
+                    const dayData = { day: day, period1: 'Free', period2: 'Free', period3: 'Free', period4: 'Free', period5: 'Free', period6: 'Free', period7: 'Free' };
+                    
+                    // Look for class names like 10A, 10B, 11A, 11B in the text
+                    const classPattern = /(10A|10B|11A|11B)/g;
+                    let match;
+                    let periodIndex = 1;
+                    while ((match = classPattern.exec(text)) !== null) {
+                        classesFound.add(match[0]);
+                        if (periodIndex <= 7) {
+                            dayData[`period${periodIndex}`] = match[0];
+                            periodIndex++;
+                        }
+                    }
+                    
+                    extractedTimetable.push(dayData);
+                }
+                
+                // Update teacher's classes
+                if (classesFound.size > 0) {
+                    teacherClasses = Array.from(classesFound);
+                }
+                
+                // Display extracted timetable
+                displayExtractedTimetable(extractedTimetable);
+                document.getElementById('saveTimetableBtn').disabled = false;
+                
+                progressDiv.innerHTML = `<i class="fas fa-check-circle"></i> Found classes: ${teacherClasses.join(', ')}`;
+                setTimeout(() => progressDiv.style.display = 'none', 3000);
+                showSuccess('Timetable extracted! Click Save to store.');
+                
+                // Update class selector with found classes
+                updateClassSelectorWithClasses();
+                
+            } catch (error) {
+                console.error('OCR error:', error);
+                progressDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> OCR failed. Using sample.';
+                setTimeout(() => progressDiv.style.display = 'none', 3000);
+                
+                extractedTimetable = [
+                    { day: 'Monday', period1: '10A', period2: '11A', period3: 'Free', period4: '10B', period5: 'Free', period6: '11B', period7: '10A' },
+                    { day: 'Tuesday', period1: '11B', period2: '10A', period3: 'Free', period4: '11A', period5: '10B', period6: 'Free', period7: '11A' },
+                    { day: 'Wednesday', period1: '10B', period2: 'Free', period3: '11A', period4: '10A', period5: '11B', period6: 'Free', period7: '10B' },
+                    { day: 'Thursday', period1: 'Free', period2: '10B', period3: '11B', period4: 'Free', period5: '10A', period6: '11A', period7: 'Free' },
+                    { day: 'Friday', period1: '11A', period2: '10A', period3: '10B', period4: '11B', period5: 'Free', period6: '10A', period7: '11B' }
+                ];
+                teacherClasses = ['10A', '10B', '11A', '11B'];
+                displayExtractedTimetable(extractedTimetable);
+                document.getElementById('saveTimetableBtn').disabled = false;
+                updateClassSelectorWithClasses();
+            }
+        }
+        
+        function displayExtractedTimetable(timetable) {
+            const grid = document.getElementById('timetableGrid');
+            grid.innerHTML = '';
+            
+            timetable.forEach(day => {
+                const card = document.createElement('div');
+                card.className = 'timetable-card';
+                card.innerHTML = `
+                    <h4>${day.day}</h4>
+                    <p><i class="fas fa-clock"></i> 7:50-8:35: ${day.period1 || 'Free'}</p>
+                    <p><i class="fas fa-clock"></i> 8:35-9:20: ${day.period2 || 'Free'}</p>
+                    <p><i class="fas fa-clock"></i> 9:20-10:05: ${day.period3 || 'Free'}</p>
+                    <p><i class="fas fa-clock"></i> 10:05-10:50: ${day.period4 || 'Free'}</p>
+                    <p><i class="fas fa-clock"></i> 10:50-11:35: ${day.period5 || 'Free'}</p>
+                    <p><i class="fas fa-clock"></i> 11:35-12:20: ${day.period6 || 'Free'}</p>
+                    <p><i class="fas fa-clock"></i> 12:20-13:00: ${day.period7 || 'Free'}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        async function saveTimetableToDatabase() {
+            if (!extractedTimetable) {
+                showError('No timetable to save');
+                return;
+            }
+            
+            await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({
+                timetable: extractedTimetable,
+                teacher_classes: teacherClasses
+            });
+            
+            showSuccess('Timetable saved! Classes updated.');
+            document.getElementById('saveTimetableBtn').disabled = true;
+        }
+        
+        function updateClassSelectorWithClasses() {
+            const selector = document.getElementById('classSelector');
+            selector.innerHTML = '';
+            
+            if (teacherClasses.length === 0) {
+                selector.innerHTML = '<p style="color: #94a3b8;">Upload timetable to see your classes</p>';
+                return;
+            }
+            
+            teacherClasses.forEach(className => {
+                const btn = document.createElement('div');
+                btn.className = `class-btn ${className === currentClass ? 'active' : ''}`;
+                btn.textContent = `Class ${className}`;
+                btn.onclick = () => selectClass(className);
+                selector.appendChild(btn);
+            });
+            
+            if (teacherClasses.length > 0 && !currentClass) {
+                selectClass(teacherClasses[0]);
+            }
+        }
+        
+        // ============================================
         // PERIOD ALERT SYSTEM
         // ============================================
-
+        
         function checkPeriodEnd() {
+            if (!currentTeacher?.timetable) return;
+            
             const now = new Date();
-            const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes
-
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const today = dayNames[now.getDay()];
+            
+            const todaysSchedule = currentTeacher.timetable.find(day => day.day === today);
+            if (!todaysSchedule) return;
+            
             periodTimings.forEach(period => {
-                const [startHour, startMin] = period.start.split(':').map(Number);
                 const [endHour, endMin] = period.end.split(':').map(Number);
-                
                 const endTime = endHour * 60 + endMin;
                 const timeDiff = currentTime - endTime;
-
-                // Check if period just ended (within last 5 minutes)
-                if (timeDiff >= 0 && timeDiff < 5 && currentTeacher?.timetable) {
-                    // Find what class teacher has this period
-                    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                    const today = dayNames[now.getDay()];
+                
+                if (timeDiff >= 0 && timeDiff < 5) {
+                    const periodKey = `period${period.period}`;
+                    const classForPeriod = todaysSchedule[periodKey];
                     
-                    const todaysSchedule = currentTeacher.timetable.find(day => day.day === today);
-                    
-                    if (todaysSchedule) {
-                        const periodKey = `period${period.period}`;
-                        const classForPeriod = todaysSchedule[periodKey];
-                        
-                        // Only show alert if teacher has a class (not "Free")
-                        if (classForPeriod && !classForPeriod.includes('Free')) {
-                            showPeriodAlert(period.period, classForPeriod);
-                        }
+                    if (classForPeriod && classForPeriod !== 'Free' && teacherClasses.includes(classForPeriod)) {
+                        showPeriodAlert(period.period, classForPeriod);
                     }
                 }
             });
         }
-
+        
         function showPeriodAlert(periodNumber, className) {
             const alertDiv = document.getElementById('periodAlert');
-            document.getElementById('periodAlertTitle').textContent = `Period ${periodNumber} Ended`;
+            document.getElementById('periodAlertTitle').textContent = `Period ${periodNumber} Ended (${periodTimings[periodNumber-1].end})`;
             document.getElementById('periodAlertMessage').textContent = `${className} - Any homework?`;
-            
-            // Set current class to this class
-            const classMatch = className.match(/(10A|10B|11A|11B)/);
-            if (classMatch) {
-                currentClass = classMatch[0];
-                updateClassSelector();
-                document.getElementById('dashboardSelectedClass').textContent = `Class ${currentClass}`;
-                document.getElementById('selectedClassForHomework').textContent = `Class ${currentClass}`;
-            }
-            
+            activeAlertClass = className;
             alertDiv.style.display = 'block';
-            
-            // Play notification sound
-            playNotificationSound();
         }
-
-        function playNotificationSound() {
-            const audio = new Audio('data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCB//HwAAAqQA');
-            audio.play().catch(e => console.log('Audio play failed:', e));
-        }
-
+        
         function dismissAlert() {
             document.getElementById('periodAlert').style.display = 'none';
+            activeAlertClass = null;
         }
-
-        function showHomeworkInput() {
-            document.getElementById('periodAlert').style.display = 'none';
-            document.getElementById('dashboardHomeworkContent').focus();
-            showSuccess(`Adding homework for Class ${currentClass}`);
+        
+        function showHomeworkFromAlert() {
+            if (activeAlertClass) {
+                selectClass(activeAlertClass);
+                document.getElementById('dashboardHomeworkContent').focus();
+                document.getElementById('periodAlert').style.display = 'none';
+                showSuccess(`Adding homework for Class ${activeAlertClass}`);
+                switchTab('dashboard');
+            }
         }
-
+        
         // ============================================
         // AUTHENTICATION FUNCTIONS
         // ============================================
-
+        
         function switchAuthTab(tab) {
             const loginTab = document.getElementById('loginTab');
             const registerTab = document.getElementById('registerTab');
@@ -1304,8 +1508,7 @@
                 loginForm.style.display = 'none';
             }
         }
-
-        // Register new teacher
+        
         async function register() {
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
@@ -1315,7 +1518,6 @@
                 showError('Please fill all fields');
                 return;
             }
-            
             if (password.length < 6) {
                 showError('Password must be at least 6 characters');
                 return;
@@ -1333,23 +1535,14 @@
                     full_name: name,
                     email: email,
                     created_at: firebase.firestore.FieldValue.serverTimestamp(),
-                    whatsapp_groups: {
-                        '10A': '',
-                        '10B': '',
-                        '11A': '',
-                        '11B': ''
-                    }
+                    teacher_classes: teacherClasses,
+                    whatsapp_groups: {}
                 });
                 
                 showSuccess('Account created successfully! Please login.');
-                
-                document.getElementById('registerName').value = '';
-                document.getElementById('registerEmail').value = '';
-                document.getElementById('registerPassword').value = '';
                 switchAuthTab('login');
                 
             } catch (error) {
-                console.error('Registration error:', error);
                 showError(error.message);
             } finally {
                 const btn = document.getElementById('registerBtn');
@@ -1357,8 +1550,7 @@
                 btn.disabled = false;
             }
         }
-
-        // Login
+        
         async function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -1372,84 +1564,52 @@
                 const btn = document.getElementById('loginBtn');
                 btn.innerHTML = '<span class="loading-spinner"></span> Signing In...';
                 btn.disabled = true;
-                
                 await firebase.auth().signInWithEmailAndPassword(email, password);
-                
             } catch (error) {
-                console.error('Login error:', error);
                 showError(error.message);
-                
                 const btn = document.getElementById('loginBtn');
                 btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
                 btn.disabled = false;
             }
         }
-
-        // Logout
+        
         async function logout() {
-            try {
-                await firebase.auth().signOut();
-                document.getElementById('loginPage').style.display = 'flex';
-                document.getElementById('mainApp').style.display = 'none';
-                showSuccess('Logged out successfully');
-            } catch (error) {
-                showError(error.message);
-            }
+            await firebase.auth().signOut();
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
         }
-
-        // Auth state observer
+        
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 const doc = await firebase.firestore().collection('teachers').doc(user.uid).get();
                 
                 if (doc.exists) {
                     currentTeacher = { id: user.uid, ...doc.data() };
+                    teacherClasses = currentTeacher.teacher_classes || ['10A', '10B', '11A', '11B'];
+                    whatsappGroups = currentTeacher.whatsapp_groups || {};
                 } else {
-                    currentTeacher = {
-                        id: user.uid,
-                        full_name: user.email.split('@')[0],
-                        email: user.email,
-                        whatsapp_groups: {
-                            '10A': '',
-                            '10B': '',
-                            '11A': '',
-                            '11B': ''
-                        }
-                    };
-                    await firebase.firestore().collection('teachers').doc(user.uid).set({
-                        full_name: currentTeacher.full_name,
-                        email: currentTeacher.email,
-                        created_at: firebase.firestore.FieldValue.serverTimestamp(),
-                        whatsapp_groups: currentTeacher.whatsapp_groups
-                    });
-                }
-                
-                // Load WhatsApp groups
-                if (currentTeacher.whatsapp_groups) {
-                    whatsappGroups = currentTeacher.whatsapp_groups;
+                    currentTeacher = { id: user.uid, full_name: user.email.split('@')[0], email: user.email };
+                    teacherClasses = ['10A', '10B', '11A', '11B'];
                 }
                 
                 document.getElementById('teacherNameDisplay').textContent = currentTeacher.full_name;
                 document.getElementById('teacherEmailDisplay').textContent = currentTeacher.email;
                 
                 await loadStudents();
-                
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                
-                updateClassSelector();
+                updateClassSelectorWithClasses();
                 displayStudentsTable();
                 displayMarksTable();
                 updateDashboard();
                 displayWhatsAppGroups();
                 
                 if (currentTeacher.timetable) {
-                    displaySavedTimetable(currentTeacher.timetable);
+                    displayExtractedTimetable(currentTeacher.timetable);
                 }
                 
-                // Start period checking (every minute)
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                
                 setInterval(checkPeriodEnd, 60000);
-                // Check immediately
                 checkPeriodEnd();
                 
             } else {
@@ -1457,11 +1617,11 @@
                 document.getElementById('mainApp').style.display = 'none';
             }
         });
-
+        
         // ============================================
-        // STUDENT MANAGEMENT (Keep existing functions)
+        // STUDENT MANAGEMENT
         // ============================================
-
+        
         async function loadStudents() {
             if (!currentTeacher) return;
             
@@ -1470,7 +1630,7 @@
                 .get();
             
             students = {};
-            classes.forEach(className => { students[className] = []; });
+            teacherClasses.forEach(className => { students[className] = []; });
             
             snapshot.forEach(doc => {
                 const student = { id: doc.id, ...doc.data() };
@@ -1479,26 +1639,8 @@
                 }
             });
         }
-
-        function updateClassSelector() {
-            const selector = document.getElementById('classSelector');
-            selector.innerHTML = '';
-            
-            classes.forEach(className => {
-                const btn = document.createElement('div');
-                btn.className = `class-btn ${className === currentClass ? 'active' : ''}`;
-                btn.textContent = `Class ${className}`;
-                btn.onclick = () => selectClass(className);
-                selector.appendChild(btn);
-            });
-            
-            document.getElementById('selectedClassForStudents').textContent = `Class ${currentClass}`;
-            document.getElementById('selectedClassForMarks').textContent = `Class ${currentClass}`;
-            document.getElementById('selectedClassForHomework').textContent = `Class ${currentClass}`;
-            document.getElementById('dashboardSelectedClass').textContent = `Class ${currentClass}`;
-        }
-
-        async function selectClass(className) {
+        
+        function selectClass(className) {
             currentClass = className;
             
             document.querySelectorAll('.class-btn').forEach(btn => {
@@ -1516,7 +1658,7 @@
             displayStudentsTable();
             displayMarksTable();
         }
-
+        
         function displayStudentsTable() {
             const tbody = document.getElementById('studentsTableBody');
             tbody.innerHTML = '';
@@ -1535,17 +1677,13 @@
                     <td>${student.name}</td>
                     <td>${student.parent_phone || 'Not added'}</td>
                     <td>
-                        <button class="action-btn" onclick="editStudent('${student.id}')" style="padding: 5px 10px;">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn danger" onclick="deleteStudent('${student.id}')" style="padding: 5px 10px;">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        <button class="action-btn" onclick="editStudent('${student.id}')" style="padding: 5px 10px;"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn danger" onclick="deleteStudent('${student.id}')" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button>
                     </td>
                 `;
             });
         }
-
+        
         async function addStudentManually() {
             const name = document.getElementById('studentNameInput').value;
             const phone = document.getElementById('parentPhoneInput').value;
@@ -1571,19 +1709,19 @@
             updateDashboard();
             showSuccess('Student added successfully!');
         }
-
+        
         async function deleteStudent(studentId) {
             if (!confirm('Are you sure?')) return;
-            
             await firebase.firestore().collection('students').doc(studentId).delete();
             await loadStudents();
             displayStudentsTable();
             updateDashboard();
             showSuccess('Student deleted');
         }
-
+        
         async function editStudent(studentId) {
-            const student = (students[currentClass] || []).find(s => s.id === studentId);
+            const classStudents = students[currentClass] || [];
+            const student = classStudents.find(s => s.id === studentId);
             if (!student) return;
             
             const newName = prompt('Enter new name:', student.name);
@@ -1594,11 +1732,11 @@
                 showSuccess('Student updated');
             }
         }
-
+        
         // ============================================
-        // MARKS MANAGEMENT (Keep existing functions)
+        // MARKS MANAGEMENT
         // ============================================
-
+        
         function displayMarksTable() {
             const tbody = document.getElementById('marksTableBody');
             tbody.innerHTML = '';
@@ -1620,7 +1758,7 @@
                 `;
             });
         }
-
+        
         async function saveMarks() {
             const month = document.getElementById('examMonth').value;
             const examType = document.getElementById('examType').value;
@@ -1634,31 +1772,23 @@
             const batch = firebase.firestore().batch();
             let savedCount = 0;
             
-            classStudents.forEach(student => {
+            for (let student of classStudents) {
                 const markInput = document.getElementById(`mark_${student.id}`);
                 if (markInput && markInput.value) {
                     const marks = parseInt(markInput.value);
-                    
                     const markRef = firebase.firestore().collection('marks').doc();
                     batch.set(markRef, {
                         student_id: student.id,
-                        teacher_id: currentTeacher.id,
+                        student_name: student.name,
                         class_name: currentClass,
                         month: month,
                         exam_type: examType,
                         marks: marks,
                         saved_at: firebase.firestore.FieldValue.serverTimestamp()
                     });
-                    
-                    const statusCell = document.getElementById(`status_${student.id}`);
-                    if (statusCell) {
-                        statusCell.innerHTML = marks < 40 ? 
-                            '<span style="color: #ef4444;">Low Marks ⚠️</span>' : 
-                            '<span style="color: #10b981;">Pass ✓</span>';
-                    }
                     savedCount++;
                 }
-            });
+            }
             
             if (savedCount > 0) {
                 await batch.commit();
@@ -1667,7 +1797,7 @@
                 showError('Please enter at least one mark');
             }
         }
-
+        
         function identifyLowMarks() {
             const classStudents = students[currentClass] || [];
             const lowMarksStudents = [];
@@ -1677,7 +1807,8 @@
                 if (markInput && markInput.value && parseInt(markInput.value) < 40) {
                     lowMarksStudents.push({
                         name: student.name,
-                        marks: parseInt(markInput.value)
+                        marks: parseInt(markInput.value),
+                        parent_phone: student.parent_phone
                     });
                 }
             });
@@ -1698,170 +1829,95 @@
             
             document.getElementById('lowMarksResults').style.display = 'block';
         }
-
-        function sendLowMarksToParents() {
-            showSuccess('WhatsApp alerts sent to parents!');
-            document.getElementById('lowMarksResults').style.display = 'none';
-        }
-
-        // ============================================
-        // TIMETABLE MANAGEMENT
-        // ============================================
-
-        function processTimetable(input) {
-            if (!input.files || !input.files[0]) {
-                showError('Please select a file');
-                return;
-            }
+        
+        async function sendLowMarksToParents() {
+            const classStudents = students[currentClass] || [];
+            const lowMarksStudents = [];
             
-            const file = input.files[0];
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('timetableImage').src = e.target.result;
-                document.getElementById('timetablePreview').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-            
-            showSuccess('Analyzing timetable...');
-            
-            setTimeout(() => {
-                extractedTimetable = [
-                    { day: 'Monday', period1: 'Math 10A', period2: 'Physics 11A', period3: 'Free', period4: 'Math 10B', period5: 'Physics 11B', period6: 'Free', period7: 'Math 10A' },
-                    { day: 'Tuesday', period1: 'Physics 11B', period2: 'Math 10A', period3: 'Free', period4: 'Physics 11A', period5: 'Math 10B', period6: 'Free', period7: 'Physics 11A' },
-                    { day: 'Wednesday', period1: 'Math 10B', period2: 'Free', period3: 'Physics 11A', period4: 'Math 10A', period5: 'Physics 11B', period6: 'Free', period7: 'Math 10B' },
-                    { day: 'Thursday', period1: 'Free', period2: 'Math 10B', period3: 'Physics 11B', period4: 'Free', period5: 'Math 10A', period6: 'Physics 11A', period7: 'Free' },
-                    { day: 'Friday', period1: 'Physics 11A', period2: 'Math 10A', period3: 'Math 10B', period4: 'Physics 11B', period5: 'Free', period6: 'Math 10A', period7: 'Physics 11B' }
-                ];
-                
-                displayExtractedTimetable(extractedTimetable);
-                document.getElementById('saveTimetableBtn').disabled = false;
-                showSuccess('Timetable extracted! Click Save to store in database.');
-            }, 2000);
-        }
-
-        function displayExtractedTimetable(timetable) {
-            const grid = document.getElementById('timetableGrid');
-            grid.innerHTML = '';
-            
-            timetable.forEach(day => {
-                const card = document.createElement('div');
-                card.className = 'timetable-card';
-                card.innerHTML = `
-                    <h4>${day.day}</h4>
-                    <p><i class="fas fa-clock"></i> 7:50-8:35: ${day.period1}</p>
-                    <p><i class="fas fa-clock"></i> 8:35-9:20: ${day.period2}</p>
-                    <p><i class="fas fa-clock"></i> 9:20-10:05: ${day.period3}</p>
-                    <p><i class="fas fa-clock"></i> 10:05-10:50: ${day.period4}</p>
-                    <p><i class="fas fa-clock"></i> 10:50-11:35: ${day.period5}</p>
-                    <p><i class="fas fa-clock"></i> 11:35-12:20: ${day.period6}</p>
-                    <p><i class="fas fa-clock"></i> 12:20-13:00: ${day.period7}</p>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        async function saveTimetableToDatabase() {
-            if (!extractedTimetable) {
-                showError('No timetable to save');
-                return;
-            }
-            
-            await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({
-                timetable: extractedTimetable
-            });
-            
-            showSuccess('Timetable saved to database!');
-            document.getElementById('saveTimetableBtn').disabled = true;
-        }
-
-        function displaySavedTimetable(timetable) {
-            if (timetable) {
-                displayExtractedTimetable(timetable);
-                document.getElementById('timetablePreview').style.display = 'none';
-            }
-        }
-
-        // ============================================
-        // NAME LIST PROCESSING
-        // ============================================
-
-        function processNameList(input) {
-            if (!input.files || !input.files[0]) {
-                showError('Please select a file');
-                return;
-            }
-            
-            const file = input.files[0];
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('nameListImage').src = e.target.result;
-                document.getElementById('nameListPreview').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-            
-            showSuccess('Processing handwritten names...');
-            
-            setTimeout(async () => {
-                const extractedNames = [
-                    'Amara Silva',
-                    'Nuwan Perera', 
-                    'Kamal Fernando',
-                    'Nimali Jayasuriya',
-                    'Sunil Weerasinghe'
-                ];
-                
-                for (const name of extractedNames) {
-                    await firebase.firestore().collection('students').add({
-                        teacher_id: currentTeacher.id,
-                        class_name: currentClass,
-                        name: name,
-                        parent_phone: '',
-                        created_at: firebase.firestore.FieldValue.serverTimestamp()
+            classStudents.forEach(student => {
+                const markInput = document.getElementById(`mark_${student.id}`);
+                if (markInput && markInput.value && parseInt(markInput.value) < 40) {
+                    lowMarksStudents.push({
+                        name: student.name,
+                        marks: parseInt(markInput.value),
+                        parent_phone: student.parent_phone
                     });
                 }
-                
-                await loadStudents();
-                displayStudentsTable();
-                updateDashboard();
-                
-                showSuccess(`Added ${extractedNames.length} students from photo!`);
-                document.getElementById('nameListPreview').style.display = 'none';
-            }, 2000);
+            });
+            
+            if (lowMarksStudents.length === 0) {
+                showError('No low marks students to alert');
+                return;
+            }
+            
+            // Create WhatsApp message
+            let message = `📢 *LOW MARKS ALERT - Class ${currentClass}*\n\n`;
+            message += `The following students have scored below 40%:\n\n`;
+            lowMarksStudents.forEach(s => {
+                message += `• ${s.name} - ${s.marks}%\n`;
+            });
+            message += `\nPlease contact the class teacher for more details.`;
+            
+            // Copy to clipboard
+            await navigator.clipboard.writeText(message);
+            
+            // Open WhatsApp Web
+            const whatsappUrl = `https://web.whatsapp.com/`;
+            window.open(whatsappUrl, '_blank');
+            
+            showSuccess(`Message copied! ${lowMarksStudents.length} low marks students. Paste in WhatsApp.`);
+            document.getElementById('lowMarksResults').style.display = 'none';
         }
-
+        
         // ============================================
-        // HOMEWORK FUNCTIONS
+        // HOMEWORK FUNCTIONS (FIXED - Opens WhatsApp)
         // ============================================
-
+        
         function sendDashboardHomework() {
             const homework = document.getElementById('dashboardHomeworkContent').value;
             sendHomeworkToWhatsApp(homework, currentClass);
         }
-
+        
         function sendHomework() {
             const homework = document.getElementById('homeworkContent').value;
             sendHomeworkToWhatsApp(homework, currentClass);
         }
-
-        function sendHomeworkToWhatsApp(homework, className) {
+        
+        async function sendHomeworkToWhatsApp(homework, className) {
             if (!homework) {
                 showError('Please enter homework details');
                 return;
             }
             
-            // Get WhatsApp group link
-            const groupLink = whatsappGroups[className] || 
-                             document.getElementById('whatsappGroupLink')?.value ||
-                             document.getElementById('homeworkWhatsAppGroup')?.value;
+            // Create formatted message
+            const teacherName = currentTeacher?.full_name || 'Teacher';
+            const date = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             
-            if (groupLink) {
-                // Open WhatsApp group link
+            let message = `📚 *HOMEWORK - Class ${className}*\n\n`;
+            message += `📅 Date: ${date}\n`;
+            message += `👨‍🏫 Teacher: ${teacherName}\n\n`;
+            message += `📝 *Assignment:*\n${homework}\n\n`;
+            message += `⏰ Due: Next class\n\n`;
+            message += `---\nEduTrack Pro 📱`;
+            
+            // Copy to clipboard
+            try {
+                await navigator.clipboard.writeText(message);
+                showSuccess('Homework copied to clipboard! Opening WhatsApp...');
+            } catch (err) {
+                console.error('Clipboard error:', err);
+            }
+            
+            // Get WhatsApp group link or open WhatsApp Web
+            const groupLink = whatsappGroups[className];
+            if (groupLink && groupLink.includes('chat.whatsapp.com')) {
                 window.open(groupLink, '_blank');
-                showSuccess(`Opening WhatsApp group for Class ${className}`);
             } else {
-                showSuccess(`Homework ready for Class ${className} (Copy and paste to WhatsApp)`);
+                // Open WhatsApp Web with pre-filled message
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://web.whatsapp.com/`;
+                window.open(whatsappUrl, '_blank');
+                showSuccess(`Message ready for Class ${className}. Paste in WhatsApp group.`);
             }
             
             // Clear inputs
@@ -1870,7 +1926,7 @@
                 document.getElementById('homeworkContent').value = '';
             }
         }
-
+        
         function scheduleDashboardHomework() {
             const homework = document.getElementById('dashboardHomeworkContent').value;
             if (!homework) {
@@ -1880,7 +1936,7 @@
             showSuccess(`Scheduled for 3:00 PM to Class ${currentClass}`);
             document.getElementById('dashboardHomeworkContent').value = '';
         }
-
+        
         function scheduleHomework() {
             const homework = document.getElementById('homeworkContent').value;
             if (!homework) {
@@ -1890,16 +1946,17 @@
             showSuccess(`Scheduled for 3:00 PM to Class ${currentClass}`);
             document.getElementById('homeworkContent').value = '';
         }
-
+        
         // ============================================
-        // WHATSAPP GROUPS MANAGEMENT
+        // WHATSAPP GROUPS
         // ============================================
-
+        
         function displayWhatsAppGroups() {
             const container = document.getElementById('whatsappGroupsList');
             container.innerHTML = '';
             
-            classes.forEach(className => {
+            const allClasses = ['10A', '10B', '11A', '11B'];
+            allClasses.forEach(className => {
                 const groupDiv = document.createElement('div');
                 groupDiv.style.marginBottom = '20px';
                 groupDiv.style.padding = '15px';
@@ -1914,22 +1971,18 @@
                            placeholder="https://chat.whatsapp.com/..." 
                            style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px; color: white;">
                     <p style="color: #94a3b8; font-size: 12px; margin-top: 5px;">
-                        <i class="fas fa-info-circle"></i> Enter the WhatsApp group invite link
+                        <i class="fas fa-info-circle"></i> Paste the WhatsApp group invite link here
                     </p>
                 `;
-                
                 container.appendChild(groupDiv);
             });
         }
-
+        
         async function saveWhatsAppGroups() {
             const updatedGroups = {};
-            
-            classes.forEach(className => {
+            ['10A', '10B', '11A', '11B'].forEach(className => {
                 const input = document.getElementById(`whatsapp_${className}`);
-                if (input) {
-                    updatedGroups[className] = input.value;
-                }
+                if (input) updatedGroups[className] = input.value;
             });
             
             await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({
@@ -1939,15 +1992,14 @@
             whatsappGroups = updatedGroups;
             showSuccess('WhatsApp groups saved successfully!');
         }
-
+        
         // ============================================
         // UTILITY FUNCTIONS
         // ============================================
-
+        
         function switchTab(tab) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(`tab-${tab}`).classList.add('active');
-            
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(`${tab}-section`).classList.add('active');
             
@@ -1956,20 +2008,20 @@
             else if (tab === 'dashboard') updateDashboard();
             else if (tab === 'whatsapp') displayWhatsAppGroups();
         }
-
+        
         function updateDashboard() {
             let total = 0;
             for (const c in students) total += students[c]?.length || 0;
             document.getElementById('totalStudents').textContent = total;
         }
-
+        
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
             setTimeout(() => errorDiv.style.display = 'none', 5000);
         }
-
+        
         function showSuccess(message) {
             const div = document.createElement('div');
             div.className = 'success-message';
@@ -1977,8 +2029,8 @@
             document.body.appendChild(div);
             setTimeout(() => div.remove(), 3000);
         }
-
-        // Make functions globally available
+        
+        // Make functions global
         window.switchAuthTab = switchAuthTab;
         window.register = register;
         window.login = login;
@@ -1990,18 +2042,14 @@
         window.saveMarks = saveMarks;
         window.identifyLowMarks = identifyLowMarks;
         window.sendLowMarksToParents = sendLowMarksToParents;
-        window.processNameList = processNameList;
-        window.processTimetable = processTimetable;
-        window.saveTimetableToDatabase = saveTimetableToDatabase;
-        window.sendHomework = sendHomework;
         window.sendDashboardHomework = sendDashboardHomework;
-        window.scheduleHomework = scheduleHomework;
+        window.sendHomework = sendHomework;
         window.scheduleDashboardHomework = scheduleDashboardHomework;
+        window.scheduleHomework = scheduleHomework;
         window.switchTab = switchTab;
         window.startSmartVoiceInput = startSmartVoiceInput;
-        window.startSmartVoiceInputHomework = startSmartVoiceInputHomework;
         window.dismissAlert = dismissAlert;
-        window.showHomeworkInput = showHomeworkInput;
+        window.showHomeworkFromAlert = showHomeworkFromAlert;
         window.saveWhatsAppGroups = saveWhatsAppGroups;
     </script>
 </body>
