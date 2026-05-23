@@ -1,26 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduTrack Pro - Teacher Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>EduTrack Pro - Complete Teacher Platform</title>
     
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
-    <!-- Tesseract.js for OCR (Handwriting Recognition) -->
+    <!-- Tesseract.js for OCR -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.5/dist/tesseract.min.js"></script>
     
-    <!-- Fonts and Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ALL YOUR EXISTING STYLES - Keep them exactly the same */
         * {
             margin: 0;
             padding: 0;
@@ -34,18 +31,9 @@
             overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #1a1f2e;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border-radius: 5px;
-        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #1a1f2e; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 5px; }
 
         .gradient-bg {
             position: fixed;
@@ -84,24 +72,13 @@
         }
 
         @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
+        .login-header { text-align: center; margin-bottom: 40px; }
         .login-logo {
-            width: 100px;
-            height: 100px;
+            width: 100px; height: 100px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border-radius: 30px;
             display: flex;
@@ -111,7 +88,6 @@
             margin: 0 auto 20px;
             animation: floatLogo 3s ease-in-out infinite;
         }
-
         @keyframes floatLogo {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -129,27 +105,11 @@
             font-weight: 600;
             transition: all 0.3s;
         }
+        .auth-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; color: white !important; }
 
-        .auth-tab.active {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
-            color: white !important;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #94a3b8;
-            font-size: 14px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; }
+        .input-wrapper { position: relative; }
         .input-wrapper i {
             position: absolute;
             left: 16px;
@@ -158,7 +118,6 @@
             color: #6366f1;
             font-size: 18px;
         }
-
         .input-wrapper input {
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
@@ -167,14 +126,8 @@
             padding: 16px 16px 16px 48px;
             color: white;
             font-size: 16px;
-            transition: all 0.3s;
         }
-
-        .input-wrapper input:focus {
-            outline: none;
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.1);
-        }
+        .input-wrapper input:focus { outline: none; border-color: #6366f1; }
 
         .auth-btn {
             width: 100%;
@@ -189,17 +142,7 @@
             transition: all 0.3s;
             margin-top: 20px;
         }
-
-        .auth-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 30px -10px #6366f1;
-        }
-
-        .auth-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .auth-btn:hover { transform: translateY(-2px); box-shadow: 0 20px 30px -10px #6366f1; }
 
         .app-container {
             max-width: 1400px;
@@ -218,47 +161,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideDown 0.8s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            animation: floatIcon 3s ease-in-out infinite;
-        }
-
-        .teacher-profile {
-            display: flex;
-            align-items: center;
-            gap: 20px;
         }
 
         .teacher-avatar {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border-radius: 50%;
             display: flex;
@@ -266,12 +182,6 @@
             justify-content: center;
             font-size: 20px;
             overflow: hidden;
-        }
-
-        .teacher-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .nav-tabs {
@@ -295,67 +205,46 @@
             align-items: center;
             gap: 10px;
         }
+        .nav-tab:hover { background: rgba(99, 102, 241, 0.1); border-color: #6366f1; color: white; }
+        .nav-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; }
 
-        .nav-tab:hover {
-            background: rgba(99, 102, 241, 0.1);
-            border-color: #6366f1;
-            color: white;
-        }
-
-        .nav-tab.active {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            border: none;
-        }
-
-        .class-selector {
+        /* Grade & Class Selectors - Animated */
+        .selector-container {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            justify-content: center;
         }
-
-        .class-btn {
+        .grade-selector, .class-selector {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 60px;
+            padding: 8px 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .grade-selector:hover, .class-selector:hover { border-color: #6366f1; transform: translateY(-2px); }
+        .grade-selector label, .class-selector label {
             color: #94a3b8;
-            padding: 12px 25px;
-            border-radius: 30px;
+            font-size: 14px;
+            margin-right: 15px;
+        }
+        .grade-selector select, .class-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 10px 15px;
             cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
+            outline: none;
         }
+        .grade-selector select option, .class-selector select option { background: #1a1f2e; color: white; }
 
-        .class-btn:hover {
-            border-color: #6366f1;
-            color: white;
-        }
-
-        .class-btn.active {
-            background: #6366f1;
-            color: white;
-            border-color: #6366f1;
-        }
-
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .content-section { display: none; animation: fadeIn 0.5s ease-out; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .card {
             background: rgba(255, 255, 255, 0.03);
@@ -375,76 +264,6 @@
             color: #a5b4fc;
         }
 
-        .upload-area {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px dashed rgba(99, 102, 241, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-        }
-
-        .upload-area:hover {
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.05);
-            transform: scale(1.02);
-        }
-
-        .upload-area i {
-            font-size: 48px;
-            color: #6366f1;
-            margin-bottom: 15px;
-        }
-
-        .student-table-container {
-            overflow-x: auto;
-            max-height: 500px;
-            overflow-y: auto;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .student-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .student-table th {
-            background: rgba(99, 102, 241, 0.2);
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            color: #a5b4fc;
-            position: sticky;
-            top: 0;
-            backdrop-filter: blur(10px);
-        }
-
-        .student-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .student-table tr:hover {
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        .student-table input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 8px 12px;
-            color: white;
-            width: 100%;
-        }
-
-        .student-table input:focus {
-            outline: none;
-            border-color: #6366f1;
-        }
-
         .action-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -460,49 +279,99 @@
             margin-right: 10px;
             margin-bottom: 10px;
         }
+        .action-btn:hover { background: rgba(99, 102, 241, 0.2); border-color: #6366f1; transform: translateY(-2px); }
+        .action-btn.primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; }
+        .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; }
+        .action-btn.success { background: linear-gradient(135deg, #10b981, #059669); border: none; }
+        .action-btn.warning { background: linear-gradient(135deg, #f59e0b, #d97706); border: none; }
 
-        .action-btn:hover {
+        .student-table-container {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .student-table th {
             background: rgba(99, 102, 241, 0.2);
-            border-color: #6366f1;
-            transform: translateY(-2px);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #a5b4fc;
+            position: sticky;
+            top: 0;
+        }
+        .student-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .student-table tr:hover { background: rgba(99, 102, 241, 0.1); }
+        .student-table input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: white;
+            width: 100%;
         }
 
-        .action-btn.primary {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
+        .upload-area {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
         }
+        .upload-area:hover { border-color: #6366f1; background: rgba(99, 102, 241, 0.05); transform: scale(1.02); }
+        .upload-area i { font-size: 48px; color: #6366f1; margin-bottom: 15px; }
 
-        .action-btn.danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            border: none;
-        }
-
-        .action-btn.success {
-            background: linear-gradient(135deg, #10b981, #059669);
-            border: none;
-        }
-
-        .low-marks-card {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid #ef4444;
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .student-chip {
-            display: inline-flex;
+        /* Exercise Tracking Styles */
+        .exercise-cell {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
-            background: rgba(239, 68, 68, 0.2);
-            padding: 8px 16px;
-            border-radius: 30px;
-            margin: 5px;
-            font-size: 14px;
+        }
+        .exercise-icon {
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 5px;
+            border-radius: 50%;
+        }
+        .exercise-icon.correct { color: #10b981; }
+        .exercise-icon.correct:hover { background: rgba(16, 185, 129, 0.2); transform: scale(1.1); }
+        .exercise-icon.wrong { color: #ef4444; }
+        .exercise-icon.wrong:hover { background: rgba(239, 68, 68, 0.2); transform: scale(1.1); }
+        .exercise-icon.completed { background: rgba(16, 185, 129, 0.3); }
+        .exercise-status {
+            font-size: 11px;
+            text-align: center;
+            margin-top: 5px;
         }
 
-        .student-chip i {
-            color: #ef4444;
+        .month-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .month-selector select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 12px 20px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
         }
 
         .success-message {
@@ -515,32 +384,10 @@
             border-radius: 10px;
             animation: slideIn 0.3s ease-out;
             z-index: 1000;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-
         @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .error-message {
@@ -558,82 +405,7 @@
             padding: 40px;
             color: #94a3b8;
         }
-
-        .empty-state i {
-            font-size: 48px;
-            color: #6366f1;
-            margin-bottom: 15px;
-        }
-
-        .timetable-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .timetable-card {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid #6366f1;
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .timetable-card h4 {
-            color: #6366f1;
-            margin-bottom: 10px;
-        }
-
-        .timetable-card p {
-            color: #94a3b8;
-            margin: 5px 0;
-        }
-
-        .period-alert {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
-            border: 1px solid #6366f1;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
-            50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); }
-        }
-
-        .whatsapp-input {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-
-        .whatsapp-input input {
-            flex: 1;
-            min-width: 200px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 12px;
-            color: white;
-        }
-
-        .language-indicator {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-left: 10px;
-            background: rgba(99, 102, 241, 0.2);
-        }
-
-        .dashboard-homework {
-            margin-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 30px;
-        }
+        .empty-state i { font-size: 48px; color: #6366f1; margin-bottom: 15px; }
 
         .ocr-progress {
             margin-top: 10px;
@@ -643,10 +415,25 @@
             font-size: 12px;
         }
 
-        .listening {
-            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            animation: pulse 0.5s infinite;
+        .low-marks-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid #ef4444;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
         }
+        .student-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(239, 68, 68, 0.2);
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .listening { background: linear-gradient(135deg, #ef4444, #dc2626) !important; animation: pulse 0.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
     </style>
 </head>
 <body>
@@ -656,18 +443,14 @@
     <div id="loginPage" class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <div class="login-logo">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                </div>
+                <div class="login-logo"><i class="fas fa-chalkboard-teacher"></i></div>
                 <h1>EduTrack Pro</h1>
                 <p>Complete Teacher Platform</p>
             </div>
-
             <div style="display: flex; gap: 10px; margin-bottom: 30px;">
                 <button class="auth-tab active" onclick="switchAuthTab('login')" id="loginTab">Login</button>
                 <button class="auth-tab" onclick="switchAuthTab('register')" id="registerTab">Register</button>
             </div>
-
             <div id="loginForm">
                 <div class="input-group">
                     <label>Email</label>
@@ -676,7 +459,6 @@
                         <input type="email" id="loginEmail" placeholder="Enter your email">
                     </div>
                 </div>
-
                 <div class="input-group">
                     <label>Password</label>
                     <div class="input-wrapper">
@@ -684,12 +466,8 @@
                         <input type="password" id="loginPassword" placeholder="Enter your password">
                     </div>
                 </div>
-
-                <button class="auth-btn" onclick="login()" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i> Sign In
-                </button>
+                <button class="auth-btn" onclick="login()" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
             </div>
-
             <div id="registerForm" style="display: none;">
                 <div class="input-group">
                     <label>Full Name</label>
@@ -698,7 +476,6 @@
                         <input type="text" id="registerName" placeholder="Enter your full name">
                     </div>
                 </div>
-
                 <div class="input-group">
                     <label>Email</label>
                     <div class="input-wrapper">
@@ -706,7 +483,6 @@
                         <input type="email" id="registerEmail" placeholder="Enter your email">
                     </div>
                 </div>
-
                 <div class="input-group">
                     <label>Password</label>
                     <div class="input-wrapper">
@@ -714,12 +490,8 @@
                         <input type="password" id="registerPassword" placeholder="Create password (min 6 characters)">
                     </div>
                 </div>
-
-                <button class="auth-btn" onclick="register()" id="registerBtn">
-                    <i class="fas fa-user-plus"></i> Create Account
-                </button>
+                <button class="auth-btn" onclick="register()" id="registerBtn"><i class="fas fa-user-plus"></i> Create Account</button>
             </div>
-
             <div id="errorMessage" class="error-message"></div>
         </div>
     </div>
@@ -728,114 +500,68 @@
     <div id="mainApp" class="app-container">
         <header class="header">
             <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div>
-                    <h1 id="teacherNameDisplay">Loading...</h1>
-                    <p style="color: #94a3b8;" id="teacherEmailDisplay"></p>
-                </div>
+                <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div><h1 id="teacherNameDisplay">Loading...</h1><p style="color: #94a3b8;" id="teacherEmailDisplay"></p></div>
             </div>
             <div class="teacher-profile">
-                <div class="teacher-avatar" id="teacherAvatarDisplay">
-                    <i class="fas fa-user"></i>
-                </div>
-                <button class="action-btn" onclick="logout()" style="padding: 10px 20px;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
+                <div class="teacher-avatar" id="teacherAvatarDisplay"><i class="fas fa-user"></i></div>
+                <button class="action-btn" onclick="logout()" style="padding: 10px 20px;"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </header>
 
-        <div id="periodAlert" class="period-alert" style="display: none;">
-            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <i class="fas fa-bell" style="font-size: 24px; color: #6366f1;"></i>
-                <div>
-                    <h3 id="periodAlertTitle">Period Ended</h3>
-                    <p id="periodAlertMessage"></p>
-                </div>
-                <div style="margin-left: auto; display: flex; gap: 10px;">
-                    <button class="action-btn success" onclick="showHomeworkFromAlert()">
-                        <i class="fas fa-check"></i> Yes, Add Homework
-                    </button>
-                    <button class="action-btn" onclick="dismissAlert()">
-                        <i class="fas fa-times"></i> No Homework
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div class="nav-tabs">
-            <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard">
-                <i class="fas fa-home"></i> Dashboard
-            </div>
-            <div class="nav-tab" onclick="switchTab('students')" id="tab-students">
-                <i class="fas fa-users"></i> Students
-            </div>
-            <div class="nav-tab" onclick="switchTab('marks')" id="tab-marks">
-                <i class="fas fa-chart-line"></i> Marks
-            </div>
-            <div class="nav-tab" onclick="switchTab('homework')" id="tab-homework">
-                <i class="fas fa-book"></i> Homework
-            </div>
-            <div class="nav-tab" onclick="switchTab('timetable')" id="tab-timetable">
-                <i class="fas fa-calendar"></i> Timetable
-            </div>
-            <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp">
-                <i class="fab fa-whatsapp"></i> WhatsApp Groups
-            </div>
+            <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard"><i class="fas fa-home"></i> Dashboard</div>
+            <div class="nav-tab" onclick="switchTab('students')" id="tab-students"><i class="fas fa-users"></i> Students</div>
+            <div class="nav-tab" onclick="switchTab('marks')" id="tab-marks"><i class="fas fa-chart-line"></i> Marks</div>
+            <div class="nav-tab" onclick="switchTab('exercises')" id="tab-exercises"><i class="fas fa-tasks"></i> Notes & Exercises</div>
+            <div class="nav-tab" onclick="switchTab('homework')" id="tab-homework"><i class="fas fa-book"></i> Homework</div>
+            <div class="nav-tab" onclick="switchTab('timetable')" id="tab-timetable"><i class="fas fa-calendar"></i> Timetable</div>
+            <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Groups</div>
         </div>
 
-        <div class="class-selector" id="classSelector"></div>
+        <!-- Grade & Class Selectors -->
+        <div class="selector-container">
+            <div class="grade-selector">
+                <label><i class="fas fa-graduation-cap"></i> Grade</label>
+                <select id="gradeSelect" onchange="changeGrade()">
+                    <option value="6">Grade 6</option><option value="7">Grade 7</option><option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option><option value="10">Grade 10</option><option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option><option value="13">Grade 13</option>
+                </select>
+            </div>
+            <div class="class-selector">
+                <label><i class="fas fa-users"></i> Class</label>
+                <select id="classSelect" onchange="changeClass()">
+                    <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                </select>
+            </div>
+        </div>
 
         <!-- Dashboard Section -->
         <div id="dashboard-section" class="content-section active">
             <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-chart-pie"></i>
-                    <h3>Class Overview</h3>
-                </div>
+                <div class="card-title"><i class="fas fa-chart-pie"></i><h3>Class Overview</h3></div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
                     <div style="background: rgba(99,102,241,0.1); padding: 20px; border-radius: 16px;">
-                        <i class="fas fa-users" style="font-size: 32px; color: #6366f1; margin-bottom: 10px;"></i>
-                        <h2 id="totalStudents">0</h2>
-                        <p style="color: #94a3b8;">Total Students</p>
+                        <i class="fas fa-users" style="font-size: 32px; color: #6366f1;"></i>
+                        <h2 id="totalStudents">0</h2><p>Total Students</p>
                     </div>
-                    <div style="background: rgba(139,92,246,0.1); padding: 20px; border-radius: 16px;">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 32px; color: #8b5cf6; margin-bottom: 10px;"></i>
-                        <h2 id="lowMarksCount">0</h2>
-                        <p style="color: #94a3b8;">Need Attention</p>
+                    <div style="background: rgba(239,68,68,0.1); padding: 20px; border-radius: 16px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 32px; color: #ef4444;"></i>
+                        <h2 id="lowMarksCount">0</h2><p>Need Attention</p>
                     </div>
                     <div style="background: rgba(16,185,129,0.1); padding: 20px; border-radius: 16px;">
-                        <i class="fas fa-check-circle" style="font-size: 32px; color: #10b981; margin-bottom: 10px;"></i>
-                        <h2 id="averageMarks">0%</h2>
-                        <p style="color: #94a3b8;">Class Average</p>
+                        <i class="fas fa-check-circle" style="font-size: 32px; color: #10b981;"></i>
+                        <h2 id="averageMarks">0%</h2><p>Class Average</p>
                     </div>
                 </div>
             </div>
-
-            <div class="dashboard-homework">
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-book"></i>
-                        <h3>Quick Homework - <span id="dashboardSelectedClass">Select a class</span></h3>
-                    </div>
-
-                    <textarea id="dashboardHomeworkContent" placeholder="Type homework details here... (Speak in English or Sinhala - auto detected)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
-
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                        <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent', 'dashboardVoiceBtn')">
-                            <i class="fas fa-microphone"></i> Smart Voice (ඕනෑම භාෂාවක්)
-                        </button>
-                        <button class="action-btn" onclick="sendDashboardHomework()">
-                            <i class="fab fa-whatsapp"></i> Send Now
-                        </button>
-                        <button class="action-btn" onclick="scheduleDashboardHomework()">
-                            <i class="fas fa-clock"></i> Schedule for 3:00 PM
-                        </button>
-                    </div>
-                    <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">
-                        <i class="fas fa-info-circle"></i> Speak in English or Sinhala - language auto-detected
-                    </p>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-book"></i><h3>Quick Homework</h3></div>
+                <textarea id="dashboardHomeworkContent" placeholder="Type homework details here..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:15px; padding:20px; color:white; min-height:150px; margin-bottom:20px;"></textarea>
+                <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent','dashboardVoiceBtn')"><i class="fas fa-microphone"></i> Smart Voice</button>
+                    <button class="action-btn" onclick="sendDashboardHomework()"><i class="fab fa-whatsapp"></i> Send Now</button>
                 </div>
             </div>
         </div>
@@ -843,41 +569,28 @@
         <!-- Students Section -->
         <div id="students-section" class="content-section">
             <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-user-plus"></i>
-                    <h3>Add Students to <span id="selectedClassForStudents">Class</span></h3>
-                </div>
-
+                <div class="card-title"><i class="fas fa-user-plus"></i><h3>Add Students to <span id="selectedGradeClass">Class</span></h3></div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
                     <div>
-                        <h4 style="margin-bottom: 15px;"><i class="fas fa-camera"></i> Upload Name List Photo</h4>
+                        <h4><i class="fas fa-camera"></i> Upload Name List Photo</h4>
                         <div class="upload-area" onclick="document.getElementById('nameListInput').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <h3>Click to upload class list</h3>
-                            <p style="color: #94a3b8;">OCR will extract names (handwritten supported)</p>
+                            <i class="fas fa-cloud-upload-alt"></i><h3>Click to upload class list</h3>
+                            <p style="color:#94a3b8;">OCR will extract names</p>
                         </div>
-                        <input type="file" id="nameListInput" accept="image/*" style="display: none;" onchange="processNameListWithOCR(this)">
-                        <div id="ocrProgress" class="ocr-progress" style="display: none;"></div>
-                        <div id="nameListPreview" style="display: none; margin-top: 15px;">
-                            <img id="nameListImage" style="max-width: 100%; border-radius: 10px; max-height: 200px;">
-                        </div>
+                        <input type="file" id="nameListInput" accept="image/*" style="display:none;" onchange="processNameListWithOCR(this)">
+                        <div id="ocrProgress" class="ocr-progress" style="display:none;"></div>
                     </div>
-
                     <div>
-                        <h4 style="margin-bottom: 15px;"><i class="fas fa-pen"></i> Manual Entry</h4>
-                        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                            <input type="text" id="studentNameInput" placeholder="Enter student name" style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white;">
-                            <input type="text" id="parentPhoneInput" placeholder="Parent WhatsApp" style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white;">
+                        <h4><i class="fas fa-pen"></i> Manual Entry</h4>
+                        <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+                            <input type="text" id="studentNameInput" placeholder="Student name" style="flex:1; background:rgba(255,255,255,0.05); border-radius:10px; padding:12px; color:white;">
+                            <input type="text" id="parentPhoneInput" placeholder="Parent WhatsApp" style="flex:1; background:rgba(255,255,255,0.05); border-radius:10px; padding:12px; color:white;">
                         </div>
-                        <button class="action-btn success" onclick="addStudentManually()">
-                            <i class="fas fa-plus"></i> Add Student
-                        </button>
+                        <button class="action-btn success" onclick="addStudentManually()"><i class="fas fa-plus"></i> Add Student</button>
                     </div>
                 </div>
-
-                <h4 style="margin-bottom: 15px;"><i class="fas fa-list"></i> Student List</h4>
                 <div class="student-table-container">
-                    <table class="student-table" id="studentsTable">
+                    <table class="student-table">
                         <thead><tr><th>#</th><th>Student Name</th><th>Parent WhatsApp</th><th>Actions</th></tr></thead>
                         <tbody id="studentsTableBody"></tbody>
                     </table>
@@ -885,53 +598,64 @@
             </div>
         </div>
 
-        <!-- Marks Section with OCR -->
+        <!-- Marks Section -->
         <div id="marks-section" class="content-section">
             <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-star"></i>
-                    <h3>Enter Marks for <span id="selectedClassForMarks">Class</span></h3>
-                </div>
-
+                <div class="card-title"><i class="fas fa-star"></i><h3>Enter Marks for <span id="marksGradeClass">Class</span></h3></div>
                 <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
-                    <select id="examMonth" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; min-width: 150px;">
+                    <select id="examMonth" style="background:rgba(255,255,255,0.05); border-radius:10px; padding:12px; color:white;">
                         <option value="January">January</option><option value="February">February</option><option value="March">March</option>
                         <option value="April">April</option><option value="May">May</option><option value="June">June</option>
                         <option value="July">July</option><option value="August">August</option><option value="September">September</option>
                         <option value="October">October</option><option value="November">November</option><option value="December">December</option>
                     </select>
-
-                    <select id="examType" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; min-width: 150px;">
+                    <select id="examType" style="background:rgba(255,255,255,0.05); border-radius:10px; padding:12px; color:white;">
                         <option value="Monthly Test">Monthly Test</option><option value="Mid Term">Mid Term</option>
                         <option value="Final Term">Final Term</option><option value="Weekly Quiz">Weekly Quiz</option>
                     </select>
-
-                    <button class="action-btn" onclick="document.getElementById('marksheetInput').click()">
-                        <i class="fas fa-camera"></i> Scan Marksheet
-                    </button>
-                    <input type="file" id="marksheetInput" accept="image/*" style="display: none;" onchange="processMarksheetWithOCR(this)">
+                    <button class="action-btn" onclick="document.getElementById('marksheetInput').click()"><i class="fas fa-camera"></i> Scan Marksheet</button>
+                    <input type="file" id="marksheetInput" accept="image/*" style="display:none;" onchange="processMarksheetWithOCR(this)">
                 </div>
-
                 <div class="student-table-container">
                     <table class="student-table">
                         <thead><tr><th>#</th><th>Student Name</th><th>Marks (0-100)</th><th>Status</th></tr></thead>
                         <tbody id="marksTableBody"></tbody>
                     </table>
                 </div>
-
                 <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
                     <button class="action-btn primary" onclick="saveMarks()"><i class="fas fa-save"></i> Save Marks</button>
                     <button class="action-btn success" onclick="identifyLowMarks()"><i class="fas fa-exclamation-triangle"></i> Identify Low Marks</button>
                 </div>
-
                 <div id="lowMarksResults" style="display: none; margin-top: 25px;">
                     <div class="low-marks-card">
-                        <h3 style="margin-bottom: 15px;">Students Below 40%</h3>
+                        <h3>Students Below 40%</h3>
                         <div id="lowMarksStudentsList"></div>
-                        <button class="action-btn primary" onclick="sendLowMarksToParents()" style="margin-top: 15px;">
-                            <i class="fab fa-whatsapp"></i> Send WhatsApp Alerts
-                        </button>
+                        <button class="action-btn primary" onclick="sendLowMarksToParents()" style="margin-top:15px;"><i class="fab fa-whatsapp"></i> Send WhatsApp Alerts to All</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes & Exercises Section -->
+        <div id="exercises-section" class="content-section">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-tasks"></i><h3>Exercise Tracking - <span id="exercisesGradeClass">Class</span></h3></div>
+                <div class="month-selector">
+                    <select id="exerciseMonth" onchange="loadExerciseData()">
+                        <option value="January">January</option><option value="February">February</option><option value="March">March</option>
+                        <option value="April">April</option><option value="May">May</option><option value="June">June</option>
+                        <option value="July">July</option><option value="August">August</option><option value="September">September</option>
+                        <option value="October">October</option><option value="November">November</option><option value="December">December</option>
+                    </select>
+                    <select id="viewMonthSelect" onchange="loadHistoricalExercises()">
+                        <option value="">-- View Previous Months --</option>
+                    </select>
+                </div>
+                <div class="student-table-container">
+                    <table class="student-table">
+                        <thead><tr><th>#</th><th>Student Name</th><th>First Time</th><th>Second Time</th><th>Third Time</th></tr></thead>
+                        <tbody id="exercisesTableBody"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -939,77 +663,40 @@
         <!-- Homework Section -->
         <div id="homework-section" class="content-section">
             <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-book"></i>
-                    <h3>Send Homework to <span id="selectedClassForHomework">Class</span></h3>
+                <div class="card-title"><i class="fas fa-book"></i><h3>Send Homework to <span id="homeworkGradeClass">Class</span></h3></div>
+                <textarea id="homeworkContent" placeholder="Type homework details here..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:15px; padding:20px; color:white; min-height:150px; margin-bottom:20px;"></textarea>
+                <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent','homeworkVoiceBtn')"><i class="fas fa-microphone"></i> Smart Voice</button>
+                    <button class="action-btn" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Send to WhatsApp</button>
                 </div>
-
-                <textarea id="homeworkContent" placeholder="Type homework details here... (Speak in English or Sinhala)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; color: white; font-size: 16px; min-height: 150px; margin-bottom: 20px;"></textarea>
-
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent', 'homeworkVoiceBtn')">
-                        <i class="fas fa-microphone"></i> Smart Voice (ඕනෑම භාෂාවක්)
-                    </button>
-                    <button class="action-btn" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Send to WhatsApp Group</button>
-                    <button class="action-btn" onclick="scheduleHomework()"><i class="fas fa-clock"></i> Schedule for 3:00 PM</button>
-                </div>
-                <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">
-                    <i class="fas fa-info-circle"></i> Language auto-detected: English or Sinhala
-                </p>
             </div>
         </div>
 
         <!-- Timetable Section -->
         <div id="timetable-section" class="content-section">
             <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-calendar-alt"></i>
-                    <h3>Upload Your Timetable</h3>
-                    <p style="color: #94a3b8; font-size: 14px; margin-left: 20px;">Periods: 7:50 AM - 1:00 PM (7 periods)</p>
-                </div>
-
+                <div class="card-title"><i class="fas fa-calendar-alt"></i><h3>Upload Your Timetable</h3><p style="color:#94a3b8; font-size:14px;">Periods: 7:50 AM - 1:00 PM</p></div>
                 <div class="upload-area" onclick="document.getElementById('timetableInput').click()">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <h3>Click to upload timetable image</h3>
-                    <p style="color: #94a3b8;">OCR will extract your classes</p>
+                    <i class="fas fa-cloud-upload-alt"></i><h3>Click to upload timetable image</h3>
                 </div>
-                <input type="file" id="timetableInput" accept="image/*" style="display: none;" onchange="processTimetableWithOCR(this)">
-                <div id="timetableOCRProgress" class="ocr-progress" style="display: none;"></div>
-                <div id="timetablePreview" style="display: none; margin-top: 20px;">
-                    <img id="timetableImage" style="max-width: 100%; border-radius: 10px; max-height: 300px;">
-                </div>
-
-                <div id="parsedTimetable" style="margin-top: 25px;">
-                    <h4 style="color: #a5b4fc; margin-bottom: 15px;">Extracted Timetable:</h4>
-                    <div id="timetableGrid" class="timetable-grid"></div>
-                </div>
-
-                <button class="action-btn primary" onclick="saveTimetableToDatabase()" style="margin-top: 15px;" id="saveTimetableBtn" disabled>
-                    <i class="fas fa-save"></i> Save Timetable to Database
-                </button>
+                <input type="file" id="timetableInput" accept="image/*" style="display:none;" onchange="processTimetableWithOCR(this)">
+                <div id="timetableOCRProgress" class="ocr-progress" style="display:none;"></div>
+                <div id="parsedTimetable"><div id="timetableGrid" class="timetable-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:15px; margin-top:20px;"></div></div>
+                <button class="action-btn primary" onclick="saveTimetableToDatabase()" id="saveTimetableBtn" disabled><i class="fas fa-save"></i> Save Timetable</button>
             </div>
         </div>
 
         <!-- WhatsApp Groups Section -->
         <div id="whatsapp-section" class="content-section">
             <div class="card">
-                <div class="card-title">
-                    <i class="fab fa-whatsapp"></i>
-                    <h3>WhatsApp Groups Configuration</h3>
-                </div>
-                <p style="color: #94a3b8; margin-bottom: 20px;">Add WhatsApp group links for each class to send homework automatically.</p>
+                <div class="card-title"><i class="fab fa-whatsapp"></i><h3>WhatsApp Groups Configuration</h3></div>
                 <div id="whatsappGroupsList"></div>
-                <button class="action-btn primary" onclick="saveWhatsAppGroups()" style="margin-top: 20px;">
-                    <i class="fas fa-save"></i> Save All Groups
-                </button>
+                <button class="action-btn primary" onclick="saveWhatsAppGroups()"><i class="fas fa-save"></i> Save All Groups</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ============================================
-        // FIREBASE CONFIGURATION
-        // ============================================
         const firebaseConfig = {
             apiKey: "AIzaSyCl1HnHVpgyAvmfAqff6KUM7tJqc_45u-k",
             authDomain: "edutrack-pro-eeb6f.firebaseapp.com",
@@ -1018,1039 +705,454 @@
             messagingSenderId: "1009233045568",
             appId: "1:1009233045568:web:eeeb4d9c4dc597f8c757a5"
         };
-        
         firebase.initializeApp(firebaseConfig);
         
-        // Global variables
         let currentTeacher = null;
-        let currentClass = '';
-        let teacherClasses = ['10A', '10B', '11A', '11B'];
+        let currentGrade = "10";
+        let currentClass = "A";
         let students = {};
         let extractedTimetable = null;
         let whatsappGroups = {};
-        let activeAlertClass = null;
         let currentRecognition = null;
-        
-        // Period timings
-        const periodTimings = [
-            { period: 1, start: '7:50', end: '8:35', name: 'Period 1' },
-            { period: 2, start: '8:35', end: '9:20', name: 'Period 2' },
-            { period: 3, start: '9:20', end: '10:05', name: 'Period 3' },
-            { period: 4, start: '10:05', end: '10:50', name: 'Period 4' },
-            { period: 5, start: '10:50', end: '11:35', name: 'Period 5' },
-            { period: 6, start: '11:35', end: '12:20', name: 'Period 6' },
-            { period: 7, start: '12:20', end: '13:00', name: 'Period 7' }
-        ];
+        let exerciseData = {};
 
-        // ============================================
-        // SMART VOICE INPUT (FIXED - Working!)
-        // ============================================
-        
-        function startSmartVoiceInput(textareaId, buttonId) {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                showError('Voice input not supported. Please use Chrome browser.');
-                return;
-            }
+        function getFullClassName() { return `Grade ${currentGrade} - ${currentClass}`; }
 
-            // Stop any existing recognition
-            if (currentRecognition) {
-                currentRecognition.stop();
-                currentRecognition = null;
-            }
-
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            
-            // Configure for better accuracy
-            recognition.continuous = false;
-            recognition.interimResults = true;
-            recognition.maxAlternatives = 1;
-            recognition.lang = 'si-LK'; // Start with Sinhala, will auto-detect
-
-            const button = document.getElementById(buttonId);
-            const originalHTML = button.innerHTML;
-            
-            recognition.onstart = function() {
-                button.innerHTML = '<i class="fas fa-microphone-slash"></i> Listening...';
-                button.classList.add('listening');
-                showSuccess('Listening... Speak in English or Sinhala');
-            };
-
-            recognition.onresult = function(event) {
-                let transcript = '';
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                    if (event.results[i].isFinal) {
-                        transcript += event.results[i][0].transcript;
-                    }
-                }
-                
-                if (transcript) {
-                    const textarea = document.getElementById(textareaId);
-                    const currentText = textarea.value;
-                    textarea.value = currentText ? currentText + ' ' + transcript : transcript;
-                    
-                    // Auto-detect language and show indicator
-                    const hasSinhala = /[\u0D80-\u0DFF]/.test(transcript);
-                    const languageText = hasSinhala ? 'සිංහල 🇱🇰' : 'English 🇺🇸';
-                    showSuccess(`Detected: ${languageText}`);
-                }
-            };
-
-            recognition.onerror = function(event) {
-                console.error('Speech error:', event.error);
-                if (event.error !== 'no-speech') {
-                    showError('Voice error: ' + event.error);
-                }
-            };
-
-            recognition.onend = function() {
-                button.innerHTML = originalHTML;
-                button.classList.remove('listening');
-                currentRecognition = null;
-            };
-
-            currentRecognition = recognition;
-            recognition.start();
-        }
-
-        // ============================================
-        // OCR FUNCTIONS (Handwriting Recognition)
-        // ============================================
-        
-        async function processNameListWithOCR(input) {
-            if (!input.files || !input.files[0]) {
-                showError('Please select a file');
-                return;
-            }
-            
-            const file = input.files[0];
-            const progressDiv = document.getElementById('ocrProgress');
-            progressDiv.style.display = 'block';
-            progressDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing image...';
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('nameListImage').src = e.target.result;
-                document.getElementById('nameListPreview').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-            
-            try {
-                const { data: { text } } = await Tesseract.recognize(
-                    file,
-                    'eng+sin',
-                    { logger: m => progressDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${m.status}: ${Math.round(m.progress * 100)}%` }
-                );
-                
-                progressDiv.innerHTML = '<i class="fas fa-check-circle"></i> Extracting names...';
-                
-                const lines = text.split('\n');
-                const extractedNames = [];
-                
-                for (let line of lines) {
-                    line = line.trim();
-                    if (line.length > 2 && !line.match(/^\d+$/) && !line.includes('Name') && !line.includes('List')) {
-                        extractedNames.push(line);
-                    }
-                }
-                
-                if (extractedNames.length === 0) {
-                    extractedNames.push('Amara Silva', 'Nuwan Perera', 'Kamal Fernando', 'Nimali Jayasuriya', 'Sunil Weerasinghe');
-                }
-                
-                for (const name of extractedNames.slice(0, 30)) {
-                    await firebase.firestore().collection('students').add({
-                        teacher_id: currentTeacher.id,
-                        class_name: currentClass,
-                        name: name,
-                        parent_phone: '',
-                        created_at: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
-                
-                await loadStudents();
-                displayStudentsTable();
-                updateDashboard();
-                
-                progressDiv.innerHTML = `<i class="fas fa-check-circle"></i> Added ${extractedNames.length} students!`;
-                setTimeout(() => progressDiv.style.display = 'none', 3000);
-                showSuccess(`Added ${extractedNames.length} students from photo!`);
-                
-            } catch (error) {
-                console.error('OCR error:', error);
-                progressDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> OCR failed. Using sample data.';
-                setTimeout(() => progressDiv.style.display = 'none', 3000);
-                
-                const sampleNames = ['Amara Silva', 'Nuwan Perera', 'Kamal Fernando', 'Nimali Jayasuriya', 'Sunil Weerasinghe'];
-                for (const name of sampleNames) {
-                    await firebase.firestore().collection('students').add({
-                        teacher_id: currentTeacher.id,
-                        class_name: currentClass,
-                        name: name,
-                        parent_phone: '',
-                        created_at: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
-                await loadStudents();
-                displayStudentsTable();
-                showSuccess(`Added ${sampleNames.length} students (sample data)`);
-            }
-        }
-        
-        async function processMarksheetWithOCR(input) {
-            if (!input.files || !input.files[0]) {
-                showError('Please select a file');
-                return;
-            }
-            
-            const file = input.files[0];
-            const progressDiv = document.createElement('div');
-            progressDiv.className = 'ocr-progress';
-            progressDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning marksheet...';
-            document.getElementById('marks-section').appendChild(progressDiv);
-            
-            try {
-                const { data: { text } } = await Tesseract.recognize(
-                    file,
-                    'eng',
-                    { logger: m => progressDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${m.status}: ${Math.round(m.progress * 100)}%` }
-                );
-                
-                progressDiv.innerHTML = '<i class="fas fa-check-circle"></i> Extracting marks...';
-                
-                // Parse marks from text - look for patterns like "Name: 85" or "Name = 75"
-                const lines = text.split('\n');
-                const studentMarks = {};
-                
-                for (let line of lines) {
-                    // Pattern: Name followed by number
-                    const match = line.match(/([A-Za-z\s]+)[:=]\s*(\d{1,3})/i);
-                    if (match) {
-                        const studentName = match[1].trim();
-                        const marks = parseInt(match[2]);
-                        if (marks >= 0 && marks <= 100) {
-                            studentMarks[studentName] = marks;
-                        }
-                    }
-                    
-                    // Pattern: Name and number separated by space
-                    const simpleMatch = line.match(/([A-Za-z\s]+)\s+(\d{1,3})/i);
-                    if (simpleMatch && !studentMarks[simpleMatch[1].trim()]) {
-                        const studentName = simpleMatch[1].trim();
-                        const marks = parseInt(simpleMatch[2]);
-                        if (marks >= 0 && marks <= 100 && studentName.length > 2) {
-                            studentMarks[studentName] = marks;
-                        }
-                    }
-                }
-                
-                // Update marks table
-                const classStudents = students[currentClass] || [];
-                let filledCount = 0;
-                
-                for (let student of classStudents) {
-                    const markInput = document.getElementById(`mark_${student.id}`);
-                    if (markInput) {
-                        // Try exact match or partial match
-                        let foundMark = studentMarks[student.name];
-                        if (!foundMark) {
-                            // Try to find by first name
-                            const firstName = student.name.split(' ')[0];
-                            for (let [name, marks] of Object.entries(studentMarks)) {
-                                if (name.includes(firstName) || firstName.includes(name.split(' ')[0])) {
-                                    foundMark = marks;
-                                    break;
-                                }
-                            }
-                        }
-                        
-                        if (foundMark !== undefined) {
-                            markInput.value = foundMark;
-                            const statusCell = document.getElementById(`status_${student.id}`);
-                            if (statusCell) {
-                                statusCell.innerHTML = foundMark < 40 ? 
-                                    '<span style="color: #ef4444;">Low Marks ⚠️</span>' : 
-                                    '<span style="color: #10b981;">Pass ✓</span>';
-                            }
-                            filledCount++;
-                        }
-                    }
-                }
-                
-                progressDiv.innerHTML = `<i class="fas fa-check-circle"></i> Filled marks for ${filledCount} students!`;
-                setTimeout(() => progressDiv.remove(), 3000);
-                showSuccess(`Marks extracted! Filled ${filledCount} student marks. Review and save.`);
-                
-            } catch (error) {
-                console.error('OCR error:', error);
-                progressDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> OCR failed';
-                setTimeout(() => progressDiv.remove(), 3000);
-                showError('Failed to scan marksheet. Please try a clearer image.');
-            }
-        }
-        
-        async function processTimetableWithOCR(input) {
-            if (!input.files || !input.files[0]) {
-                showError('Please select a file');
-                return;
-            }
-            
-            const file = input.files[0];
-            const progressDiv = document.getElementById('timetableOCRProgress');
-            progressDiv.style.display = 'block';
-            progressDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing timetable...';
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('timetableImage').src = e.target.result;
-                document.getElementById('timetablePreview').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-            
-            try {
-                const { data: { text } } = await Tesseract.recognize(
-                    file,
-                    'eng',
-                    { logger: m => progressDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${m.status}: ${Math.round(m.progress * 100)}%` }
-                );
-                
-                progressDiv.innerHTML = '<i class="fas fa-check-circle"></i> Extracting schedule...';
-                
-                // Parse timetable from OCR text
-                const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-                const classesFound = new Set();
-                extractedTimetable = [];
-                
-                for (let day of days) {
-                    const dayData = { day: day, period1: 'Free', period2: 'Free', period3: 'Free', period4: 'Free', period5: 'Free', period6: 'Free', period7: 'Free' };
-                    
-                    // Look for class names like 10A, 10B, 11A, 11B in the text
-                    const classPattern = /(10A|10B|11A|11B)/g;
-                    let match;
-                    let periodIndex = 1;
-                    while ((match = classPattern.exec(text)) !== null) {
-                        classesFound.add(match[0]);
-                        if (periodIndex <= 7) {
-                            dayData[`period${periodIndex}`] = match[0];
-                            periodIndex++;
-                        }
-                    }
-                    
-                    extractedTimetable.push(dayData);
-                }
-                
-                // Update teacher's classes
-                if (classesFound.size > 0) {
-                    teacherClasses = Array.from(classesFound);
-                }
-                
-                // Display extracted timetable
-                displayExtractedTimetable(extractedTimetable);
-                document.getElementById('saveTimetableBtn').disabled = false;
-                
-                progressDiv.innerHTML = `<i class="fas fa-check-circle"></i> Found classes: ${teacherClasses.join(', ')}`;
-                setTimeout(() => progressDiv.style.display = 'none', 3000);
-                showSuccess('Timetable extracted! Click Save to store.');
-                
-                // Update class selector with found classes
-                updateClassSelectorWithClasses();
-                
-            } catch (error) {
-                console.error('OCR error:', error);
-                progressDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> OCR failed. Using sample.';
-                setTimeout(() => progressDiv.style.display = 'none', 3000);
-                
-                extractedTimetable = [
-                    { day: 'Monday', period1: '10A', period2: '11A', period3: 'Free', period4: '10B', period5: 'Free', period6: '11B', period7: '10A' },
-                    { day: 'Tuesday', period1: '11B', period2: '10A', period3: 'Free', period4: '11A', period5: '10B', period6: 'Free', period7: '11A' },
-                    { day: 'Wednesday', period1: '10B', period2: 'Free', period3: '11A', period4: '10A', period5: '11B', period6: 'Free', period7: '10B' },
-                    { day: 'Thursday', period1: 'Free', period2: '10B', period3: '11B', period4: 'Free', period5: '10A', period6: '11A', period7: 'Free' },
-                    { day: 'Friday', period1: '11A', period2: '10A', period3: '10B', period4: '11B', period5: 'Free', period6: '10A', period7: '11B' }
-                ];
-                teacherClasses = ['10A', '10B', '11A', '11B'];
-                displayExtractedTimetable(extractedTimetable);
-                document.getElementById('saveTimetableBtn').disabled = false;
-                updateClassSelectorWithClasses();
-            }
-        }
-        
-        function displayExtractedTimetable(timetable) {
-            const grid = document.getElementById('timetableGrid');
-            grid.innerHTML = '';
-            
-            timetable.forEach(day => {
-                const card = document.createElement('div');
-                card.className = 'timetable-card';
-                card.innerHTML = `
-                    <h4>${day.day}</h4>
-                    <p><i class="fas fa-clock"></i> 7:50-8:35: ${day.period1 || 'Free'}</p>
-                    <p><i class="fas fa-clock"></i> 8:35-9:20: ${day.period2 || 'Free'}</p>
-                    <p><i class="fas fa-clock"></i> 9:20-10:05: ${day.period3 || 'Free'}</p>
-                    <p><i class="fas fa-clock"></i> 10:05-10:50: ${day.period4 || 'Free'}</p>
-                    <p><i class="fas fa-clock"></i> 10:50-11:35: ${day.period5 || 'Free'}</p>
-                    <p><i class="fas fa-clock"></i> 11:35-12:20: ${day.period6 || 'Free'}</p>
-                    <p><i class="fas fa-clock"></i> 12:20-13:00: ${day.period7 || 'Free'}</p>
-                `;
-                grid.appendChild(card);
-            });
-        }
-        
-        async function saveTimetableToDatabase() {
-            if (!extractedTimetable) {
-                showError('No timetable to save');
-                return;
-            }
-            
-            await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({
-                timetable: extractedTimetable,
-                teacher_classes: teacherClasses
-            });
-            
-            showSuccess('Timetable saved! Classes updated.');
-            document.getElementById('saveTimetableBtn').disabled = true;
-        }
-        
-        function updateClassSelectorWithClasses() {
-            const selector = document.getElementById('classSelector');
-            selector.innerHTML = '';
-            
-            if (teacherClasses.length === 0) {
-                selector.innerHTML = '<p style="color: #94a3b8;">Upload timetable to see your classes</p>';
-                return;
-            }
-            
-            teacherClasses.forEach(className => {
-                const btn = document.createElement('div');
-                btn.className = `class-btn ${className === currentClass ? 'active' : ''}`;
-                btn.textContent = `Class ${className}`;
-                btn.onclick = () => selectClass(className);
-                selector.appendChild(btn);
-            });
-            
-            if (teacherClasses.length > 0 && !currentClass) {
-                selectClass(teacherClasses[0]);
-            }
-        }
-        
-        // ============================================
-        // PERIOD ALERT SYSTEM
-        // ============================================
-        
-        function checkPeriodEnd() {
-            if (!currentTeacher?.timetable) return;
-            
-            const now = new Date();
-            const currentTime = now.getHours() * 60 + now.getMinutes();
-            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const today = dayNames[now.getDay()];
-            
-            const todaysSchedule = currentTeacher.timetable.find(day => day.day === today);
-            if (!todaysSchedule) return;
-            
-            periodTimings.forEach(period => {
-                const [endHour, endMin] = period.end.split(':').map(Number);
-                const endTime = endHour * 60 + endMin;
-                const timeDiff = currentTime - endTime;
-                
-                if (timeDiff >= 0 && timeDiff < 5) {
-                    const periodKey = `period${period.period}`;
-                    const classForPeriod = todaysSchedule[periodKey];
-                    
-                    if (classForPeriod && classForPeriod !== 'Free' && teacherClasses.includes(classForPeriod)) {
-                        showPeriodAlert(period.period, classForPeriod);
-                    }
-                }
-            });
-        }
-        
-        function showPeriodAlert(periodNumber, className) {
-            const alertDiv = document.getElementById('periodAlert');
-            document.getElementById('periodAlertTitle').textContent = `Period ${periodNumber} Ended (${periodTimings[periodNumber-1].end})`;
-            document.getElementById('periodAlertMessage').textContent = `${className} - Any homework?`;
-            activeAlertClass = className;
-            alertDiv.style.display = 'block';
-        }
-        
-        function dismissAlert() {
-            document.getElementById('periodAlert').style.display = 'none';
-            activeAlertClass = null;
-        }
-        
-        function showHomeworkFromAlert() {
-            if (activeAlertClass) {
-                selectClass(activeAlertClass);
-                document.getElementById('dashboardHomeworkContent').focus();
-                document.getElementById('periodAlert').style.display = 'none';
-                showSuccess(`Adding homework for Class ${activeAlertClass}`);
-                switchTab('dashboard');
-            }
-        }
-        
-        // ============================================
-        // AUTHENTICATION FUNCTIONS
-        // ============================================
-        
         function switchAuthTab(tab) {
-            const loginTab = document.getElementById('loginTab');
-            const registerTab = document.getElementById('registerTab');
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            
-            if (tab === 'login') {
-                loginTab.classList.add('active');
-                registerTab.classList.remove('active');
-                loginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-            } else {
-                registerTab.classList.add('active');
-                loginTab.classList.remove('active');
-                registerForm.style.display = 'block';
-                loginForm.style.display = 'none';
-            }
+            document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+            document.getElementById('registerTab').classList.toggle('active', tab === 'register');
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
         }
-        
+
         async function register() {
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
-            
-            if (!name || !email || !password) {
-                showError('Please fill all fields');
-                return;
-            }
-            if (password.length < 6) {
-                showError('Password must be at least 6 characters');
-                return;
-            }
-            
+            if (!name || !email || !password) return showError('Please fill all fields');
+            if (password.length < 6) return showError('Password must be at least 6 characters');
             try {
                 const btn = document.getElementById('registerBtn');
                 btn.innerHTML = '<span class="loading-spinner"></span> Creating...';
                 btn.disabled = true;
-                
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-                
-                await firebase.firestore().collection('teachers').doc(user.uid).set({
-                    full_name: name,
-                    email: email,
-                    created_at: firebase.firestore.FieldValue.serverTimestamp(),
-                    teacher_classes: teacherClasses,
-                    whatsapp_groups: {}
+                await firebase.firestore().collection('teachers').doc(userCredential.user.uid).set({
+                    full_name: name, email: email, created_at: new Date().toISOString(),
+                    whatsapp_groups: {}, teacher_classes: []
                 });
-                
-                showSuccess('Account created successfully! Please login.');
+                showSuccess('Account created! Please login.');
                 switchAuthTab('login');
-                
-            } catch (error) {
-                showError(error.message);
-            } finally {
-                const btn = document.getElementById('registerBtn');
-                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
-                btn.disabled = false;
-            }
+            } catch (error) { showError(error.message); }
+            finally { document.getElementById('registerBtn').innerHTML = '<i class="fas fa-user-plus"></i> Create Account'; document.getElementById('registerBtn').disabled = false; }
         }
-        
+
         async function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            
-            if (!email || !password) {
-                showError('Please enter email and password');
-                return;
-            }
-            
+            if (!email || !password) return showError('Please enter email and password');
             try {
                 const btn = document.getElementById('loginBtn');
                 btn.innerHTML = '<span class="loading-spinner"></span> Signing In...';
                 btn.disabled = true;
                 await firebase.auth().signInWithEmailAndPassword(email, password);
-            } catch (error) {
-                showError(error.message);
-                const btn = document.getElementById('loginBtn');
-                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
-                btn.disabled = false;
-            }
+            } catch (error) { showError(error.message); }
+            finally { document.getElementById('loginBtn').innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In'; document.getElementById('loginBtn').disabled = false; }
         }
-        
-        async function logout() {
-            await firebase.auth().signOut();
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('mainApp').style.display = 'none';
-        }
-        
+
+        async function logout() { await firebase.auth().signOut(); document.getElementById('loginPage').style.display = 'flex'; document.getElementById('mainApp').style.display = 'none'; }
+
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 const doc = await firebase.firestore().collection('teachers').doc(user.uid).get();
-                
-                if (doc.exists) {
-                    currentTeacher = { id: user.uid, ...doc.data() };
-                    teacherClasses = currentTeacher.teacher_classes || ['10A', '10B', '11A', '11B'];
-                    whatsappGroups = currentTeacher.whatsapp_groups || {};
-                } else {
-                    currentTeacher = { id: user.uid, full_name: user.email.split('@')[0], email: user.email };
-                    teacherClasses = ['10A', '10B', '11A', '11B'];
-                }
-                
-                document.getElementById('teacherNameDisplay').textContent = currentTeacher.full_name;
-                document.getElementById('teacherEmailDisplay').textContent = currentTeacher.email;
-                
+                if (doc.exists) currentTeacher = { id: user.uid, ...doc.data() };
+                else currentTeacher = { id: user.uid, full_name: user.email.split('@')[0], email: user.email };
+                whatsappGroups = currentTeacher.whatsapp_groups || {};
+                document.getElementById('teacherNameDisplay').innerHTML = currentTeacher.full_name;
+                document.getElementById('teacherEmailDisplay').innerHTML = currentTeacher.email;
                 await loadStudents();
-                updateClassSelectorWithClasses();
-                displayStudentsTable();
-                displayMarksTable();
-                updateDashboard();
-                displayWhatsAppGroups();
-                
-                if (currentTeacher.timetable) {
-                    displayExtractedTimetable(currentTeacher.timetable);
-                }
-                
+                await loadExerciseData();
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
-                
-                setInterval(checkPeriodEnd, 60000);
-                checkPeriodEnd();
-                
-            } else {
-                document.getElementById('loginPage').style.display = 'flex';
-                document.getElementById('mainApp').style.display = 'none';
-            }
+                updateAllDisplays();
+                displayWhatsAppGroups();
+            } else { document.getElementById('loginPage').style.display = 'flex'; document.getElementById('mainApp').style.display = 'none'; }
         });
-        
-        // ============================================
-        // STUDENT MANAGEMENT
-        // ============================================
-        
+
         async function loadStudents() {
-            if (!currentTeacher) return;
-            
-            const snapshot = await firebase.firestore().collection('students')
-                .where('teacher_id', '==', currentTeacher.id)
-                .get();
-            
+            const snapshot = await firebase.firestore().collection('students').where('teacher_id', '==', currentTeacher.id).get();
             students = {};
-            teacherClasses.forEach(className => { students[className] = []; });
-            
             snapshot.forEach(doc => {
-                const student = { id: doc.id, ...doc.data() };
-                if (students[student.class_name]) {
-                    students[student.class_name].push(student);
-                }
+                const s = { id: doc.id, ...doc.data() };
+                const key = `${s.grade}_${s.classLetter}`;
+                if (!students[key]) students[key] = [];
+                students[key].push(s);
             });
         }
-        
-        function selectClass(className) {
-            currentClass = className;
-            
-            document.querySelectorAll('.class-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.includes(className)) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            document.getElementById('selectedClassForStudents').textContent = `Class ${className}`;
-            document.getElementById('selectedClassForMarks').textContent = `Class ${className}`;
-            document.getElementById('selectedClassForHomework').textContent = `Class ${className}`;
-            document.getElementById('dashboardSelectedClass').textContent = `Class ${className}`;
-            
+
+        async function loadExerciseData() {
+            const month = document.getElementById('exerciseMonth').value;
+            const fullClass = getFullClassName();
+            const docRef = firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${month}`);
+            const doc = await docRef.get();
+            if (doc.exists) exerciseData = doc.data();
+            else exerciseData = {};
+            displayExercisesTable();
+        }
+
+        async function saveExerciseData() {
+            const month = document.getElementById('exerciseMonth').value;
+            const fullClass = getFullClassName();
+            await firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${month}`).set(exerciseData);
+        }
+
+        function updateAllDisplays() {
+            document.getElementById('selectedGradeClass').innerText = getFullClassName();
+            document.getElementById('marksGradeClass').innerText = getFullClassName();
+            document.getElementById('exercisesGradeClass').innerText = getFullClassName();
+            document.getElementById('homeworkGradeClass').innerText = getFullClassName();
             displayStudentsTable();
             displayMarksTable();
+            displayExercisesTable();
+            updateDashboard();
         }
-        
+
+        function changeGrade() { currentGrade = document.getElementById('gradeSelect').value; updateAllDisplays(); }
+        function changeClass() { currentClass = document.getElementById('classSelect').value; updateAllDisplays(); }
+
         function displayStudentsTable() {
             const tbody = document.getElementById('studentsTableBody');
             tbody.innerHTML = '';
-            
-            const classStudents = students[currentClass] || [];
-            
-            if (classStudents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students in this class.</p></td></tr>`;
-                return;
-            }
-            
-            classStudents.forEach((student, index) => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${student.name}</td>
-                    <td>${student.parent_phone || 'Not added'}</td>
-                    <td>
-                        <button class="action-btn" onclick="editStudent('${student.id}')" style="padding: 5px 10px;"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn danger" onclick="deleteStudent('${student.id}')" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
+            const key = `${currentGrade}_${currentClass}`;
+            const classStudents = students[key] || [];
+            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            classStudents.forEach((student, idx) => {
+                tbody.innerHTML += `<tr><td>${idx+1}</td><td>${student.name}</td><td>${student.parent_phone || 'Not added'}</td>
+                <td><button class="action-btn" onclick="editStudent('${student.id}')" style="padding:5px 10px;"><i class="fas fa-edit"></i></button>
+                <button class="action-btn danger" onclick="deleteStudent('${student.id}')" style="padding:5px 10px;"><i class="fas fa-trash"></i></button></td></tr>`;
             });
         }
-        
+
         async function addStudentManually() {
             const name = document.getElementById('studentNameInput').value;
             const phone = document.getElementById('parentPhoneInput').value;
-            
-            if (!name) {
-                showError('Please enter student name');
-                return;
-            }
-            
+            if (!name) return showError('Enter student name');
             await firebase.firestore().collection('students').add({
-                teacher_id: currentTeacher.id,
-                class_name: currentClass,
-                name: name,
-                parent_phone: phone || '',
-                created_at: firebase.firestore.FieldValue.serverTimestamp()
+                teacher_id: currentTeacher.id, grade: currentGrade, classLetter: currentClass,
+                name: name, parent_phone: phone || '', created_at: new Date().toISOString()
             });
-            
             document.getElementById('studentNameInput').value = '';
             document.getElementById('parentPhoneInput').value = '';
-            
             await loadStudents();
             displayStudentsTable();
             updateDashboard();
-            showSuccess('Student added successfully!');
+            showSuccess('Student added!');
         }
-        
-        async function deleteStudent(studentId) {
-            if (!confirm('Are you sure?')) return;
-            await firebase.firestore().collection('students').doc(studentId).delete();
-            await loadStudents();
-            displayStudentsTable();
-            updateDashboard();
-            showSuccess('Student deleted');
-        }
-        
-        async function editStudent(studentId) {
-            const classStudents = students[currentClass] || [];
-            const student = classStudents.find(s => s.id === studentId);
-            if (!student) return;
-            
-            const newName = prompt('Enter new name:', student.name);
-            if (newName && newName !== student.name) {
-                await firebase.firestore().collection('students').doc(studentId).update({ name: newName });
-                await loadStudents();
-                displayStudentsTable();
-                showSuccess('Student updated');
-            }
-        }
-        
-        // ============================================
-        // MARKS MANAGEMENT
-        // ============================================
-        
+
+        async function deleteStudent(id) { if (confirm('Delete?')) { await firebase.firestore().collection('students').doc(id).delete(); await loadStudents(); displayStudentsTable(); updateDashboard(); showSuccess('Deleted'); } }
+        async function editStudent(id) { const newName = prompt('New name:'); if (newName) { await firebase.firestore().collection('students').doc(id).update({ name: newName }); await loadStudents(); displayStudentsTable(); showSuccess('Updated'); } }
+
         function displayMarksTable() {
             const tbody = document.getElementById('marksTableBody');
             tbody.innerHTML = '';
-            
-            const classStudents = students[currentClass] || [];
-            
-            if (classStudents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students in this class.</p></td></tr>`;
-                return;
-            }
-            
-            classStudents.forEach((student, index) => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${student.name}</td>
-                    <td><input type="number" min="0" max="100" id="mark_${student.id}" value="" placeholder="Enter marks"></td>
-                    <td id="status_${student.id}" style="color: #94a3b8;">Not set</td>
-                `;
+            const key = `${currentGrade}_${currentClass}`;
+            const classStudents = students[key] || [];
+            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            classStudents.forEach((student, idx) => {
+                tbody.innerHTML += `<tr><td>${idx+1}</td><td>${student.name}</td>
+                <td><input type="number" min="0" max="100" id="mark_${student.id}" placeholder="Enter marks"></td>
+                <td id="status_${student.id}">Not set</td></tr>`;
             });
         }
-        
+
         async function saveMarks() {
             const month = document.getElementById('examMonth').value;
             const examType = document.getElementById('examType').value;
-            const classStudents = students[currentClass] || [];
-            
-            if (classStudents.length === 0) {
-                showError('No students in this class');
-                return;
-            }
-            
+            const key = `${currentGrade}_${currentClass}`;
+            const classStudents = students[key] || [];
+            if (classStudents.length === 0) return showError('No students');
             const batch = firebase.firestore().batch();
-            let savedCount = 0;
-            
-            for (let student of classStudents) {
-                const markInput = document.getElementById(`mark_${student.id}`);
-                if (markInput && markInput.value) {
-                    const marks = parseInt(markInput.value);
-                    const markRef = firebase.firestore().collection('marks').doc();
-                    batch.set(markRef, {
-                        student_id: student.id,
-                        student_name: student.name,
-                        class_name: currentClass,
-                        month: month,
-                        exam_type: examType,
-                        marks: marks,
-                        saved_at: firebase.firestore.FieldValue.serverTimestamp()
+            let saved = 0;
+            for (let s of classStudents) {
+                const input = document.getElementById(`mark_${s.id}`);
+                if (input && input.value) {
+                    batch.set(firebase.firestore().collection('marks').doc(), {
+                        student_id: s.id, student_name: s.name, grade: currentGrade, classLetter: currentClass,
+                        month, exam_type: examType, marks: parseInt(input.value), saved_at: new Date().toISOString()
                     });
-                    savedCount++;
+                    saved++;
                 }
             }
-            
-            if (savedCount > 0) {
-                await batch.commit();
-                showSuccess(`Saved marks for ${savedCount} students!`);
-            } else {
-                showError('Please enter at least one mark');
-            }
+            if (saved > 0) { await batch.commit(); showSuccess(`Saved ${saved} marks`); }
+            else showError('Enter marks');
         }
-        
+
         function identifyLowMarks() {
-            const classStudents = students[currentClass] || [];
-            const lowMarksStudents = [];
-            
-            classStudents.forEach(student => {
-                const markInput = document.getElementById(`mark_${student.id}`);
-                if (markInput && markInput.value && parseInt(markInput.value) < 40) {
-                    lowMarksStudents.push({
-                        name: student.name,
-                        marks: parseInt(markInput.value),
-                        parent_phone: student.parent_phone
-                    });
-                }
+            const key = `${currentGrade}_${currentClass}`;
+            const classStudents = students[key] || [];
+            const low = [];
+            classStudents.forEach(s => {
+                const input = document.getElementById(`mark_${s.id}`);
+                if (input && input.value && parseInt(input.value) < 40) low.push({ name: s.name, marks: parseInt(input.value), phone: s.parent_phone });
             });
-            
-            const listDiv = document.getElementById('lowMarksStudentsList');
-            listDiv.innerHTML = '';
-            
-            if (lowMarksStudents.length === 0) {
-                listDiv.innerHTML = '<p style="color: #10b981;">No students below 40%! 🎉</p>';
-            } else {
-                lowMarksStudents.forEach(student => {
-                    const chip = document.createElement('span');
-                    chip.className = 'student-chip';
-                    chip.innerHTML = `<i class="fas fa-user-graduate"></i> ${student.name} - ${student.marks}%`;
-                    listDiv.appendChild(chip);
-                });
-            }
-            
-            document.getElementById('lowMarksResults').style.display = 'block';
+            const container = document.getElementById('lowMarksStudentsList');
+            container.innerHTML = low.map(s => `<span class="student-chip"><i class="fas fa-user-graduate"></i> ${s.name} - ${s.marks}%</span>`).join('');
+            document.getElementById('lowMarksResults').style.display = low.length ? 'block' : 'none';
+            if (!low.length) showSuccess('No low marks!');
         }
-        
+
         async function sendLowMarksToParents() {
-            const classStudents = students[currentClass] || [];
-            const lowMarksStudents = [];
-            
-            classStudents.forEach(student => {
-                const markInput = document.getElementById(`mark_${student.id}`);
-                if (markInput && markInput.value && parseInt(markInput.value) < 40) {
-                    lowMarksStudents.push({
-                        name: student.name,
-                        marks: parseInt(markInput.value),
-                        parent_phone: student.parent_phone
+            const key = `${currentGrade}_${currentClass}`;
+            const classStudents = students[key] || [];
+            const lowMarks = [];
+            for (let s of classStudents) {
+                const input = document.getElementById(`mark_${s.id}`);
+                if (input && input.value && parseInt(input.value) < 40 && s.parent_phone) {
+                    lowMarks.push({ name: s.name, marks: parseInt(input.value), phone: s.parent_phone });
+                }
+            }
+            if (lowMarks.length === 0) return showError('No low marks students with phone numbers');
+            let message = `📢 *LOW MARKS ALERT - ${getFullClassName()}*\n\nThe following students scored below 40%:\n\n`;
+            lowMarks.forEach(s => message += `• ${s.name} - ${s.marks}%\n`);
+            message += `\nPlease contact the class teacher.`;
+            await navigator.clipboard.writeText(message);
+            window.open('https://web.whatsapp.com/', '_blank');
+            showSuccess(`Copied! ${lowMarks.length} students. Open WhatsApp and paste.`);
+        }
+
+        // Exercise Tracking Functions
+        function displayExercisesTable() {
+            const tbody = document.getElementById('exercisesTableBody');
+            tbody.innerHTML = '';
+            const key = `${currentGrade}_${currentClass}`;
+            const classStudents = students[key] || [];
+            const month = document.getElementById('exerciseMonth').value;
+            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            classStudents.forEach((student, idx) => {
+                const studentExercises = exerciseData[student.id] || { first: null, second: null, third: null };
+                tbody.innerHTML += `<tr>
+                    <td>${idx+1}</td><td>${student.name}</td>
+                    <td class="exercise-cell">
+                        <i class="fas fa-check-circle exercise-icon correct ${studentExercises.first === 'correct' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'first', 'correct')"></i>
+                        <i class="fas fa-times-circle exercise-icon wrong ${studentExercises.first === 'wrong' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'first', 'wrong')"></i>
+                        <div class="exercise-status">${studentExercises.first === 'correct' ? '✓ Done' : studentExercises.first === 'wrong' ? '✗ Not Done' : 'Pending'}</div>
+                    </td>
+                    <td class="exercise-cell">
+                        <i class="fas fa-check-circle exercise-icon correct ${studentExercises.second === 'correct' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'second', 'correct')"></i>
+                        <i class="fas fa-times-circle exercise-icon wrong ${studentExercises.second === 'wrong' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'second', 'wrong')"></i>
+                        <div class="exercise-status">${studentExercises.second === 'correct' ? '✓ Done' : studentExercises.second === 'wrong' ? '✗ Not Done' : 'Pending'}</div>
+                    </td>
+                    <td class="exercise-cell">
+                        <i class="fas fa-check-circle exercise-icon correct ${studentExercises.third === 'correct' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'third', 'correct')"></i>
+                        <i class="fas fa-times-circle exercise-icon wrong ${studentExercises.third === 'wrong' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'third', 'wrong')"></i>
+                        <div class="exercise-status">${studentExercises.third === 'correct' ? '✓ Done' : studentExercises.third === 'wrong' ? '✗ Not Done' : 'Pending'}</div>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        async function markExercise(studentId, time, status) {
+            if (!exerciseData[studentId]) exerciseData[studentId] = { first: null, second: null, third: null };
+            exerciseData[studentId][time] = status;
+            await saveExerciseData();
+            displayExercisesTable();
+            // Send alerts for wrong exercises
+            const student = (students[`${currentGrade}_${currentClass}`] || []).find(s => s.id === studentId);
+            if (student && student.parent_phone) {
+                if (time === 'second' && exerciseData[studentId].first === 'wrong' && status === 'wrong') {
+                    await sendExerciseAlert(student, `${time} time wrong (both first and second wrong)`);
+                } else if (time === 'third' && status === 'wrong') {
+                    await sendExerciseAlert(student, `${time} time wrong`);
+                } else if (time === 'first' && status === 'wrong') {
+                    // First time wrong - no alert yet
+                } else if (time === 'second' && status === 'wrong' && exerciseData[studentId].first !== 'wrong') {
+                    await sendExerciseAlert(student, `${time} time wrong`);
+                }
+            }
+            showSuccess(`${student?.name} - ${time}: ${status === 'correct' ? '✓ Correct' : '✗ Wrong'}`);
+        }
+
+        async function sendExerciseAlert(student, reason) {
+            const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* didn't complete the exercise for the ${reason}.\n\nPlease encourage them to complete their homework regularly.\n\nThank you,\nEduTrack Pro System`;
+            await navigator.clipboard.writeText(message);
+            window.open('https://web.whatsapp.com/', '_blank');
+            showSuccess(`Alert prepared for ${student.name}'s parent. Open WhatsApp to send.`);
+        }
+
+        async function loadHistoricalExercises() {
+            const month = document.getElementById('viewMonthSelect').value;
+            if (!month) return;
+            const fullClass = getFullClassName();
+            const doc = await firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${month}`).get();
+            if (doc.exists) exerciseData = doc.data();
+            else exerciseData = {};
+            displayExercisesTable();
+        }
+
+        // Populate historical months
+        async function populateHistoricalMonths() {
+            const select = document.getElementById('viewMonthSelect');
+            select.innerHTML = '<option value="">-- View Previous Months --</option>';
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            for (let m of months) {
+                const fullClass = getFullClassName();
+                const doc = await firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${m}`).get();
+                if (doc.exists) select.innerHTML += `<option value="${m}">${m}</option>`;
+            }
+        }
+
+        // OCR Functions
+        async function processNameListWithOCR(input) {
+            if (!input.files[0]) return;
+            const file = input.files[0];
+            const progress = document.getElementById('ocrProgress');
+            progress.style.display = 'block';
+            try {
+                const { data: { text } } = await Tesseract.recognize(file, 'eng+sin');
+                const names = text.split('\n').filter(l => l.trim().length > 2 && !l.match(/^\d+$/)).slice(0, 30);
+                for (let name of names) {
+                    await firebase.firestore().collection('students').add({
+                        teacher_id: currentTeacher.id, grade: currentGrade, classLetter: currentClass,
+                        name: name.trim(), parent_phone: '', created_at: new Date().toISOString()
                     });
                 }
-            });
-            
-            if (lowMarksStudents.length === 0) {
-                showError('No low marks students to alert');
-                return;
-            }
-            
-            // Create WhatsApp message
-            let message = `📢 *LOW MARKS ALERT - Class ${currentClass}*\n\n`;
-            message += `The following students have scored below 40%:\n\n`;
-            lowMarksStudents.forEach(s => {
-                message += `• ${s.name} - ${s.marks}%\n`;
-            });
-            message += `\nPlease contact the class teacher for more details.`;
-            
-            // Copy to clipboard
-            await navigator.clipboard.writeText(message);
-            
-            // Open WhatsApp Web
-            const whatsappUrl = `https://web.whatsapp.com/`;
-            window.open(whatsappUrl, '_blank');
-            
-            showSuccess(`Message copied! ${lowMarksStudents.length} low marks students. Paste in WhatsApp.`);
-            document.getElementById('lowMarksResults').style.display = 'none';
+                await loadStudents();
+                displayStudentsTable();
+                showSuccess(`Added ${names.length} students`);
+            } catch(e) { showError('OCR failed'); }
+            progress.style.display = 'none';
         }
-        
-        // ============================================
-        // HOMEWORK FUNCTIONS (FIXED - Opens WhatsApp)
-        // ============================================
-        
-        function sendDashboardHomework() {
-            const homework = document.getElementById('dashboardHomeworkContent').value;
-            sendHomeworkToWhatsApp(homework, currentClass);
-        }
-        
-        function sendHomework() {
-            const homework = document.getElementById('homeworkContent').value;
-            sendHomeworkToWhatsApp(homework, currentClass);
-        }
-        
-        async function sendHomeworkToWhatsApp(homework, className) {
-            if (!homework) {
-                showError('Please enter homework details');
-                return;
-            }
-            
-            // Create formatted message
-            const teacherName = currentTeacher?.full_name || 'Teacher';
-            const date = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            
-            let message = `📚 *HOMEWORK - Class ${className}*\n\n`;
-            message += `📅 Date: ${date}\n`;
-            message += `👨‍🏫 Teacher: ${teacherName}\n\n`;
-            message += `📝 *Assignment:*\n${homework}\n\n`;
-            message += `⏰ Due: Next class\n\n`;
-            message += `---\nEduTrack Pro 📱`;
-            
-            // Copy to clipboard
+
+        async function processMarksheetWithOCR(input) {
+            if (!input.files[0]) return;
+            const file = input.files[0];
+            const progress = document.createElement('div');
+            progress.className = 'ocr-progress';
+            progress.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning...';
+            document.getElementById('marks-section').appendChild(progress);
             try {
-                await navigator.clipboard.writeText(message);
-                showSuccess('Homework copied to clipboard! Opening WhatsApp...');
-            } catch (err) {
-                console.error('Clipboard error:', err);
-            }
-            
-            // Get WhatsApp group link or open WhatsApp Web
-            const groupLink = whatsappGroups[className];
-            if (groupLink && groupLink.includes('chat.whatsapp.com')) {
-                window.open(groupLink, '_blank');
-            } else {
-                // Open WhatsApp Web with pre-filled message
-                const encodedMessage = encodeURIComponent(message);
-                const whatsappUrl = `https://web.whatsapp.com/`;
-                window.open(whatsappUrl, '_blank');
-                showSuccess(`Message ready for Class ${className}. Paste in WhatsApp group.`);
-            }
-            
-            // Clear inputs
-            document.getElementById('dashboardHomeworkContent').value = '';
-            if (document.getElementById('homeworkContent')) {
-                document.getElementById('homeworkContent').value = '';
-            }
+                const { data: { text } } = await Tesseract.recognize(file, 'eng');
+                const lines = text.split('\n');
+                const key = `${currentGrade}_${currentClass}`;
+                const classStudents = students[key] || [];
+                for (let student of classStudents) {
+                    for (let line of lines) {
+                        if (line.toLowerCase().includes(student.name.toLowerCase())) {
+                            const match = line.match(/(\d{1,3})/);
+                            if (match) {
+                                const inputField = document.getElementById(`mark_${student.id}`);
+                                if (inputField) inputField.value = parseInt(match[0]);
+                            }
+                        }
+                    }
+                }
+                showSuccess('Marks extracted! Review and save.');
+            } catch(e) { showError('OCR failed'); }
+            progress.remove();
         }
-        
-        function scheduleDashboardHomework() {
-            const homework = document.getElementById('dashboardHomeworkContent').value;
-            if (!homework) {
-                showError('Please enter homework details');
-                return;
-            }
-            showSuccess(`Scheduled for 3:00 PM to Class ${currentClass}`);
-            document.getElementById('dashboardHomeworkContent').value = '';
+
+        async function processTimetableWithOCR(input) {
+            if (!input.files[0]) return;
+            const file = input.files[0];
+            const progress = document.getElementById('timetableOCRProgress');
+            progress.style.display = 'block';
+            const reader = new FileReader();
+            reader.onload = e => { document.getElementById('timetablePreview')?.remove(); };
+            reader.readAsDataURL(file);
+            try {
+                const { data: { text } } = await Tesseract.recognize(file, 'eng');
+                const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+                extractedTimetable = days.map(day => ({ day, period1: 'Free', period2: 'Free', period3: 'Free', period4: 'Free', period5: 'Free', period6: 'Free', period7: 'Free' }));
+                const grid = document.getElementById('timetableGrid');
+                grid.innerHTML = extractedTimetable.map(day => `<div class="timetable-card"><h4>${day.day}</h4>${[1,2,3,4,5,6,7].map(p => `<p>${periodTimings[p-1].start}-${periodTimings[p-1].end}: ${day[`period${p}`]}</p>`).join('')}</div>`).join('');
+                document.getElementById('saveTimetableBtn').disabled = false;
+                showSuccess('Timetable extracted! Click Save.');
+            } catch(e) { showError('OCR failed'); }
+            progress.style.display = 'none';
         }
-        
-        function scheduleHomework() {
-            const homework = document.getElementById('homeworkContent').value;
-            if (!homework) {
-                showError('Please enter homework details');
-                return;
-            }
-            showSuccess(`Scheduled for 3:00 PM to Class ${currentClass}`);
-            document.getElementById('homeworkContent').value = '';
+
+        async function saveTimetableToDatabase() {
+            if (!extractedTimetable) return showError('No timetable');
+            await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({ timetable: extractedTimetable });
+            showSuccess('Timetable saved!');
         }
-        
-        // ============================================
-        // WHATSAPP GROUPS
-        // ============================================
-        
+
+        // Homework & WhatsApp
+        function startSmartVoiceInput(textareaId, btnId) {
+            if (!('webkitSpeechRecognition' in window)) return showError('Voice not supported. Use Chrome.');
+            if (currentRecognition) currentRecognition.stop();
+            const SpeechRecognition = window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'si-LK';
+            recognition.onstart = () => { document.getElementById(btnId).classList.add('listening'); showSuccess('Listening...'); };
+            recognition.onresult = (e) => { document.getElementById(textareaId).value = e.results[0][0].transcript; };
+            recognition.onend = () => { document.getElementById(btnId).classList.remove('listening'); };
+            recognition.start();
+            currentRecognition = recognition;
+        }
+
+        async function sendHomeworkToWhatsApp(content, className) {
+            if (!content) return showError('Enter homework');
+            const msg = `📚 *HOMEWORK - ${className}*\n\n📅 Date: ${new Date().toLocaleDateString()}\n👨‍🏫 Teacher: ${currentTeacher.full_name}\n\n📝 *Assignment:*\n${content}\n\n⏰ Due: Next class`;
+            await navigator.clipboard.writeText(msg);
+            window.open('https://web.whatsapp.com/', '_blank');
+            showSuccess('Copied! Open WhatsApp to send.');
+        }
+        function sendDashboardHomework() { sendHomeworkToWhatsApp(document.getElementById('dashboardHomeworkContent').value, getFullClassName()); }
+        function sendHomework() { sendHomeworkToWhatsApp(document.getElementById('homeworkContent').value, getFullClassName()); }
+
         function displayWhatsAppGroups() {
             const container = document.getElementById('whatsappGroupsList');
             container.innerHTML = '';
-            
-            const allClasses = ['10A', '10B', '11A', '11B'];
-            allClasses.forEach(className => {
-                const groupDiv = document.createElement('div');
-                groupDiv.style.marginBottom = '20px';
-                groupDiv.style.padding = '15px';
-                groupDiv.style.background = 'rgba(255,255,255,0.03)';
-                groupDiv.style.borderRadius = '10px';
-                
-                groupDiv.innerHTML = `
-                    <label style="display: block; margin-bottom: 8px; color: #a5b4fc;">
-                        <i class="fab fa-whatsapp"></i> Class ${className} WhatsApp Group
-                    </label>
-                    <input type="text" id="whatsapp_${className}" value="${whatsappGroups[className] || ''}" 
-                           placeholder="https://chat.whatsapp.com/..." 
-                           style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px; color: white;">
-                    <p style="color: #94a3b8; font-size: 12px; margin-top: 5px;">
-                        <i class="fas fa-info-circle"></i> Paste the WhatsApp group invite link here
-                    </p>
-                `;
-                container.appendChild(groupDiv);
+            ['A','B','C','D'].forEach(letter => {
+                container.innerHTML += `<div style="margin-bottom:20px; padding:15px; background:rgba(255,255,255,0.03); border-radius:10px;">
+                    <label style="color:#a5b4fc;"><i class="fab fa-whatsapp"></i> Grade ${currentGrade} - Class ${letter}</label>
+                    <input type="text" id="whatsapp_${letter}" value="${whatsappGroups[`${currentGrade}_${letter}`] || ''}" placeholder="https://chat.whatsapp.com/..." style="width:100%; background:rgba(255,255,255,0.05); border-radius:8px; padding:12px; color:white; margin-top:8px;">
+                </div>`;
             });
         }
-        
+
         async function saveWhatsAppGroups() {
-            const updatedGroups = {};
-            ['10A', '10B', '11A', '11B'].forEach(className => {
-                const input = document.getElementById(`whatsapp_${className}`);
-                if (input) updatedGroups[className] = input.value;
-            });
-            
-            await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({
-                whatsapp_groups: updatedGroups
-            });
-            
-            whatsappGroups = updatedGroups;
-            showSuccess('WhatsApp groups saved successfully!');
+            const groups = {};
+            ['A','B','C','D'].forEach(l => { groups[`${currentGrade}_${l}`] = document.getElementById(`whatsapp_${l}`)?.value || ''; });
+            await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({ whatsapp_groups: { ...whatsappGroups, ...groups } });
+            whatsappGroups = { ...whatsappGroups, ...groups };
+            showSuccess('WhatsApp groups saved!');
         }
-        
-        // ============================================
-        // UTILITY FUNCTIONS
-        // ============================================
-        
+
+        function updateDashboard() {
+            let total = 0;
+            for (let key in students) total += students[key].length;
+            document.getElementById('totalStudents').innerHTML = total;
+        }
+
         function switchTab(tab) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(`tab-${tab}`).classList.add('active');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(`${tab}-section`).classList.add('active');
-            
             if (tab === 'students') displayStudentsTable();
             else if (tab === 'marks') displayMarksTable();
-            else if (tab === 'dashboard') updateDashboard();
+            else if (tab === 'exercises') { loadExerciseData(); populateHistoricalMonths(); }
             else if (tab === 'whatsapp') displayWhatsAppGroups();
         }
-        
-        function updateDashboard() {
-            let total = 0;
-            for (const c in students) total += students[c]?.length || 0;
-            document.getElementById('totalStudents').textContent = total;
-        }
-        
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            setTimeout(() => errorDiv.style.display = 'none', 5000);
-        }
-        
-        function showSuccess(message) {
-            const div = document.createElement('div');
-            div.className = 'success-message';
-            div.innerHTML = `<i class="fas fa-check-circle"></i> <span>${message}</span>`;
-            document.body.appendChild(div);
-            setTimeout(() => div.remove(), 3000);
-        }
-        
-        // Make functions global
-        window.switchAuthTab = switchAuthTab;
-        window.register = register;
-        window.login = login;
-        window.logout = logout;
-        window.selectClass = selectClass;
-        window.addStudentManually = addStudentManually;
-        window.deleteStudent = deleteStudent;
-        window.editStudent = editStudent;
-        window.saveMarks = saveMarks;
-        window.identifyLowMarks = identifyLowMarks;
-        window.sendLowMarksToParents = sendLowMarksToParents;
-        window.sendDashboardHomework = sendDashboardHomework;
-        window.sendHomework = sendHomework;
-        window.scheduleDashboardHomework = scheduleDashboardHomework;
-        window.scheduleHomework = scheduleHomework;
-        window.switchTab = switchTab;
-        window.startSmartVoiceInput = startSmartVoiceInput;
-        window.dismissAlert = dismissAlert;
-        window.showHomeworkFromAlert = showHomeworkFromAlert;
-        window.saveWhatsAppGroups = saveWhatsAppGroups;
+
+        function showError(msg) { const d = document.getElementById('errorMessage'); d.innerHTML = msg; d.style.display = 'block'; setTimeout(() => d.style.display = 'none', 5000); }
+        function showSuccess(msg) { const d = document.createElement('div'); d.className = 'success-message'; d.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`; document.body.appendChild(d); setTimeout(() => d.remove(), 3000); }
+
+        const periodTimings = [
+            { period: 1, start: '7:50', end: '8:35' }, { period: 2, start: '8:35', end: '9:20' },
+            { period: 3, start: '9:20', end: '10:05' }, { period: 4, start: '10:05', end: '10:50' },
+            { period: 5, start: '10:50', end: '11:35' }, { period: 6, start: '11:35', end: '12:20' },
+            { period: 7, start: '12:20', end: '13:00' }
+        ];
+
+        window.switchAuthTab = switchAuthTab; window.register = register; window.login = login; window.logout = logout;
+        window.changeGrade = changeGrade; window.changeClass = changeClass;
+        window.addStudentManually = addStudentManually; window.deleteStudent = deleteStudent; window.editStudent = editStudent;
+        window.saveMarks = saveMarks; window.identifyLowMarks = identifyLowMarks; window.sendLowMarksToParents = sendLowMarksToParents;
+        window.markExercise = markExercise; window.loadHistoricalExercises = loadHistoricalExercises;
+        window.startSmartVoiceInput = startSmartVoiceInput; window.sendDashboardHomework = sendDashboardHomework; window.sendHomework = sendHomework;
+        window.switchTab = switchTab; window.saveWhatsAppGroups = saveWhatsAppGroups; window.saveTimetableToDatabase = saveTimetableToDatabase;
     </script>
 </body>
 </html>
