@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <meta name="theme-color" content="#0a0f1e">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>EduTrack Pro - Complete Teacher Platform</title>
+    <title>EduTrack Pro - Shared Teacher Platform</title>
     
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -36,12 +35,10 @@
             overflow-x: hidden;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1a1f2e; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 10px; }
 
-        /* Animated Gradient Background */
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -55,11 +52,10 @@
         }
 
         @keyframes gradientPulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
-        /* Login Page Styles */
         .login-container {
             min-height: 100vh;
             display: flex;
@@ -77,7 +73,6 @@
             width: 100%;
             max-width: 450px;
             animation: slideUp 0.8s ease-out;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes slideUp {
@@ -96,19 +91,10 @@
             font-size: 42px;
             margin: 0 auto 20px;
             animation: floatLogo 3s ease-in-out infinite;
-            box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.4);
         }
         @keyframes floatLogo {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(2deg); }
-        }
-
-        .login-header h1 {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         .auth-tab {
@@ -121,12 +107,12 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-        .auth-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3); }
+        .auth-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
 
         .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; font-weight: 500; }
+        .input-group label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; }
         .input-wrapper { position: relative; }
         .input-wrapper i {
             position: absolute;
@@ -144,9 +130,8 @@
             padding: 14px 16px 14px 48px;
             color: white;
             font-size: 16px;
-            transition: all 0.3s;
         }
-        .input-wrapper input:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+        .input-wrapper input:focus { outline: none; border-color: #6366f1; }
 
         .auth-btn {
             width: 100%;
@@ -160,11 +145,9 @@
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
         }
-        .auth-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4); }
+        .auth-btn:hover { transform: translateY(-2px); }
 
-        /* Main App Container */
         .app-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -172,7 +155,6 @@
             display: none;
         }
 
-        /* Header - Mobile Optimized */
         .header {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
@@ -185,11 +167,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            animation: slideDown 0.6s ease-out;
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .logo {
@@ -205,15 +182,7 @@
             align-items: center;
             justify-content: center;
             font-size: 22px;
-            animation: pulseGlow 2s infinite;
         }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
-        }
-
-        .logo h1 { font-size: 18px; font-weight: 700; }
-        .logo p { font-size: 11px; color: #94a3b8; }
 
         .teacher-profile {
             display: flex;
@@ -229,18 +198,25 @@
             justify-content: center;
             font-size: 18px;
             overflow: hidden;
-            transition: transform 0.3s;
         }
-        .teacher-avatar:hover { transform: scale(1.05); }
 
-        /* Navigation Tabs - Horizontal Scroll for Mobile */
+        /* Shared Database Indicator */
+        .shared-badge {
+            background: rgba(16, 185, 129, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #10b981;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         .nav-tabs {
             display: flex;
             gap: 8px;
             margin-bottom: 20px;
             overflow-x: auto;
-            overflow-y: hidden;
-            white-space: nowrap;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: thin;
             padding-bottom: 8px;
@@ -264,10 +240,9 @@
             gap: 8px;
             white-space: nowrap;
         }
-        .nav-tab:hover { background: rgba(99, 102, 241, 0.1); border-color: #6366f1; color: white; transform: translateY(-2px); }
+        .nav-tab:hover { background: rgba(99, 102, 241, 0.1); border-color: #6366f1; color: white; }
         .nav-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; }
 
-        /* Grade & Class Selectors - Mobile Optimized */
         .selector-container {
             display: flex;
             gap: 12px;
@@ -283,11 +258,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             padding: 5px 15px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
             text-align: center;
         }
-        .grade-selector:hover, .class-selector:hover { border-color: #6366f1; transform: translateY(-2px); }
         .grade-selector label, .class-selector label {
             color: #94a3b8;
             font-size: 12px;
@@ -304,7 +276,6 @@
             outline: none;
         }
 
-        /* Content Sections with Fade Animation */
         .content-section { display: none; animation: fadeInUp 0.5s ease-out; }
         .content-section.active { display: block; }
         @keyframes fadeInUp {
@@ -312,7 +283,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Cards with Hover Animation */
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -321,7 +291,6 @@
             margin-bottom: 20px;
             transition: all 0.3s ease;
         }
-        .card:hover { border-color: rgba(99, 102, 241, 0.3); transform: translateY(-3px); }
 
         .card-title {
             font-size: 16px;
@@ -331,9 +300,9 @@
             align-items: center;
             gap: 10px;
             color: #a5b4fc;
+            flex-wrap: wrap;
         }
 
-        /* Stats Grid - Mobile Responsive */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -346,22 +315,12 @@
             border-radius: 16px;
             text-align: center;
             transition: all 0.3s;
-            animation: fadeInScale 0.5s ease-out;
-            animation-fill-mode: both;
-        }
-        .stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
         .stat-card:hover { transform: translateY(-3px); background: rgba(99, 102, 241, 0.15); }
         .stat-card i { font-size: 28px; margin-bottom: 8px; display: block; }
         .stat-card h2 { font-size: 24px; font-weight: 700; }
         .stat-card p { font-size: 12px; color: #94a3b8; }
 
-        /* Action Buttons */
         .action-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -382,14 +341,12 @@
         .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; }
         .action-btn.success { background: linear-gradient(135deg, #10b981, #059669); border: none; }
 
-        /* Table Container */
         .student-table-container {
             overflow-x: auto;
             max-height: 450px;
             overflow-y: auto;
             border-radius: 12px;
             background: rgba(0, 0, 0, 0.2);
-            -webkit-overflow-scrolling: touch;
         }
         .student-table { width: 100%; border-collapse: collapse; min-width: 500px; }
         .student-table th {
@@ -411,10 +368,8 @@
             padding: 6px 10px;
             color: white;
             width: 100%;
-            font-size: 14px;
         }
 
-        /* Upload Area */
         .upload-area {
             background: rgba(0, 0, 0, 0.3);
             border: 2px dashed rgba(99, 102, 241, 0.3);
@@ -427,7 +382,6 @@
         .upload-area:hover { border-color: #6366f1; background: rgba(99, 102, 241, 0.05); transform: scale(1.02); }
         .upload-area i { font-size: 40px; color: #6366f1; margin-bottom: 12px; }
 
-        /* Exercise Tracking */
         .exercise-cell {
             display: flex;
             gap: 8px;
@@ -446,9 +400,31 @@
         .exercise-icon.correct:hover { background: rgba(16, 185, 129, 0.2); transform: scale(1.15); }
         .exercise-icon.wrong { color: #ef4444; }
         .exercise-icon.wrong:hover { background: rgba(239, 68, 68, 0.2); transform: scale(1.15); }
-        .exercise-icon.completed { background: rgba(16, 185, 129, 0.3); }
 
-        /* Success/Error Messages - Mobile Optimized */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .month-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .month-selector select {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
         .success-message {
             position: fixed;
             bottom: 20px;
@@ -462,7 +438,6 @@
             z-index: 1000;
             text-align: center;
             font-weight: 500;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
         @keyframes slideUpMessage {
             from { transform: translateY(100px); opacity: 0; }
@@ -488,13 +463,7 @@
             border-radius: 16px;
             padding: 16px;
             margin-top: 20px;
-            animation: pulseRed 2s infinite;
         }
-        @keyframes pulseRed {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); }
-            50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-        }
-
         .student-chip {
             display: inline-flex;
             align-items: center;
@@ -509,7 +478,6 @@
         .listening { background: linear-gradient(135deg, #ef4444, #dc2626) !important; animation: pulse 0.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
-        /* Loading Spinner */
         .loading-spinner {
             width: 20px;
             height: 20px;
@@ -521,7 +489,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Two Column Layout */
         .two-col {
             display: grid;
             grid-template-columns: 1fr;
@@ -530,32 +497,6 @@
         }
         @media (min-width: 768px) {
             .two-col { grid-template-columns: 1fr 1fr; }
-        }
-
-        /* Month Selector */
-        .month-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .month-selector select {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            padding: 10px 15px;
-            color: white;
-            font-size: 13px;
-            cursor: pointer;
-        }
-
-        /* Button Group */
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
         }
     </style>
 </head>
@@ -568,7 +509,7 @@
             <div class="login-header">
                 <div class="login-logo"><i class="fas fa-chalkboard-teacher"></i></div>
                 <h1>EduTrack Pro</h1>
-                <p style="color: #94a3b8; margin-top: 5px;">Complete Teacher Platform</p>
+                <p style="color: #94a3b8; margin-top: 5px;">Shared Teacher Platform</p>
             </div>
             <div style="display: flex; gap: 12px; margin-bottom: 30px;">
                 <button class="auth-tab active" onclick="switchAuthTab('login')" id="loginTab">Login</button>
@@ -630,12 +571,13 @@
                 </div>
             </div>
             <div class="teacher-profile">
+                <div class="shared-badge"><i class="fas fa-globe"></i> Shared Database</div>
                 <div class="teacher-avatar" id="teacherAvatarDisplay"><i class="fas fa-user"></i></div>
                 <button class="action-btn" onclick="logout()" style="padding: 8px 16px;"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </header>
 
-        <!-- Navigation Tabs - Horizontal Scroll on Mobile -->
+        <!-- Navigation Tabs -->
         <div class="nav-tabs">
             <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard"><i class="fas fa-home"></i> Home</div>
             <div class="nav-tab" onclick="switchTab('students')" id="tab-students"><i class="fas fa-users"></i> Students</div>
@@ -672,7 +614,7 @@
                 <div class="stat-card"><i class="fas fa-check-circle"></i><h2 id="averageMarks">0%</h2><p>Average</p></div>
             </div>
             <div class="card" data-aos="fade-up">
-                <div class="card-title"><i class="fas fa-book"></i><h3>Quick Homework</h3></div>
+                <div class="card-title"><i class="fas fa-book"></i><h3>Quick Homework</h3><span class="shared-badge"><i class="fas fa-share-alt"></i> All teachers see this</span></div>
                 <textarea id="dashboardHomeworkContent" placeholder="Type homework details here..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:15px; color:white; min-height:120px; margin-bottom:15px;"></textarea>
                 <div class="btn-group">
                     <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent','dashboardVoiceBtn')"><i class="fas fa-microphone"></i> Voice</button>
@@ -684,7 +626,7 @@
         <!-- Students Section -->
         <div id="students-section" class="content-section">
             <div class="card" data-aos="fade-up">
-                <div class="card-title"><i class="fas fa-user-plus"></i><h3>Add Students - <span id="selectedGradeClass">Class</span></h3></div>
+                <div class="card-title"><i class="fas fa-user-plus"></i><h3>Add Students - <span id="selectedGradeClass">Class</span></h3><span class="shared-badge"><i class="fas fa-share-alt"></i> Shared across all teachers</span></div>
                 <div class="two-col">
                     <div>
                         <h4 style="margin-bottom: 12px;"><i class="fas fa-camera"></i> Upload Photo</h4>
@@ -715,7 +657,7 @@
         <!-- Marks Section -->
         <div id="marks-section" class="content-section">
             <div class="card" data-aos="fade-up">
-                <div class="card-title"><i class="fas fa-star"></i><h3>Marks - <span id="marksGradeClass">Class</span></h3></div>
+                <div class="card-title"><i class="fas fa-star"></i><h3>Marks - <span id="marksGradeClass">Class</span></h3><span class="shared-badge"><i class="fas fa-share-alt"></i> Shared across all teachers</span></div>
                 <div class="btn-group">
                     <select id="examMonth" style="background:rgba(255,255,255,0.05); border-radius:40px; padding:10px 15px; color:white; flex:1;">
                         <option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option>
@@ -750,7 +692,7 @@
         <!-- Exercises Section -->
         <div id="exercises-section" class="content-section">
             <div class="card" data-aos="fade-up">
-                <div class="card-title"><i class="fas fa-tasks"></i><h3>Exercises - <span id="exercisesGradeClass">Class</span></h3></div>
+                <div class="card-title"><i class="fas fa-tasks"></i><h3>Exercises - <span id="exercisesGradeClass">Class</span></h3><span class="shared-badge"><i class="fas fa-share-alt"></i> Shared across all teachers</span></div>
                 <div class="month-selector">
                     <select id="exerciseMonth" onchange="loadExerciseData()">
                         <option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option>
@@ -782,7 +724,7 @@
         <!-- Timetable Section -->
         <div id="timetable-section" class="content-section">
             <div class="card" data-aos="fade-up">
-                <div class="card-title"><i class="fas fa-calendar-alt"></i><h3>Your Timetable</h3><p style="color:#94a3b8; font-size:11px;">7:50 AM - 1:00 PM</p></div>
+                <div class="card-title"><i class="fas fa-calendar-alt"></i><h3>Your Timetable</h3></div>
                 <div class="upload-area" onclick="document.getElementById('timetableInput').click()">
                     <i class="fas fa-cloud-upload-alt"></i>
                     <h3>Tap to upload</h3>
@@ -805,7 +747,6 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS
         AOS.init({ duration: 600, once: true, offset: 10 });
 
         // ============================================
@@ -852,7 +793,7 @@
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 await firebase.firestore().collection('teachers').doc(userCredential.user.uid).set({
                     full_name: name, email: email, created_at: new Date().toISOString(),
-                    whatsapp_groups: {}, teacher_classes: []
+                    whatsapp_groups: {}
                 });
                 showSuccess('Account created! Please login.');
                 switchAuthTab('login');
@@ -889,11 +830,15 @@
                 document.getElementById('mainApp').style.display = 'block';
                 updateAllDisplays();
                 displayWhatsAppGroups();
+                // Set up real-time listener for shared data
+                setupRealtimeListener();
             } else { document.getElementById('loginPage').style.display = 'flex'; document.getElementById('mainApp').style.display = 'none'; }
         });
 
+        // SHARED DATABASE - NO teacher_id filter! All teachers see all students
         async function loadStudents() {
-            const snapshot = await firebase.firestore().collection('students').where('teacher_id', '==', currentTeacher.id).get();
+            // Get ALL students from the shared collection (no teacher filter)
+            const snapshot = await firebase.firestore().collection('students').get();
             students = {};
             snapshot.forEach(doc => {
                 const s = { id: doc.id, ...doc.data() };
@@ -903,10 +848,21 @@
             });
         }
 
+        // Real-time listener for shared data updates
+        function setupRealtimeListener() {
+            firebase.firestore().collection('students').onSnapshot((snapshot) => {
+                loadStudents().then(() => {
+                    displayStudentsTable();
+                    displayMarksTable();
+                    updateDashboard();
+                });
+            });
+        }
+
         async function loadExerciseData() {
             const month = document.getElementById('exerciseMonth').value;
             const fullClass = getFullClassName();
-            const docRef = firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${month}`);
+            const docRef = firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`);
             const doc = await docRef.get();
             if (doc.exists) exerciseData = doc.data();
             else exerciseData = {};
@@ -916,7 +872,7 @@
         async function saveExerciseData() {
             const month = document.getElementById('exerciseMonth').value;
             const fullClass = getFullClassName();
-            await firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${month}`).set(exerciseData);
+            await firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`).set(exerciseData);
         }
 
         function updateAllDisplays() {
@@ -952,20 +908,22 @@
             });
         }
 
+        // SHARED - Add student without teacher_id
         async function addStudentManually() {
             const name = document.getElementById('studentNameInput').value;
             const phone = document.getElementById('parentPhoneInput').value;
             if (!name) return showError('Enter student name');
             await firebase.firestore().collection('students').add({
-                teacher_id: currentTeacher.id, grade: currentGrade, classLetter: currentClass,
-                name: name, parent_phone: phone || '', created_at: new Date().toISOString()
+                grade: currentGrade, classLetter: currentClass,
+                name: name, parent_phone: phone || '', created_at: new Date().toISOString(),
+                added_by: currentTeacher?.full_name || currentTeacher?.email
             });
             document.getElementById('studentNameInput').value = '';
             document.getElementById('parentPhoneInput').value = '';
             await loadStudents();
             displayStudentsTable();
             updateDashboard();
-            showSuccess('Student added!');
+            showSuccess('Student added! (Visible to all teachers)');
         }
 
         async function deleteStudent(id) { if (confirm('Delete?')) { await firebase.firestore().collection('students').doc(id).delete(); await loadStudents(); displayStudentsTable(); updateDashboard(); showSuccess('Deleted'); } }
@@ -976,7 +934,7 @@
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            if (classStudents.length === 0) { tbody.innerHTML = `<td><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
             classStudents.forEach((student, idx) => {
                 tbody.innerHTML += `<tr>
                     <td style="padding: 10px 12px;">${idx+1}</td>
@@ -1000,12 +958,13 @@
                 if (input && input.value) {
                     batch.set(firebase.firestore().collection('marks').doc(), {
                         student_id: s.id, student_name: s.name, grade: currentGrade, classLetter: currentClass,
-                        month, exam_type: examType, marks: parseInt(input.value), saved_at: new Date().toISOString()
+                        month, exam_type: examType, marks: parseInt(input.value), saved_at: new Date().toISOString(),
+                        added_by: currentTeacher?.full_name || currentTeacher?.email
                     });
                     saved++;
                 }
             }
-            if (saved > 0) { await batch.commit(); showSuccess(`Saved ${saved} marks`); }
+            if (saved > 0) { await batch.commit(); showSuccess(`Saved ${saved} marks (Shared with all teachers)`); }
             else showError('Enter marks');
         }
 
@@ -1095,7 +1054,7 @@
             const month = document.getElementById('viewMonthSelect').value;
             if (!month) return;
             const fullClass = getFullClassName();
-            const doc = await firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${month}`).get();
+            const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`).get();
             if (doc.exists) exerciseData = doc.data();
             else exerciseData = {};
             displayExercisesTable();
@@ -1107,7 +1066,7 @@
             const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
             const fullClass = getFullClassName();
             for (let m of months) {
-                const doc = await firebase.firestore().collection('exercises').doc(`${currentTeacher.id}_${fullClass}_${m}`).get();
+                const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${m}`).get();
                 if (doc.exists) select.innerHTML += `<option value="${m}">${m}</option>`;
             }
         }
@@ -1125,13 +1084,14 @@
                 const names = text.split('\n').filter(l => l.trim().length > 2 && !l.match(/^\d+$/)).slice(0, 30);
                 for (let name of names) {
                     await firebase.firestore().collection('students').add({
-                        teacher_id: currentTeacher.id, grade: currentGrade, classLetter: currentClass,
-                        name: name.trim(), parent_phone: '', created_at: new Date().toISOString()
+                        grade: currentGrade, classLetter: currentClass,
+                        name: name.trim(), parent_phone: '', created_at: new Date().toISOString(),
+                        added_by: currentTeacher?.full_name || currentTeacher?.email
                     });
                 }
                 await loadStudents();
                 displayStudentsTable();
-                showSuccess(`Added ${names.length} students`);
+                showSuccess(`Added ${names.length} students (Shared with all teachers)`);
             } catch(e) { showError('OCR failed'); }
             progress.style.display = 'none';
         }
