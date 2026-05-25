@@ -168,13 +168,14 @@
         }
         .action-btn-sm { padding: 5px 10px; font-size: 11px; }
 
-        /* Compact Navigation Tabs */
+        /* Navigation Tabs - Horizontal Scroll */
         .nav-tabs {
             display: flex;
             gap: 6px;
             margin-bottom: 12px;
             overflow-x: auto;
             padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
         }
         .nav-tab {
             background: rgba(255, 255, 255, 0.03);
@@ -190,7 +191,15 @@
             align-items: center;
             gap: 5px;
         }
-        .nav-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+        .nav-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; }
+
+        /* Each Tab Content - Proper Separation */
+        .content-section { display: none; animation: fadeIn 0.3s ease; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* Compact Selectors */
         .selector-container {
@@ -239,7 +248,7 @@
         }
         .card-title i { font-size: 12px; }
 
-        /* Compact Stats Grid */
+        /* Compact Stats Grid - Dashboard Only */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -279,12 +288,12 @@
         /* Compact Tables */
         .student-table-container {
             overflow-x: auto;
-            max-height: 350px;
+            max-height: 400px;
             overflow-y: auto;
             border-radius: 10px;
             background: rgba(0, 0, 0, 0.2);
         }
-        .student-table { width: 100%; border-collapse: collapse; min-width: 450px; }
+        .student-table { width: 100%; border-collapse: collapse; min-width: 400px; }
         .student-table th {
             background: rgba(99, 102, 241, 0.2);
             padding: 8px;
@@ -316,8 +325,8 @@
         .upload-area h3 { font-size: 12px; }
 
         /* Compact Exercise Icons */
-        .exercise-cell { display: flex; gap: 6px; justify-content: center; }
-        .exercise-icon { font-size: 16px; cursor: pointer; padding: 3px; border-radius: 50%; }
+        .exercise-cell { display: flex; gap: 8px; justify-content: center; }
+        .exercise-icon { font-size: 18px; cursor: pointer; padding: 4px; border-radius: 50%; }
         .exercise-icon.correct { color: #10b981; }
         .exercise-icon.wrong { color: #ef4444; }
 
@@ -396,6 +405,12 @@
 
         .two-col { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
         @media (min-width: 550px) { .two-col { grid-template-columns: 1fr 1fr; } }
+
+        /* Timetable Grid */
+        .timetable-grid { display: flex; flex-direction: column; gap: 8px; }
+        .timetable-card { background: rgba(99, 102, 241, 0.1); border-radius: 10px; padding: 8px; }
+        .timetable-card h4 { font-size: 12px; margin-bottom: 5px; }
+        .timetable-card p { font-size: 10px; }
     </style>
 </head>
 <body>
@@ -468,7 +483,7 @@
             <div class="teacher-profile">
                 <span class="shared-badge"><i class="fas fa-globe"></i> Shared</span>
                 <div class="teacher-avatar" id="teacherAvatarDisplay"><i class="fas fa-user"></i></div>
-                <button class="action-btn action-btn-sm" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+                <button class="action-btn-sm" onclick="logout()" style="background:rgba(255,255,255,0.1); border:none; border-radius:20px; padding:5px 10px;"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </header>
 
@@ -483,7 +498,7 @@
             <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i> Groups</div>
         </div>
 
-        <!-- Grade & Class Selectors -->
+        <!-- Grade & Class Selectors (Shows on all tabs) -->
         <div class="selector-container">
             <div class="grade-selector">
                 <label><i class="fas fa-graduation-cap"></i></label>
@@ -501,7 +516,7 @@
             </div>
         </div>
 
-        <!-- Dashboard Section -->
+        <!-- ========== DASHBOARD TAB ========== -->
         <div id="dashboard-section" class="content-section active">
             <div class="stats-grid">
                 <div class="stat-card"><i class="fas fa-users"></i><h2 id="totalStudents">0</h2><p>Students</p></div>
@@ -518,22 +533,23 @@
             </div>
         </div>
 
-        <!-- Students Section -->
+        <!-- ========== STUDENTS TAB ========== -->
         <div id="students-section" class="content-section">
             <div class="card">
-                <div class="card-title"><i class="fas fa-user-plus"></i><span>Add Students - <span id="selectedGradeClass">Class</span></span></div>
+                <div class="card-title"><i class="fas fa-user-plus"></i><span>Add Students to <span id="selectedGradeClass">Class</span></span></div>
                 <div class="two-col">
                     <div>
                         <div class="upload-area" onclick="document.getElementById('nameListInput').click()">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <h3>Upload Photo</h3>
+                            <p style="font-size:10px; color:#94a3b8;">OCR extracts names</p>
                         </div>
                         <input type="file" id="nameListInput" accept="image/*" style="display:none;" onchange="processNameListWithOCR(this)">
                     </div>
                     <div>
                         <input type="text" id="studentNameInput" placeholder="Student name" style="width:100%; margin-bottom:8px; background:rgba(255,255,255,0.05); border-radius:10px; padding:8px; color:white; font-size:12px;">
                         <input type="text" id="parentPhoneInput" placeholder="Parent WhatsApp" style="width:100%; margin-bottom:8px; background:rgba(255,255,255,0.05); border-radius:10px; padding:8px; color:white; font-size:12px;">
-                        <button class="action-btn success" onclick="addStudentManually()"><i class="fas fa-plus"></i> Add</button>
+                        <button class="action-btn success" onclick="addStudentManually()"><i class="fas fa-plus"></i> Add Student</button>
                     </div>
                 </div>
                 <div class="student-table-container">
@@ -545,10 +561,10 @@
             </div>
         </div>
 
-        <!-- Marks Section -->
+        <!-- ========== MARKS TAB ========== -->
         <div id="marks-section" class="content-section">
             <div class="card">
-                <div class="card-title"><i class="fas fa-star"></i><span>Marks - <span id="marksGradeClass">Class</span></span></div>
+                <div class="card-title"><i class="fas fa-star"></i><span>Enter Marks for <span id="marksGradeClass">Class</span></span></div>
                 <div class="btn-group">
                     <select id="examMonth" style="background:rgba(255,255,255,0.05); border-radius:20px; padding:6px 10px; font-size:11px;">
                         <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
@@ -568,7 +584,7 @@
                 </div>
                 <div class="btn-group">
                     <button class="action-btn primary" onclick="saveMarks()"><i class="fas fa-save"></i> Save</button>
-                    <button class="action-btn success" onclick="identifyLowMarks()"><i class="fas fa-exclamation-triangle"></i> Low</button>
+                    <button class="action-btn success" onclick="identifyLowMarks()"><i class="fas fa-exclamation-triangle"></i> Low Marks</button>
                 </div>
                 <div id="lowMarksResults" style="display:none; margin-top:10px;">
                     <div class="low-marks-card">
@@ -580,16 +596,16 @@
             </div>
         </div>
 
-        <!-- Exercises Section -->
+        <!-- ========== EXERCISES TAB ========== -->
         <div id="exercises-section" class="content-section">
             <div class="card">
-                <div class="card-title"><i class="fas fa-tasks"></i><span>Exercises - <span id="exercisesGradeClass">Class</span></span></div>
+                <div class="card-title"><i class="fas fa-tasks"></i><span>Exercise Tracking - <span id="exercisesGradeClass">Class</span></span></div>
                 <div class="month-selector">
                     <select id="exerciseMonth" onchange="loadExerciseData()">
                         <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
                         <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
                     </select>
-                    <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">History</option></select>
+                    <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">View History</option></select>
                 </div>
                 <div class="student-table-container">
                     <table class="student-table">
@@ -600,38 +616,39 @@
             </div>
         </div>
 
-        <!-- Homework Section -->
+        <!-- ========== HOMEWORK TAB ========== -->
         <div id="homework-section" class="content-section">
             <div class="card">
-                <div class="card-title"><i class="fas fa-book"></i><span>Homework - <span id="homeworkGradeClass">Class</span></span></div>
-                <textarea id="homeworkContent" placeholder="Homework details..." rows="2" style="width:100%; background:rgba(255,255,255,0.05); border-radius:12px; padding:10px; color:white; font-size:12px; margin-bottom:10px;"></textarea>
+                <div class="card-title"><i class="fas fa-book"></i><span>Send Homework to <span id="homeworkGradeClass">Class</span></span></div>
+                <textarea id="homeworkContent" placeholder="Type homework details..." rows="3" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:10px; color:white; font-size:12px; margin-bottom:10px;"></textarea>
                 <div class="btn-group">
                     <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent','homeworkVoiceBtn')"><i class="fas fa-microphone"></i> Voice</button>
-                    <button class="action-btn" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Send</button>
+                    <button class="action-btn" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Send to WhatsApp</button>
                 </div>
             </div>
         </div>
 
-        <!-- Timetable Section -->
+        <!-- ========== TIMETABLE TAB ========== -->
         <div id="timetable-section" class="content-section">
             <div class="card">
                 <div class="card-title"><i class="fas fa-calendar-alt"></i><span>Your Timetable</span></div>
                 <div class="upload-area" onclick="document.getElementById('timetableInput').click()">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <h3>Upload Timetable</h3>
+                    <h3>Upload Timetable Image</h3>
+                    <p style="font-size:10px; color:#94a3b8;">OCR will extract schedule</p>
                 </div>
                 <input type="file" id="timetableInput" accept="image/*" style="display:none;" onchange="processTimetableWithOCR(this)">
                 <div id="timetableGrid" style="margin-top:10px;"></div>
-                <button class="action-btn primary" onclick="saveTimetableToDatabase()" id="saveTimetableBtn" disabled style="margin-top:10px;"><i class="fas fa-save"></i> Save</button>
+                <button class="action-btn primary" onclick="saveTimetableToDatabase()" id="saveTimetableBtn" disabled style="margin-top:10px;"><i class="fas fa-save"></i> Save Timetable</button>
             </div>
         </div>
 
-        <!-- WhatsApp Groups Section -->
+        <!-- ========== WHATSAPP GROUPS TAB ========== -->
         <div id="whatsapp-section" class="content-section">
             <div class="card">
-                <div class="card-title"><i class="fab fa-whatsapp"></i><span>WhatsApp Groups</span></div>
+                <div class="card-title"><i class="fab fa-whatsapp"></i><span>WhatsApp Groups Configuration</span></div>
                 <div id="whatsappGroupsList"></div>
-                <button class="action-btn primary" onclick="saveWhatsAppGroups()" style="margin-top:10px;"><i class="fas fa-save"></i> Save</button>
+                <button class="action-btn primary" onclick="saveWhatsAppGroups()" style="margin-top:10px;"><i class="fas fa-save"></i> Save All Groups</button>
             </div>
         </div>
     </div>
@@ -733,8 +750,8 @@
         function setupRealtimeListener() {
             firebase.firestore().collection('students').onSnapshot(() => {
                 loadStudents().then(() => {
-                    displayStudentsTable();
-                    displayMarksTable();
+                    if (document.getElementById('students-section').classList.contains('active')) displayStudentsTable();
+                    if (document.getElementById('marks-section').classList.contains('active')) displayMarksTable();
                     updateDashboard();
                 });
             });
@@ -774,7 +791,7 @@
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            if (classStudents.length === 0) { tbody.innerHTML = `<table><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
             classStudents.forEach((student, idx) => {
                 tbody.innerHTML += `<tr><td>${idx+1}</td><td>${student.name}</td><td>${student.parent_phone || '-'}</td>
                 <td><button class="action-btn" onclick="editStudent('${student.id}')" style="padding:3px 6px;"><i class="fas fa-edit"></i></button>
@@ -806,7 +823,7 @@
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) { tbody.innerHTML = `<td><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
             classStudents.forEach((student, idx) => {
                 tbody.innerHTML += `<tr><td>${idx+1}</td><td>${student.name}</td>
                 <td><input type="number" min="0" max="100" id="mark_${student.id}" placeholder="-" style="width:70px;"></td>
@@ -910,7 +927,7 @@
 
         async function populateHistoricalMonths() {
             const select = document.getElementById('viewMonthSelect');
-            select.innerHTML = '<option value="">History</option>';
+            select.innerHTML = '<option value="">View History</option>';
             const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
             const fullClass = getFullClassName();
             for (let m of months) {
@@ -920,209 +937,52 @@
         }
 
         async function processNameListWithOCR(input) {
-    if (!input.files || !input.files[0]) {
-        return showError('Please select a file');
-    }
-
-    const file = input.files[0];
-    const progress = document.getElementById('ocrProgress');
-
-    progress.style.display = 'block';
-    progress.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing handwritten names...';
-
-    try {
-
-        // Create image preprocessing canvas
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-
-        await new Promise(resolve => img.onload = resolve);
-
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        ctx.drawImage(img, 0, 0);
-
-        // Improve handwriting visibility
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-
-        for (let i = 0; i < data.length; i += 4) {
-
-            // Convert to grayscale
-            const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-
-            // Increase contrast
-            const value = avg > 140 ? 255 : 0;
-
-            data[i] = value;
-            data[i + 1] = value;
-            data[i + 2] = value;
+            if (!input.files[0]) return;
+            const file = input.files[0];
+            showSuccess('Processing...');
+            try {
+                const worker = await Tesseract.createWorker('eng+sin');
+                const { data: { text } } = await worker.recognize(file);
+                await worker.terminate();
+                const names = text.split('\n').filter(l => l.trim().length > 2 && !l.match(/^\d+$/)).slice(0, 20);
+                for (let name of names) {
+                    await firebase.firestore().collection('students').add({
+                        grade: currentGrade, classLetter: currentClass,
+                        name: name.trim(), parent_phone: '', created_at: new Date().toISOString()
+                    });
+                }
+                await loadStudents();
+                displayStudentsTable();
+                showSuccess(`Added ${names.length} students`);
+            } catch(e) { showError('OCR failed'); }
         }
 
-        ctx.putImageData(imageData, 0, 0);
-
-        // OCR Worker
-        const worker = await Tesseract.createWorker('eng+sin');
-
-        await worker.setParameters({
-            tessedit_pageseg_mode: Tesseract.PSM.AUTO,
-            preserve_interword_spaces: '1',
-        });
-
-        const { data: { text } } = await worker.recognize(canvas);
-
-        await worker.terminate();
-
-        // Better handwritten name extraction
-        const names = text
-            .split('\n')
-            .map(line => line.trim())
-            .filter(line =>
-                line.length > 2 &&
-                !line.match(/^\d+$/) &&
-                /^[A-Za-z\s.]+$/.test(line)
-            )
-            .slice(0, 50);
-
-        let added = 0;
-
-        for (let name of names) {
-
-            await firebase.firestore().collection('students').add({
-                grade: currentGrade,
-                classLetter: currentClass,
-                name: name,
-                parent_phone: '',
-                created_at: new Date().toISOString(),
-                added_by: currentTeacher?.full_name || currentTeacher?.email
-            });
-
-            added++;
-        }
-
-        await loadStudents();
-        displayStudentsTable();
-        updateDashboard();
-
-        showSuccess(`Successfully analyzed ${added} handwritten student names!`);
-
-    } catch (e) {
-        console.error(e);
-        showError('Handwritten OCR failed');
-    }
-
-    progress.style.display = 'none';
-}
-
-async function processMarksheetWithOCR(input) {
-
-    if (!input.files || !input.files[0]) {
-        return showError('Please select a marksheet');
-    }
-
-    const file = input.files[0];
-
-    showSuccess('Analyzing handwritten marksheet...');
-
-    try {
-
-        // Image preprocessing
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-
-        await new Promise(resolve => img.onload = resolve);
-
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        ctx.drawImage(img, 0, 0);
-
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-
-        for (let i = 0; i < data.length; i += 4) {
-
-            const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-
-            // Strong contrast for handwritten text
-            const value = avg > 130 ? 255 : 0;
-
-            data[i] = value;
-            data[i + 1] = value;
-            data[i + 2] = value;
-        }
-
-        ctx.putImageData(imageData, 0, 0);
-
-        const worker = await Tesseract.createWorker('eng');
-
-        await worker.setParameters({
-            tessedit_pageseg_mode: Tesseract.PSM.AUTO,
-            tessedit_char_whitelist: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ',
-            preserve_interword_spaces: '1'
-        });
-
-        const { data: { text } } = await worker.recognize(canvas);
-
-        await worker.terminate();
-
-        const lines = text.split('\n');
-
-        const key = `${currentGrade}_${currentClass}`;
-        const classStudents = students[key] || [];
-
-        let filled = 0;
-
-        for (let student of classStudents) {
-
-            for (let line of lines) {
-
-                const cleanLine = line.toLowerCase().replace(/[^a-z0-9 ]/g, '');
-                const cleanName = student.name.toLowerCase().replace(/[^a-z0-9 ]/g, '');
-
-                // Flexible handwritten matching
-                if (
-                    cleanLine.includes(cleanName) ||
-                    cleanName.split(' ').some(part =>
-                        part.length > 3 && cleanLine.includes(part)
-                    )
-                ) {
-
-                    const match = line.match(/\b(\d{1,3})\b/);
-
-                    if (match) {
-
-                        let mark = parseInt(match[1]);
-
-                        if (mark >= 0 && mark <= 100) {
-
-                            const inputField = document.getElementById(`mark_${student.id}`);
-
-                            if (inputField) {
-                                inputField.value = mark;
+        async function processMarksheetWithOCR(input) {
+            if (!input.files[0]) return;
+            const file = input.files[0];
+            showSuccess('Scanning...');
+            try {
+                const worker = await Tesseract.createWorker('eng');
+                const { data: { text } } = await worker.recognize(file);
+                await worker.terminate();
+                const lines = text.split('\n');
+                const key = `${currentGrade}_${currentClass}`;
+                const classStudents = students[key] || [];
+                for (let student of classStudents) {
+                    for (let line of lines) {
+                        if (line.toLowerCase().includes(student.name.toLowerCase())) {
+                            const match = line.match(/(\d{1,3})/);
+                            if (match) {
+                                const inputField = document.getElementById(`mark_${student.id}`);
+                                if (inputField) inputField.value = parseInt(match[0]);
                             }
-
-                            filled++;
                         }
                     }
                 }
-            }
+                showSuccess('Marks extracted!');
+            } catch(e) { showError('OCR failed'); }
         }
 
-        showSuccess(`Handwritten OCR filled ${filled} marks! Review and save.`);
-
-    } catch (e) {
-        console.error(e);
-        showError('Handwritten marks OCR failed');
-    }
-}
         async function processTimetableWithOCR(input) {
             if (!input.files[0]) return;
             const file = input.files[0];
@@ -1134,7 +994,7 @@ async function processMarksheetWithOCR(input) {
                 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
                 extractedTimetable = days.map(day => ({ day, period1: 'Free', period2: 'Free', period3: 'Free', period4: 'Free', period5: 'Free', period6: 'Free', period7: 'Free' }));
                 const grid = document.getElementById('timetableGrid');
-                grid.innerHTML = extractedTimetable.map(day => `<div style="background:rgba(99,102,241,0.1); border-radius:10px; padding:8px; margin-bottom:6px;"><h4 style="font-size:12px;">${day.day}</h4><p style="font-size:10px;">Periods: ${day.period1}, ${day.period2}, ${day.period3}</p></div>`).join('');
+                grid.innerHTML = extractedTimetable.map(day => `<div class="timetable-card"><h4>${day.day}</h4><p>Period 1: ${day.period1}</p><p>Period 2: ${day.period2}</p><p>Period 3: ${day.period3}</p></div>`).join('');
                 document.getElementById('saveTimetableBtn').disabled = false;
                 showSuccess('Timetable extracted!');
             } catch(e) { showError('OCR failed'); }
@@ -1163,7 +1023,7 @@ async function processMarksheetWithOCR(input) {
             const msg = `📚 *HOMEWORK - ${className}*\n\n📅 ${new Date().toLocaleDateString()}\n👨‍🏫 ${currentTeacher.full_name}\n\n📝 ${content}`;
             await navigator.clipboard.writeText(msg);
             window.open('https://web.whatsapp.com/', '_blank');
-            showSuccess('Copied!');
+            showSuccess('Copied! Open WhatsApp to send.');
         }
         function sendDashboardHomework() { sendHomeworkToWhatsApp(document.getElementById('dashboardHomeworkContent').value, getFullClassName()); }
         function sendHomework() { sendHomeworkToWhatsApp(document.getElementById('homeworkContent').value, getFullClassName()); }
@@ -1184,7 +1044,7 @@ async function processMarksheetWithOCR(input) {
             ['A','B','C','D'].forEach(l => { groups[`${currentGrade}_${l}`] = document.getElementById(`whatsapp_${l}`)?.value || ''; });
             await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({ whatsapp_groups: { ...whatsappGroups, ...groups } });
             whatsappGroups = { ...whatsappGroups, ...groups };
-            showSuccess('Saved!');
+            showSuccess('WhatsApp groups saved!');
         }
 
         function updateDashboard() {
@@ -1198,10 +1058,13 @@ async function processMarksheetWithOCR(input) {
             document.getElementById(`tab-${tab}`).classList.add('active');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(`${tab}-section`).classList.add('active');
+            
+            // Refresh data when switching tabs
             if (tab === 'students') displayStudentsTable();
             else if (tab === 'marks') displayMarksTable();
             else if (tab === 'exercises') { loadExerciseData(); populateHistoricalMonths(); }
             else if (tab === 'whatsapp') displayWhatsAppGroups();
+            else if (tab === 'dashboard') updateDashboard();
         }
 
         function showError(msg) { const d = document.getElementById('errorMessage'); d.innerHTML = msg; d.style.display = 'block'; setTimeout(() => d.style.display = 'none', 3000); }
