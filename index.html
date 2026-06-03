@@ -123,7 +123,7 @@
             margin-top: 16px;
         }
 
-        /* Main App - Compact Mobile Layout */
+        /* Main App */
         .app-container {
             max-width: 100%;
             margin: 0 auto;
@@ -131,7 +131,6 @@
             display: none;
         }
 
-        /* Compact Header */
         .header {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
@@ -166,16 +165,14 @@
             justify-content: center;
             font-size: 14px;
         }
-        .action-btn-sm { padding: 5px 10px; font-size: 11px; }
 
-        /* Navigation Tabs - Horizontal Scroll */
+        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
             gap: 6px;
             margin-bottom: 12px;
             overflow-x: auto;
             padding-bottom: 4px;
-            -webkit-overflow-scrolling: touch;
         }
         .nav-tab {
             background: rgba(255, 255, 255, 0.03);
@@ -193,7 +190,6 @@
         }
         .nav-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; }
 
-        /* Each Tab Content - Proper Separation */
         .content-section { display: none; animation: fadeIn 0.3s ease; }
         .content-section.active { display: block; }
         @keyframes fadeIn {
@@ -201,7 +197,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Compact Selectors */
         .selector-container {
             display: flex;
             gap: 8px;
@@ -229,7 +224,6 @@
             cursor: pointer;
         }
 
-        /* Compact Cards */
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -246,9 +240,7 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        .card-title i { font-size: 12px; }
 
-        /* Compact Stats Grid - Dashboard Only */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -265,7 +257,6 @@
         .stat-card h2 { font-size: 18px; font-weight: 700; }
         .stat-card p { font-size: 9px; color: #94a3b8; }
 
-        /* Compact Buttons */
         .action-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -285,7 +276,6 @@
         .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; }
         .action-btn.success { background: linear-gradient(135deg, #10b981, #059669); border: none; }
 
-        /* Compact Tables */
         .student-table-container {
             overflow-x: auto;
             max-height: 400px;
@@ -293,15 +283,18 @@
             border-radius: 10px;
             background: rgba(0, 0, 0, 0.2);
         }
-        .student-table { width: 100%; border-collapse: collapse; min-width: 400px; }
+        .student-table { width: 100%; border-collapse: collapse; min-width: 550px; }
         .student-table th {
             background: rgba(99, 102, 241, 0.2);
             padding: 8px;
             font-size: 11px;
             position: sticky;
             top: 0;
+            text-align: center;
         }
-        .student-table td { padding: 7px 8px; font-size: 11px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .student-table td { padding: 8px; font-size: 11px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
+        .student-table td:first-child { text-align: left; }
+        .student-table td:first-child { text-align: left; }
         .student-table input {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -310,9 +303,9 @@
             color: white;
             width: 100%;
             font-size: 11px;
+            text-align: center;
         }
 
-        /* Compact Upload Area */
         .upload-area {
             background: rgba(0, 0, 0, 0.3);
             border: 1px dashed rgba(99, 102, 241, 0.3);
@@ -324,13 +317,38 @@
         .upload-area i { font-size: 28px; margin-bottom: 6px; }
         .upload-area h3 { font-size: 12px; }
 
-        /* Compact Exercise Icons */
-        .exercise-cell { display: flex; gap: 8px; justify-content: center; }
-        .exercise-icon { font-size: 18px; cursor: pointer; padding: 4px; border-radius: 50%; }
+        /* Exercise Icons - Side by Side in one row */
+        .exercise-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-direction: row;
+        }
+        .exercise-pair {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .exercise-label {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-right: 5px;
+        }
+        .exercise-icon { 
+            font-size: 20px; 
+            cursor: pointer; 
+            padding: 4px; 
+            border-radius: 50%; 
+            transition: all 0.2s ease;
+        }
         .exercise-icon.correct { color: #10b981; }
+        .exercise-icon.correct:hover { background: rgba(16, 185, 129, 0.2); transform: scale(1.1); }
         .exercise-icon.wrong { color: #ef4444; }
+        .exercise-icon.wrong:hover { background: rgba(239, 68, 68, 0.2); transform: scale(1.1); }
+        .exercise-icon.active-correct { background: rgba(16, 185, 129, 0.25); border-radius: 50%; }
+        .exercise-icon.active-wrong { background: rgba(239, 68, 68, 0.25); border-radius: 50%; }
 
-        /* Compact Selectors */
         .month-selector { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
         .month-selector select {
             flex: 1;
@@ -344,7 +362,6 @@
 
         .btn-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 
-        /* Success/Error Messages */
         .success-message {
             position: fixed;
             bottom: 10px;
@@ -406,7 +423,6 @@
         .two-col { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
         @media (min-width: 550px) { .two-col { grid-template-columns: 1fr 1fr; } }
 
-        /* Timetable Grid */
         .timetable-grid { display: flex; flex-direction: column; gap: 8px; }
         .timetable-card { background: rgba(99, 102, 241, 0.1); border-radius: 10px; padding: 8px; }
         .timetable-card h4 { font-size: 12px; margin-bottom: 5px; }
@@ -483,7 +499,7 @@
             <div class="teacher-profile">
                 <span class="shared-badge"><i class="fas fa-globe"></i> Shared</span>
                 <div class="teacher-avatar" id="teacherAvatarDisplay"><i class="fas fa-user"></i></div>
-                <button class="action-btn-sm" onclick="logout()" style="background:rgba(255,255,255,0.1); border:none; border-radius:20px; padding:5px 10px;"><i class="fas fa-sign-out-alt"></i></button>
+                <button class="action-btn" onclick="logout()" style="padding: 5px 10px;"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </header>
 
@@ -498,7 +514,7 @@
             <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i> Groups</div>
         </div>
 
-        <!-- Grade & Class Selectors (Shows on all tabs) -->
+        <!-- Grade & Class Selectors -->
         <div class="selector-container">
             <div class="grade-selector">
                 <label><i class="fas fa-graduation-cap"></i></label>
@@ -578,7 +594,7 @@
                 </div>
                 <div class="student-table-container">
                     <table class="student-table">
-                        <thead><tr><th>#</th><th>Name</th><th>Marks</th><th>Status</th></tr></thead>
+                        <thead><td><th>#</th><th>Name</th><th>Marks</th><th>Status</th></tr></thead>
                         <tbody id="marksTableBody"></tbody>
                     </table>
                 </div>
@@ -596,21 +612,32 @@
             </div>
         </div>
 
-        <!-- ========== EXERCISES TAB ========== -->
+        <!-- ========== EXERCISES TAB (TASKS) - FIXED ALIGNMENT ========== -->
         <div id="exercises-section" class="content-section">
             <div class="card">
                 <div class="card-title"><i class="fas fa-tasks"></i><span>Exercise Tracking - <span id="exercisesGradeClass">Class</span></span></div>
                 <div class="month-selector">
                     <select id="exerciseMonth" onchange="loadExerciseData()">
-                        <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
-                        <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+                        <option>January</option><option>February</option><option>March</option><option>April</option>
+                        <option>May</option><option>June</option><option>July</option><option>August</option>
+                        <option>September</option><option>October</option><option>November</option><option>December</option>
                     </select>
-                    <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">View History</option></select>
+                    <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">-- View Previous Months --</option></select>
                 </div>
                 <div class="student-table-container">
                     <table class="student-table">
-                        <thead><tr><th>#</th><th>Name</th><th>1st</th><th>2nd</th><th>3rd</th></tr></thead>
-                        <tbody id="exercisesTableBody"></tbody>
+                        <thead>
+                            <tr>
+                                <th style="text-align:left;">#</th>
+                                <th style="text-align:left;">Student Name</th>
+                                <th style="text-align:center;">1st Time</th>
+                                <th style="text-align:center;">2nd Time</th>
+                                <th style="text-align:center;">3rd Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exercisesTableBody">
+                            <tr><td colspan="5" class="empty-state">Loading students...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -752,6 +779,7 @@
                 loadStudents().then(() => {
                     if (document.getElementById('students-section').classList.contains('active')) displayStudentsTable();
                     if (document.getElementById('marks-section').classList.contains('active')) displayMarksTable();
+                    if (document.getElementById('exercises-section').classList.contains('active')) displayExercisesTable();
                     updateDashboard();
                 });
             });
@@ -762,7 +790,11 @@
             const fullClass = getFullClassName();
             const docRef = firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`);
             const doc = await docRef.get();
-            exerciseData = doc.exists ? doc.data() : {};
+            if (doc.exists) {
+                exerciseData = doc.data();
+            } else {
+                exerciseData = {};
+            }
             displayExercisesTable();
         }
 
@@ -791,11 +823,17 @@
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) { tbody.innerHTML = `<table><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
             classStudents.forEach((student, idx) => {
-                tbody.innerHTML += `<tr><td>${idx+1}</td><td>${student.name}</td><td>${student.parent_phone || '-'}</td>
-                <td><button class="action-btn" onclick="editStudent('${student.id}')" style="padding:3px 6px;"><i class="fas fa-edit"></i></button>
-                <button class="action-btn danger" onclick="deleteStudent('${student.id}')" style="padding:3px 6px;"><i class="fas fa-trash"></i></button></td></tr>`;
+                tbody.innerHTML += `<tr>
+                    <td style="padding: 7px 8px;">${idx+1}</td>
+                    <td style="padding: 7px 8px;">${student.name}</td>
+                    <td style="padding: 7px 8px;">${student.parent_phone || '-'}</td>
+                    <td style="padding: 7px 8px;">
+                        <button class="action-btn" onclick="editStudent('${student.id}')" style="padding:3px 6px;"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn danger" onclick="deleteStudent('${student.id}')" style="padding:3px 6px;"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
             });
         }
 
@@ -825,9 +863,12 @@
             const classStudents = students[key] || [];
             if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
             classStudents.forEach((student, idx) => {
-                tbody.innerHTML += `<tr><td>${idx+1}</td><td>${student.name}</td>
-                <td><input type="number" min="0" max="100" id="mark_${student.id}" placeholder="-" style="width:70px;"></td>
-                <td id="status_${student.id}">-</td></tr>`;
+                tbody.innerHTML += `<tr>
+                    <td style="padding: 7px 8px;">${idx+1}</td>
+                    <td style="padding: 7px 8px;">${student.name}</td>
+                    <td style="padding: 7px 8px;"><input type="number" min="0" max="100" id="mark_${student.id}" placeholder="-" style="width:70px;"></td>
+                    <td id="status_${student.id}" style="padding: 7px 8px;">-</td>
+                </tr>`;
             });
         }
 
@@ -885,35 +926,91 @@
             showSuccess(`Copied! ${lowMarks.length} students.`);
         }
 
+        // ========== FIXED EXERCISE TRACKING FUNCTIONS - SIDE BY SIDE ALIGNMENT ==========
+        
         function displayExercisesTable() {
             const tbody = document.getElementById('exercisesTableBody');
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-users-slash"></i><p>No students</p></td></tr>`; return; }
+            
+            if (classStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-users-slash"></i><p>No students in this class</p></td></tr>`;
+                return;
+            }
+            
             classStudents.forEach((student, idx) => {
-                const ex = exerciseData[student.id] || { first: null, second: null, third: null };
-                tbody.innerHTML += `<tr>
-                    <td>${idx+1}</td><td>${student.name}</td>
-                    <td class="exercise-cell"><i class="fas fa-check-circle exercise-icon correct ${ex.first === 'correct' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'first', 'correct')"></i><i class="fas fa-times-circle exercise-icon wrong ${ex.first === 'wrong' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'first', 'wrong')"></i></td>
-                    <td class="exercise-cell"><i class="fas fa-check-circle exercise-icon correct ${ex.second === 'correct' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'second', 'correct')"></i><i class="fas fa-times-circle exercise-icon wrong ${ex.second === 'wrong' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'second', 'wrong')"></i></td>
-                    <td class="exercise-cell"><i class="fas fa-check-circle exercise-icon correct ${ex.third === 'correct' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'third', 'correct')"></i><i class="fas fa-times-circle exercise-icon wrong ${ex.third === 'wrong' ? 'completed' : ''}" onclick="markExercise('${student.id}', 'third', 'wrong')"></i></td>
-                </tr>`;
+                const studentData = exerciseData[student.id] || { first: null, second: null, third: null };
+                
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td style="padding: 8px 12px; text-align: left;">${idx + 1}</td>
+                    <td style="padding: 8px 12px; text-align: left; font-weight: 500;">${student.name}</td>
+                    <td style="padding: 8px 12px; text-align: center;">
+                        <div class="exercise-group">
+                            <div class="exercise-pair">
+                                <i class="fas fa-check-circle exercise-icon correct ${studentData.first === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'first', 'correct')"></i>
+                                <i class="fas fa-times-circle exercise-icon wrong ${studentData.first === 'wrong' ? 'active-wrong' : ''}" onclick="markExercise('${student.id}', 'first', 'wrong')"></i>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 8px 12px; text-align: center;">
+                        <div class="exercise-group">
+                            <div class="exercise-pair">
+                                <i class="fas fa-check-circle exercise-icon correct ${studentData.second === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'second', 'correct')"></i>
+                                <i class="fas fa-times-circle exercise-icon wrong ${studentData.second === 'wrong' ? 'active-wrong' : ''}" onclick="markExercise('${student.id}', 'second', 'wrong')"></i>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 8px 12px; text-align: center;">
+                        <div class="exercise-group">
+                            <div class="exercise-pair">
+                                <i class="fas fa-check-circle exercise-icon correct ${studentData.third === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'third', 'correct')"></i>
+                                <i class="fas fa-times-circle exercise-icon wrong ${studentData.third === 'wrong' ? 'active-wrong' : ''}" onclick="markExercise('${student.id}', 'third', 'wrong')"></i>
+                            </div>
+                        </div>
+                    </td>
+                `;
             });
         }
 
         async function markExercise(studentId, time, status) {
-            if (!exerciseData[studentId]) exerciseData[studentId] = {};
-            exerciseData[studentId][time] = status;
-            await saveExerciseData();
-            displayExercisesTable();
-            const student = (students[`${currentGrade}_${currentClass}`] || []).find(s => s.id === studentId);
-            if (student && student.parent_phone && status === 'wrong') {
-                const message = `📢 *Exercise Alert* - ${student.name} didn't complete the exercise.`;
-                await navigator.clipboard.writeText(message);
-                showSuccess(`Alert prepared for ${student.name}'s parent`);
+            // Initialize student data if not exists
+            if (!exerciseData[studentId]) {
+                exerciseData[studentId] = { first: null, second: null, third: null };
             }
-            showSuccess(`${student?.name}: ${status === 'correct' ? '✓' : '✗'}`);
+            
+            // Update the status
+            exerciseData[studentId][time] = status;
+            
+            // Save to Firebase
+            await saveExerciseData();
+            
+            // Refresh the display
+            displayExercisesTable();
+            
+            // Get student name for success message
+            const student = (students[`${currentGrade}_${currentClass}`] || []).find(s => s.id === studentId);
+            const statusText = status === 'correct' ? '✓ Correct' : '✗ Wrong';
+            showSuccess(`${student?.name || 'Student'}: ${time} time - ${statusText}`);
+            
+            // Send alert for wrong exercises based on rules
+            if (student && student.parent_phone && status === 'wrong') {
+                // Alert rules:
+                // - If second time wrong AND first time was also wrong: Send alert
+                // - If third time wrong: Send alert (regardless of previous)
+                if ((time === 'second' && exerciseData[studentId].first === 'wrong') ||
+                    (time === 'third')) {
+                    await sendExerciseAlert(student, time);
+                }
+            }
+        }
+
+        async function sendExerciseAlert(student, time) {
+            const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* didn't complete the exercise for the ${time} time.\n\nPlease encourage them to complete their homework regularly.\n\nThank you,\nEduTrack Pro System`;
+            await navigator.clipboard.writeText(message);
+            window.open('https://web.whatsapp.com/', '_blank');
+            showSuccess(`Alert prepared for ${student.name}'s parent. Open WhatsApp to send.`);
         }
 
         async function loadHistoricalExercises() {
@@ -921,18 +1018,25 @@
             if (!month) return;
             const fullClass = getFullClassName();
             const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`).get();
-            exerciseData = doc.exists ? doc.data() : {};
+            if (doc.exists) {
+                exerciseData = doc.data();
+            } else {
+                exerciseData = {};
+            }
             displayExercisesTable();
+            showSuccess(`Loaded data for ${month}`);
         }
 
         async function populateHistoricalMonths() {
             const select = document.getElementById('viewMonthSelect');
-            select.innerHTML = '<option value="">View History</option>';
-            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            select.innerHTML = '<option value="">-- View Previous Months --</option>';
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const fullClass = getFullClassName();
             for (let m of months) {
                 const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${m}`).get();
-                if (doc.exists) select.innerHTML += `<option value="${m}">${m}</option>`;
+                if (doc.exists) {
+                    select.innerHTML += `<option value="${m}">${m}</option>`;
+                }
             }
         }
 
@@ -1051,6 +1155,8 @@
             let total = 0;
             for (let key in students) total += students[key].length;
             document.getElementById('totalStudents').innerHTML = total;
+            document.getElementById('lowMarksCount').innerHTML = '0';
+            document.getElementById('averageMarks').innerHTML = '0%';
         }
 
         function switchTab(tab) {
@@ -1059,7 +1165,6 @@
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(`${tab}-section`).classList.add('active');
             
-            // Refresh data when switching tabs
             if (tab === 'students') displayStudentsTable();
             else if (tab === 'marks') displayMarksTable();
             else if (tab === 'exercises') { loadExerciseData(); populateHistoricalMonths(); }
