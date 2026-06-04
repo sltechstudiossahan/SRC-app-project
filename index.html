@@ -174,7 +174,7 @@
             right: 0;
             background: #0d1326;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 8px 6px cubic-bezier(0.1, 0.7, 0.1, 1);
+            padding: 8px 6px;
             z-index: 999;
             justify-content: space-around;
             align-items: center;
@@ -1036,11 +1036,12 @@
             await saveExerciseData();
             displayExercisesTable();
             
-            const student = (students[`${currentGrade}_${currentClass}`] || []).find(s => s.id === studentId);
+            const key = `${currentGrade}_${currentClass}`;
+            const student = (students[key] || []).find(s => s.id === studentId);
             const statusText = status === 'correct' ? '✓ Correct' : '✗ Wrong';
             showSuccess(`${student?.name || 'Student'}: ${time} assignment marked ${statusText}`);
             
-            if (student && student.parent_phone && status === 'wrong') {
+            if (student && status === 'wrong') {
                 if ((time === 'second' && exerciseData[studentId].first === 'wrong') || (time === 'third')) {
                     await sendExerciseAlert(student, time);
                 }
@@ -1049,9 +1050,23 @@
 
         async function sendExerciseAlert(student, time) {
             const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* encountered failures processing homework problems during round trial step: ${time}.\n\nPlease assist optimization workflows at home.\n\nThank you!`;
+            
+            // Copies message template text cleanly onto clipboard logs
             await navigator.clipboard.writeText(message);
-            window.open('https://web.whatsapp.com/', '_blank');
-            showSuccess(`Alert template generated for ${student.name}. Open WhatsApp!`);
+            
+            // Clean up numbers out of text symbols (+, -, spaces)
+            let phoneNumber = student.parent_phone ? student.parent_phone.toString().replace(/[^0-9]/g, '') : '';
+            
+            if (phoneNumber) {
+                // Route target straight directly towards specific private text layout window
+                const whatsappUrl = `https://wa.me/${phoneNumber}`;
+                window.open(whatsappUrl, '_blank');
+                showSuccess(`Opening private WhatsApp chat for ${student.name}. Paste to send text.`);
+            } else {
+                // Fallback portal layout routine standard interface anchor backup structure
+                window.open('https://web.whatsapp.com/', '_blank');
+                showError(`No private WhatsApp connection string on file log parameters for ${student.name}.`);
+            }
         }
 
         async function loadHistoricalExercises() {
@@ -1212,7 +1227,6 @@
             else if (tab === 'whatsapp') displayWhatsAppGroups();
             else if (tab === 'dashboard') updateDashboard();
             
-            // Auto scroll fluid lock adjustment for mobile browsers
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
