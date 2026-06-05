@@ -203,6 +203,76 @@
             font-size: 14px;
         }
 
+        /* Slide-out Left Navigation Drawers Configuration */
+        .side-drawer-nav {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: #090d1a;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 5px 0 25px rgba(0,0,0,0.6);
+            z-index: 10000;
+            transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .side-drawer-nav.open {
+            transform: translateX(280px);
+        }
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .drawer-overlay.visible {
+            display: block;
+            opacity: 1;
+        }
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .drawer-header h2 { font-size: 16px; font-weight: 700; color: white; }
+        .drawer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #94a3b8;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .drawer-item i { font-size: 16px; width: 20px; }
+        .drawer-item:hover, .drawer-item.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+            color: #6366f1;
+            border-left: 3px solid #6366f1;
+        }
+
         /* Mobile Bottom Nav design configuration */
         .nav-tabs {
             display: flex;
@@ -445,7 +515,7 @@
             border-radius: 12px;
             font-size: 13px;
             text-align: center;
-            z-index: 1000;
+            z-index: 10000;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .error-message {
@@ -502,6 +572,25 @@
         .timetable-card h4 { font-size: 14px; margin-bottom: 6px; color: #8b5cf6; }
         .timetable-card p { font-size: 12px; margin-bottom: 4px; color: #cbd5e1; }
 
+        /* Manual Documentation Utilities Styling */
+        .manual-step {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            border-left: 3px solid #6366f1;
+        }
+        .manual-step h4 {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 4px;
+        }
+        .manual-step p {
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
         /* Tablet Scaling Layout Triggers */
         @media (min-width: 550px) { 
             .two-col { grid-template-columns: 1fr 1fr; } 
@@ -530,6 +619,22 @@
 </head>
 <body>
     <div class="gradient-bg"></div>
+
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
+    <nav class="side-drawer-nav" id="sideDrawer">
+        <div class="drawer-header">
+            <div class="logo-icon" style="width:32px; height:32px; font-size:14px;"><i class="fas fa-graduation-cap"></i></div>
+            <h2>EduTrack Core Nav</h2>
+        </div>
+        <div class="drawer-links">
+            <div class="drawer-item active" id="drawer-dashboard" onclick="handleDrawerNavigation('dashboard')">
+                <i class="fas fa-th-large"></i> Dashboard View
+            </div>
+            <div class="drawer-item" id="drawer-manual" onclick="handleDrawerNavigation('manual')">
+                <i class="fas fa-book-reader"></i> User Manual Page
+            </div>
+        </div>
+    </nav>
 
     <div id="loginPage" class="login-container">
         <div class="login-card">
@@ -661,6 +766,7 @@
     <div id="mainApp" class="app-container">
         <header class="header">
             <div class="logo">
+                <button onclick="toggleDrawer(true)" style="background:transparent; border:none; color:#6366f1; font-size:18px; margin-right:6px; cursor:pointer;"><i class="fas fa-bars"></i></button>
                 <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
                 <div><h1 id="teacherNameDisplay">Loading...</h1><p id="teacherEmailDisplay"></p></div>
             </div>
@@ -671,193 +777,236 @@
             </div>
         </header>
 
-        <div class="nav-tabs">
-            <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard"><i class="fas fa-home"></i>Dashboard</div>
-            <div class="nav-tab" onclick="switchTab('students')" id="tab-students"><i class="fas fa-users"></i>Students</div>
-            <div class="nav-tab" onclick="switchTab('marks')" id="tab-marks"><i class="fas fa-chart-line"></i>Marks</div>
-            <div class="nav-tab" onclick="switchTab('exercises')" id="tab-exercises"><i class="fas fa-tasks"></i>Tasks</div>
-            <div class="nav-tab" onclick="switchTab('homework')" id="tab-homework"><i class="fas fa-book"></i>Homework</div>
-            <div class="nav-tab" onclick="switchTab('timetable')" id="tab-timetable"><i class="fas fa-calendar"></i>Schedule</div>
-            <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i>Groups</div>
-        </div>
+        <div id="dashboardContainerView">
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard"><i class="fas fa-home"></i>Dashboard</div>
+                <div class="nav-tab" onclick="switchTab('students')" id="tab-students"><i class="fas fa-users"></i>Students</div>
+                <div class="nav-tab" onclick="switchTab('marks')" id="tab-marks"><i class="fas fa-chart-line"></i>Marks</div>
+                <div class="nav-tab" onclick="switchTab('exercises')" id="tab-exercises"><i class="fas fa-tasks"></i>Tasks</div>
+                <div class="nav-tab" onclick="switchTab('homework')" id="tab-homework"><i class="fas fa-book"></i>Homework</div>
+                <div class="nav-tab" onclick="switchTab('timetable')" id="tab-timetable"><i class="fas fa-calendar"></i>Schedule</div>
+                <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i>Groups</div>
+            </div>
 
-        <div class="selector-container">
-            <div class="grade-selector">
-                <label><i class="fas fa-graduation-cap" style="margin-right: 6px;"></i> Grade</label>
-                <select id="gradeSelect" onchange="changeGrade()">
-                    <option value="6">G6</option><option value="7">G7</option><option value="8">G8</option>
-                    <option value="9">G9</option><option value="10">G10</option><option value="11">G11</option>
-                    <option value="12">G12</option><option value="13">G13</option>
-                </select>
-            </div>
-            <div class="class-selector">
-                <label><i class="fas fa-users" style="margin-right: 6px;"></i> Class</label>
-                <select id="classSelect" onchange="changeClass()">
-                    <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
-                </select>
-            </div>
-        </div>
-
-        <div id="dashboard-section" class="content-section active">
-            <div class="stats-grid">
-                <div class="stat-card"><i class="fas fa-users"></i><h2 id="totalStudents">0</h2><p>Students</p></div>
-                <div class="stat-card"><i class="fas fa-exclamation-triangle"></i><h2 id="lowMarksCount">0</h2><p>Need Help</p></div>
-                <div class="stat-card"><i class="fas fa-check-circle"></i><h2 id="averageMarks">0%</h2><p>Average</p></div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-book"></i><span>Quick Homework Board</span></div>
-                <textarea id="dashboardHomeworkContent" placeholder="Homework details..." rows="3" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; margin-bottom:12px; outline:none; resize:none;"></textarea>
-                <div class="btn-group">
-                    <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent','dashboardVoiceBtn')"><i class="fas fa-microphone"></i> Voice Input</button>
-                    <button class="action-btn success" onclick="sendDashboardHomework()"><i class="fab fa-whatsapp"></i> Broadcast</button>
+            <div class="selector-container">
+                <div class="grade-selector">
+                    <label><i class="fas fa-graduation-cap" style="margin-right: 6px;"></i> Grade</label>
+                    <select id="gradeSelect" onchange="changeGrade()">
+                        <option value="6">G6</option><option value="7">G7</option><option value="8">G8</option>
+                        <option value="9">G9</option><option value="10">G10</option><option value="11">G11</option>
+                        <option value="12">G12</option><option value="13">G13</option>
+                    </select>
+                </div>
+                <div class="class-selector">
+                    <label><i class="fas fa-users" style="margin-right: 6px;"></i> Class</label>
+                    <select id="classSelect" onchange="changeClass()">
+                        <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                    </select>
                 </div>
             </div>
-        </div>
 
-        <div id="students-section" class="content-section">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-user-plus"></i><span>Add Students to <span id="selectedGradeClass">Class</span></span></div>
-                <div class="two-col">
-                    <div>
-                        <div class="upload-area" onclick="document.getElementById('nameListInput').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <h3>Upload Registry Image</h3>
-                            <p style="font-size:11px; color:#94a3b8; margin-top:4px;">OCR will read names automatically</p>
+            <div id="dashboard-section" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card"><i class="fas fa-users"></i><h2 id="totalStudents">0</h2><p>Students</p></div>
+                    <div class="stat-card"><i class="fas fa-exclamation-triangle"></i><h2 id="lowMarksCount">0</h2><p>Need Help</p></div>
+                    <div class="stat-card"><i class="fas fa-check-circle"></i><h2 id="averageMarks">0%</h2><p>Average</p></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-book"></i><span>Quick Homework Board</span></div>
+                    <textarea id="dashboardHomeworkContent" placeholder="Homework details..." rows="3" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; margin-bottom:12px; outline:none; resize:none;"></textarea>
+                    <div class="btn-group">
+                        <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent','dashboardVoiceBtn')"><i class="fas fa-microphone"></i> Voice Input</button>
+                        <button class="action-btn success" onclick="sendDashboardHomework()"><i class="fab fa-whatsapp"></i> Broadcast</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="students-section" class="content-section">
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-user-plus"></i><span>Add Students to <span id="selectedGradeClass">Class</span></span></div>
+                    <div class="two-col">
+                        <div>
+                            <div class="upload-area" onclick="document.getElementById('nameListInput').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h3>Upload Registry Image</h3>
+                                <p style="font-size:11px; color:#94a3b8; margin-top:4px;">OCR will read names automatically</p>
+                            </div>
+                            <input type="file" id="nameListInput" accept="image/*" style="display:none;" onchange="processNameListWithOCR(this)">
                         </div>
-                        <input type="file" id="nameListInput" accept="image/*" style="display:none;" onchange="processNameListWithOCR(this)">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <input type="text" id="studentNameInput" placeholder="Student Full Name" style="width:100%; background:rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; outline:none;">
+                            <input type="text" id="parentPhoneInput" placeholder="Parent WhatsApp Number" style="width:100%; background:rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; outline:none;">
+                            <button class="action-btn success" onclick="addStudentManually()" style="width: 100%; margin: 6px 0 0 0;"><i class="fas fa-plus"></i> Save Student</button>
+                        </div>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <input type="text" id="studentNameInput" placeholder="Student Full Name" style="width:100%; background:rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; outline:none;">
-                        <input type="text" id="parentPhoneInput" placeholder="Parent WhatsApp Number" style="width:100%; background:rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; outline:none;">
-                        <button class="action-btn success" onclick="addStudentManually()" style="width: 100%; margin: 6px 0 0 0;"><i class="fas fa-plus"></i> Save Student</button>
-                    </div>
-                </div>
-                
-                <h4 style="font-size: 13px; font-weight:600; margin: 16px 0 6px 2px;"><i class="fas fa-list-ol"></i> Class Roster</h4>
-                <div class="student-table-container">
-                    <table class="student-table">
-                        <thead><tr><th>#</th><th>Name</th><th>Parent Phone</th><th>Actions</th></tr></thead>
-                        <tbody id="studentsTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id="marks-section" class="content-section">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-star"></i><span>Enter Performance Marks (<span id="marksGradeClass">Class</span>)</span></div>
-                
-                <div class="month-selector" style="margin-bottom: 8px;">
-                    <select id="examMonth">
-                        <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
-                        <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
-                    </select>
-                    <select id="examType">
-                        <option>Monthly</option><option>Mid Term</option><option>Final</option><option>Quiz</option>
-                    </select>
-                </div>
-                
-                <button class="action-btn primary" onclick="document.getElementById('marksheetInput').click()" style="width:100%; margin-bottom:12px;"><i class="fas fa-camera"></i> Scan Marksheet Image via OCR</button>
-                <input type="file" id="marksheetInput" accept="image/*" style="display:none;" onchange="processMarksheetWithOCR(this)">
-                
-                <div class="student-table-container">
-                    <table class="student-table">
-                        <thead><tr><th>#</th><th>Student Name</th><th>Marks</th></tr></thead>
-                        <tbody id="marksTableBody"></tbody>
-                    </table>
-                </div>
-                
-                <div class="btn-group">
-                    <button class="action-btn primary" onclick="saveMarks()"><i class="fas fa-save"></i> Save Grades</button>
-                    <button class="action-btn danger" onclick="identifyLowMarks()"><i class="fas fa-exclamation-triangle"></i> Flag Failures</button>
-                </div>
-                
-                <div id="lowMarksResults" style="display:none; margin-top:10px;">
-                    <div class="low-marks-card">
-                        <h4 style="font-size:13px; font-weight:600; margin-bottom:6px;">Students Below 40%</h4>
-                        <div id="lowMarksStudentsList" style="margin-bottom: 10px;"></div>
-                        <button class="action-btn danger" onclick="sendLowMarksToParents()" style="width:100%; margin:0;"><i class="fab fa-whatsapp"></i> Send Alerts to Parents</button>
+                    
+                    <h4 style="font-size: 13px; font-weight:600; margin: 16px 0 6px 2px;"><i class="fas fa-list-ol"></i> Class Roster</h4>
+                    <div class="student-table-container">
+                        <table class="student-table">
+                            <thead><tr><th>#</th><th>Name</th><th>Parent Phone</th><th>Actions</th></tr></thead>
+                            <tbody id="studentsTableBody"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="exercises-section" class="content-section">
-            <div class="card">
-                <div class="card-title">
-                    <div><i class="fas fa-tasks"></i> <span>Exercise Checksheets - <span id="exercisesGradeClass">Class</span></span></div>
-                </div>
-
-                <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
-                    <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
-                    <div style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: flex-end;">
-                        <select id="taskSubjectSelect" onchange="loadExerciseData()" style="max-width: 180px; font-weight: 700; color: #8b5cf6;">
-                            <option value="">-- Load Elements --</option>
+            <div id="marks-section" class="content-section">
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-star"></i><span>Enter Performance Marks (<span id="marksGradeClass">Class</span>)</span></div>
+                    
+                    <div class="month-selector" style="margin-bottom: 8px;">
+                        <select id="examMonth">
+                            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
+                            <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
                         </select>
-                        <button class="action-btn primary mini" onclick="openSubjectViewManually()"><i class="fas fa-plus"></i> Add Manually</button>
+                        <select id="examType">
+                            <option>Monthly</option><option>Mid Term</option><option>Final</option><option>Quiz</option>
+                        </select>
+                    </div>
+                    
+                    <button class="action-btn primary" onclick="document.getElementById('marksheetInput').click()" style="width:100%; margin-bottom:12px;"><i class="fas fa-camera"></i> Scan Marksheet Image via OCR</button>
+                    <input type="file" id="marksheetInput" accept="image/*" style="display:none;" onchange="processMarksheetWithOCR(this)">
+                    
+                    <div class="student-table-container">
+                        <table class="student-table">
+                            <thead><tr><th>#</th><th>Student Name</th><th>Marks</th></tr></thead>
+                            <tbody id="marksTableBody"></tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="action-btn primary" onclick="saveMarks()"><i class="fas fa-save"></i> Save Grades</button>
+                        <button class="action-btn danger" onclick="identifyLowMarks()"><i class="fas fa-exclamation-triangle"></i> Flag Failures</button>
+                    </div>
+                    
+                    <div id="lowMarksResults" style="display:none; margin-top:10px;">
+                        <div class="low-marks-card">
+                            <h4 style="font-size:13px; font-weight:600; margin-bottom:6px;">Students Below 40%</h4>
+                            <div id="lowMarksStudentsList" style="margin-bottom: 10px;"></div>
+                            <button class="action-btn danger" onclick="sendLowMarksToParents()" style="width:100%; margin:0;"><i class="fab fa-whatsapp"></i> Send Alerts to Parents</button>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="month-selector">
-                    <select id="exerciseMonth" onchange="loadExerciseData()">
-                        <option>January</option><option>February</option><option>March</option><option>April</option>
-                        <option>May</option><option>June</option><option>July</option><option>August</option>
-                        <option>September</option><option>October</option><option>November</option><option>December</option>
-                    </select>
-                    <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">-- View Previous Months --</option></select>
+            <div id="exercises-section" class="content-section">
+                <div class="card">
+                    <div class="card-title">
+                        <div><i class="fas fa-tasks"></i> <span>Exercise Checksheets - <span id="exercisesGradeClass">Class</span></span></div>
+                    </div>
+
+                    <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
+                        <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
+                        <div style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: flex-end;">
+                            <select id="taskSubjectSelect" onchange="loadExerciseData()" style="max-width: 180px; font-weight: 700; color: #8b5cf6;">
+                                <option value="">-- Load Elements --</option>
+                            </select>
+                            <button class="action-btn primary mini" onclick="openSubjectViewManually()"><i class="fas fa-plus"></i> Add Manually</button>
+                        </div>
+                    </div>
+
+                    <div class="month-selector">
+                        <select id="exerciseMonth" onchange="loadExerciseData()">
+                            <option>January</option><option>February</option><option>March</option><option>April</option>
+                            <option>May</option><option>June</option><option>July</option><option>August</option>
+                            <option>September</option><option>October</option><option>November</option><option>December</option>
+                        </select>
+                        <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">-- View Previous Months --</option></select>
+                    </div>
+                    
+                    <div class="student-table-container">
+                        <table class="student-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student Name</th>
+                                    <th>1st</th>
+                                    <th>2nd</th>
+                                    <th>3rd</th>
+                                </tr>
+                            </thead>
+                            <tbody id="exercisesTableBody">
+                                <tr><td colspan="5" class="empty-state">Select a subject to populate data metrics...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="homework-section" class="content-section">
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-book"></i><span>Send Assignment Tasks (<span id="homeworkGradeClass">Class</span>)</span></div>
+                    <textarea id="homeworkContent" placeholder="Write full assignment details down here..." rows="4" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; margin-bottom:12px; outline:none; resize:none;"></textarea>
+                    <div class="btn-group">
+                        <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent','homeworkVoiceBtn')"><i class="fas fa-microphone"></i> Dictate (Voice)</button>
+                        <button class="action-btn success" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Share via WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="timetable-section" class="content-section">
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-calendar-alt"></i><span>Master Schedule Timetable</span></div>
+                    <div class="upload-area" onclick="document.getElementById('timetableInput').click()" style="margin-bottom: 12px;">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Upload Timetable Layout Snapshot</h3>
+                        <p style="font-size:11px; color:#94a3b8; margin-top:4px;">OCR will extract schedules automatically</p>
+                    </div>
+                    <input type="file" id="timetableInput" accept="image/*" style="display:none;" onchange="processTimetableWithOCR(this)">
+                    <div id="timetableGrid" class="timetable-grid"></div>
+                    <button class="action-btn primary" onclick="saveTimetableToDatabase()" id="saveTimetableBtn" disabled style="width:100%; margin-top:12px;"><i class="fas fa-save"></i> Save Schedule Grid</button>
+                </div>
+            </div>
+
+            <div id="whatsapp-section" class="content-section">
+                <div class="card">
+                    <div class="card-title"><i class="fab fa-whatsapp"></i><span>WhatsApp Integration API URLs</span></div>
+                    <div id="whatsappGroupsList"></div>
+                    <button class="action-btn success" onclick="saveWhatsAppGroups()" style="width:100%; margin-top:12px; margin-right:0; margin-bottom:0;"><i class="fas fa-save"></i> Apply Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="userManualViewPage" style="display: none; animation: fadeIn 0.25s ease-out;">
+            <div class="card">
+                <div class="card-title" style="font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+                    <span><i class="fas fa-book" style="color: #6366f1;"></i> Teacher System Training Manual</span>
+                </div>
+                <p style="color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 16px;">
+                    Welcome to your EduTrack Pro user training log profile manual. Use the details below to master all automated capabilities.
+                </p>
+
+                <div class="manual-step">
+                    <h4>1. Class Setup &amp; Student Registration</h4>
+                    <p>Go to the <b>Students</b> tab. You can register student identities manually by entering their full name and matching WhatsApp contact links, or tap <b>Upload Registry Image</b> to activate the built-in Tesseract OCR machine which extracts student names automatically from photos of written paperwork logs.</p>
+                </div>
+
+                <div class="manual-step">
+                    <h4>2. Grade &amp; Term Marks Entry Tracker</h4>
+                    <p>Navigate to the <b>Marks</b> tab. Choose specific testing months and assessment scopes. You can input performance scores key-by-key or tap <b>Scan Marksheet Image via OCR</b>. The background artificial pipeline automatically parses numbers next to corresponding names.</p>
+                </div>
+
+                <div class="manual-step">
+                    <h4>3. Flagging Failures &amp; Alerting Parents</h4>
+                    <p>Once grades are typed or scanned, click <b>Flag Failures</b>. The system compiles a real-time layout of students under 40%. Click <b>Send Alerts to Parents</b> to automatically format a structured broadcast announcement text block, copy it to your device clipboard, and redirect to WhatsApp Web instantly.</p>
+                </div>
+
+                <div class="manual-step">
+                    <h4>4. Exercise Checksheets &amp; Reminders</h4>
+                    <p>Under the <b>Tasks</b> tab, tap either green checkmarks or red cross symbols to mark exercise attempts. If a student records successive errors on task workflows, the platform immediately offers a distinct direct communication link pipeline to inform that student's parent.</p>
+                </div>
+
+                <div class="manual-step">
+                    <h4>5. Voice Dictation &amp; Broadcast Announcements</h4>
+                    <p>On both the main <b>Dashboard</b> and <b>Homework</b> view panels, tap the <b>Voice Input / Dictate (Voice)</b> buttons to record text instructions hands-free via the native webkit speech runtime API driver interface.</p>
                 </div>
                 
-                <div class="student-table-container">
-                    <table class="student-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Student Name</th>
-                                <th>1st</th>
-                                <th>2nd</th>
-                                <th>3rd</th>
-                            </tr>
-                        </thead>
-                        <tbody id="exercisesTableBody">
-                            <tr><td colspan="5" class="empty-state">Select a subject to populate data metrics...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                <button class="action-btn primary" onclick="handleDrawerNavigation('dashboard')" style="width: 100%; margin-top: 10px;">
+                    <i class="fas fa-arrow-left"></i> Return to Dashboard Area
+                </button>
             </div>
         </div>
 
-        <div id="homework-section" class="content-section">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-book"></i><span>Send Assignment Tasks (<span id="homeworkGradeClass">Class</span>)</span></div>
-                <textarea id="homeworkContent" placeholder="Write full assignment details down here..." rows="4" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; margin-bottom:12px; outline:none; resize:none;"></textarea>
-                <div class="btn-group">
-                    <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent','homeworkVoiceBtn')"><i class="fas fa-microphone"></i> Dictate (Voice)</button>
-                    <button class="action-btn success" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Share via WhatsApp</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="timetable-section" class="content-section">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-calendar-alt"></i><span>Master Schedule Timetable</span></div>
-                <div class="upload-area" onclick="document.getElementById('timetableInput').click()" style="margin-bottom: 12px;">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <h3>Upload Timetable Layout Snapshot</h3>
-                    <p style="font-size:11px; color:#94a3b8; margin-top:4px;">OCR will extract schedules automatically</p>
-                </div>
-                <input type="file" id="timetableInput" accept="image/*" style="display:none;" onchange="processTimetableWithOCR(this)">
-                <div id="timetableGrid" class="timetable-grid"></div>
-                <button class="action-btn primary" onclick="saveTimetableToDatabase()" id="saveTimetableBtn" disabled style="width:100%; margin-top:12px;"><i class="fas fa-save"></i> Save Schedule Grid</button>
-            </div>
-        </div>
-
-        <div id="whatsapp-section" class="content-section">
-            <div class="card">
-                <div class="card-title"><i class="fab fa-whatsapp"></i><span>WhatsApp Integration API URLs</span></div>
-                <div id="whatsappGroupsList"></div>
-                <button class="action-btn success" onclick="saveWhatsAppGroups()" style="width:100%; margin-top:12px; margin-right:0; margin-bottom:0;"><i class="fas fa-save"></i> Apply Changes</button>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -882,6 +1031,10 @@
         let teacherSubjects = [];
         let isEditingManuallyFromApp = false;
 
+        // Swiping Left-to-Right Screen Gesture Integration Mechanics Tracker Variables
+        let touchStartX = 0;
+        let touchStartY = 0;
+
         function getFullClassName() { return `${currentGrade}${currentClass}`; }
 
         function switchAuthTab(tab) {
@@ -903,18 +1056,13 @@
                 btn.disabled = true;
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 
-                // Save basic profile document inside Cloud Firestore database logs
                 await firebase.firestore().collection('teachers').doc(userCredential.user.uid).set({
                     full_name: name, email: email, created_at: new Date().toISOString(),
                     whatsapp_groups: {}, subjects: []
                 });
                 
                 showSuccess('Account created! Choose your subjects.');
-                
-                // Clear any pre-existing checkbox states from old views
                 document.querySelectorAll('.subject-checkbox').forEach(cb => cb.checked = false);
-                
-                // Show subject selection view layout 
                 document.getElementById('authCredentialsForm').style.display = 'none';
                 document.getElementById('subjectSelectionForm').style.display = 'block';
             } catch (error) { showError(error.message); }
@@ -924,34 +1072,23 @@
         async function saveSelectedSubjectsToDatabase() {
             if (!firebase.auth().currentUser) return showError('No authentic session data mapped.');
             const uid = firebase.auth().currentUser.uid;
-            
             const checkedBoxes = document.querySelectorAll('.subject-checkbox:checked');
             const selected = Array.from(checkedBoxes).map(cb => cb.value);
-            
             if (selected.length === 0) return showError('Please choose at least 1 subject box item');
-            
             try {
                 const btn = document.getElementById('saveSubjectsBtn');
                 btn.innerHTML = '<span class="loading-spinner"></span> Saving...';
                 btn.disabled = true;
-                
-                await firebase.firestore().collection('teachers').doc(uid).update({
-                    subjects: selected
-                });
-                
+                await firebase.firestore().collection('teachers').doc(uid).update({ subjects: selected });
                 teacherSubjects = selected;
                 populateTaskSubjectDropdown();
-                
                 showSuccess('Subjects saved successfully!');
-                
                 if (isEditingManuallyFromApp) {
-                    // Route back cleanly to tasks screen environment dashboard space
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     switchTab('exercises');
                     isEditingManuallyFromApp = false;
                 } else {
-                    // Step back to standard login portal configuration settings
                     document.getElementById('subjectSelectionForm').style.display = 'none';
                     document.getElementById('authCredentialsForm').style.display = 'block';
                     switchAuthTab('login');
@@ -971,8 +1108,6 @@
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('authCredentialsForm').style.display = 'none';
             document.getElementById('subjectSelectionForm').style.display = 'block';
-            
-            // Loop checkbox matrices and restore active profiles 
             document.querySelectorAll('.subject-checkbox').forEach(cb => {
                 cb.checked = teacherSubjects.includes(cb.value);
             });
@@ -981,12 +1116,10 @@
         function populateTaskSubjectDropdown() {
             const select = document.getElementById('taskSubjectSelect');
             select.innerHTML = '';
-            
             if (!teacherSubjects || teacherSubjects.length === 0) {
                 select.innerHTML = '<option value="">None Selected</option>';
                 return;
             }
-            
             teacherSubjects.forEach(sub => {
                 select.innerHTML += `<option value="${sub}">${sub}</option>`;
             });
@@ -1070,20 +1203,13 @@
             const month = document.getElementById('exerciseMonth').value;
             const subject = document.getElementById('taskSubjectSelect').value;
             const fullClass = getFullClassName();
-            
             if (!subject) {
                 document.getElementById('exercisesTableBody').innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
                 return;
             }
-
-            // Segment tracking data collections by Subject parameters cleanly
             const docRef = firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`);
             const doc = await docRef.get();
-            if (doc.exists) {
-                exerciseData = doc.data();
-            } else {
-                exerciseData = {};
-            }
+            exerciseData = doc.exists ? doc.data() : {};
             displayExercisesTable();
         }
 
@@ -1228,7 +1354,6 @@
                 tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
                 return;
             }
-            
             if (classStudents.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-users-slash"></i><p>No students tracking active profile configurations.</p></td></tr>`;
                 return;
@@ -1236,7 +1361,6 @@
             
             classStudents.forEach((student, idx) => {
                 const studentData = exerciseData[student.id] || { first: null, second: null, third: null };
-                
                 const row = tbody.insertRow();
                 row.innerHTML = `
                     <td>${idx + 1}</td>
@@ -1292,13 +1416,10 @@
         async function sendExerciseAlert(student, time) {
             const subject = document.getElementById('taskSubjectSelect').value;
             const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* encountered problems processing modern *${subject}* homework loops during task trial step: ${time}.\n\nPlease assist optimization workflows at home.\n\nThank you!`;
-            
             await navigator.clipboard.writeText(message);
             let phoneNumber = student.parent_phone ? student.parent_phone.toString().replace(/[^0-9]/g, '') : '';
-            
             if (phoneNumber) {
-                const whatsappUrl = `https://wa.me/${phoneNumber}`;
-                window.open(whatsappUrl, '_blank');
+                window.open(`https://wa.me/${phoneNumber}`, '_blank');
                 showSuccess(`Opening private WhatsApp chat for ${student.name}. Paste to send text.`);
             } else {
                 window.open('https://web.whatsapp.com/', '_blank');
@@ -1312,11 +1433,7 @@
             if (!month || !subject) return;
             const fullClass = getFullClassName();
             const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).get();
-            if (doc.exists) {
-                exerciseData = doc.data();
-            } else {
-                exerciseData = {};
-            }
+            exerciseData = doc.exists ? doc.data() : {};
             displayExercisesTable();
             showSuccess(`Loaded archive logs for ${month}`);
         }
@@ -1328,12 +1445,9 @@
             const fullClass = getFullClassName();
             const subject = document.getElementById('taskSubjectSelect').value;
             if (!subject) return;
-            
             for (let m of months) {
                 const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${m}`).get();
-                if (doc.exists) {
-                    select.innerHTML += `<option value="${m}">${m}</option>`;
-                }
+                if (doc.exists) select.innerHTML += `<option value="${m}">${m}</option>`;
             }
         }
 
@@ -1456,6 +1570,53 @@
             document.getElementById('averageMarks').innerHTML = '0%';
         }
 
+        // Left Swipe Navigation UI Control Logic Engine Actions
+        function toggleDrawer(shouldOpen) {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            if (shouldOpen) {
+                drawer.classList.add('open');
+                overlay.classList.add('visible');
+            } else {
+                drawer.classList.remove('open');
+                overlay.classList.remove('visible');
+            }
+        }
+
+        function handleDrawerNavigation(targetView) {
+            document.querySelectorAll('.drawer-item').forEach(el => el.classList.remove('active'));
+            if (targetView === 'dashboard') {
+                document.getElementById('drawer-dashboard').classList.add('active');
+                document.getElementById('dashboardContainerView').style.display = 'block';
+                document.getElementById('userManualViewPage').style.display = 'none';
+            } else if (targetView === 'manual') {
+                document.getElementById('drawer-manual').classList.add('active');
+                document.getElementById('dashboardContainerView').style.display = 'none';
+                document.getElementById('userManualViewPage').style.display = 'block';
+            }
+            toggleDrawer(false);
+        }
+
+        // Screen Side-Swipe Gesture Event Drivers Configuration
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, {passive: true});
+
+        window.addEventListener('touchend', (e) => {
+            const diffX = e.changedTouches[0].clientX - touchStartX;
+            const diffY = e.changedTouches[0].clientY - touchStartY;
+            
+            // Critical Parameter Check: Verify swipe gesture matches horizontal boundaries cleanly
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 65) {
+                if (diffX > 0 && touchStartX < 45) {
+                    toggleDrawer(true); // Left edge to Right swipe detected
+                } else if (diffX < 0) {
+                    toggleDrawer(false); // Right to Left swipe detected
+                }
+            }
+        }, {passive: true});
+
         function switchTab(tab) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(`tab-${tab}`).classList.add('active');
@@ -1482,6 +1643,7 @@
         window.startSmartVoiceInput = startSmartVoiceInput; window.sendDashboardHomework = sendDashboardHomework; window.sendHomework = sendHomework;
         window.switchTab = switchTab; window.saveWhatsAppGroups = saveWhatsAppGroups; window.saveTimetableToDatabase = saveTimetableToDatabase;
         window.saveSelectedSubjectsToDatabase = saveSelectedSubjectsToDatabase; window.openSubjectViewManually = openSubjectViewManually;
+        window.toggleDrawer = toggleDrawer; window.handleDrawerNavigation = handleDrawerNavigation;
     </script>
 </body>
 </html>
