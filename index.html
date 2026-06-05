@@ -28,7 +28,7 @@
             color: #fff;
             font-size: 14px;
             overflow-x: hidden;
-            padding-bottom: 70px; /* Safe padding space for the sticky bottom mobile navigation */
+            padding-bottom: 70px; /* Safe padding space for sticky bottom mobile nav */
         }
 
         ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -46,7 +46,7 @@
             z-index: -1;
         }
 
-        /* Login Page */
+        /* Login & Registration Cards */
         .login-container {
             min-height: 100vh;
             display: flex;
@@ -61,7 +61,7 @@
             border-radius: 28px;
             padding: 28px 24px;
             width: 100%;
-            max-width: 400px;
+            max-width: 440px;
         }
         .login-logo {
             width: 70px; height: 70px;
@@ -122,6 +122,44 @@
             margin-top: 16px;
         }
 
+        /* Dynamic Subject Selector Layout Component */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        @media (min-width: 400px) {
+            .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .subject-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            user-select: none;
+        }
+        .subject-box i { font-size: 20px; color: #94a3b8; }
+        .subject-box span { font-size: 12px; font-weight: 500; color: #cbd5e1; }
+        
+        /* Subject Checkbox Hidden Logic Hidden elements */
+        .subject-checkbox { display: none; }
+        .subject-checkbox:checked + .subject-box {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: #6366f1;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+        }
+        .subject-checkbox:checked + .subject-box i { color: #8b5cf6; }
+        .subject-checkbox:checked + .subject-box span { color: white; font-weight: 600; }
+
         /* Main App Container */
         .app-container {
             max-width: 600px;
@@ -165,7 +203,7 @@
             font-size: 14px;
         }
 
-        /* Responsive Mobile Navigation Bar Design */
+        /* Mobile Bottom Nav design configuration */
         .nav-tabs {
             display: flex;
             position: fixed;
@@ -213,7 +251,7 @@
             gap: 10px;
             margin-bottom: 14px;
         }
-        .grade-selector, .class-selector {
+        .grade-selector, .class-selector, .subject-selector {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
@@ -223,12 +261,12 @@
             justify-content: space-between;
             gap: 8px;
         }
-        .grade-selector label, .class-selector label { font-size: 14px; color: #94a3b8; display: flex; align-items: center; }
-        .grade-selector select, .class-selector select {
+        .grade-selector label, .class-selector label, .subject-selector label { font-size: 13px; color: #94a3b8; display: flex; align-items: center; white-space: nowrap; }
+        .grade-selector select, .class-selector select, .subject-selector select {
             background: transparent;
             border: none;
             color: white;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             padding: 6px 0;
             cursor: pointer;
@@ -236,7 +274,7 @@
             text-align: right;
             outline: none;
         }
-        .grade-selector select option, .class-selector select option {
+        .grade-selector select option, .class-selector select option, .subject-selector select option {
             background: #0d1326;
             color: white;
         }
@@ -254,8 +292,9 @@
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 8px;
         }
 
         .stats-grid {
@@ -279,7 +318,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            padding: 10px 16px;
+            padding: 10px 14px;
             border-radius: 12px;
             cursor: pointer;
             font-size: 13px;
@@ -295,6 +334,7 @@
         .action-btn.primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; }
         .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; }
         .action-btn.success { background: linear-gradient(135deg, #10b981, #059669); border: none; }
+        .action-btn.mini { min-height: 32px; padding: 4px 10px; font-size: 11px; margin: 0; }
 
         /* Perfect Mobile Data Table Styling */
         .student-table-container {
@@ -396,7 +436,7 @@
 
         .success-message {
             position: fixed;
-            bottom: 75px; /* Floats perfectly safe above our bottom nav */
+            bottom: 75px; /* Floats safely above our bottom nav design configuration */
             left: 14px;
             right: 14px;
             background: linear-gradient(135deg, #10b981, #059669);
@@ -454,7 +494,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Display structures completely items stack vertically on Mobile */
+        /* Items stack vertically layout architecture on Mobile */
         .two-col { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 12px; }
 
         .timetable-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -462,7 +502,7 @@
         .timetable-card h4 { font-size: 14px; margin-bottom: 6px; color: #8b5cf6; }
         .timetable-card p { font-size: 12px; margin-bottom: 4px; color: #cbd5e1; }
 
-        /* Tablet scaling triggers */
+        /* Tablet Scaling Layout Triggers */
         @media (min-width: 550px) { 
             .two-col { grid-template-columns: 1fr 1fr; } 
             .month-selector { grid-template-columns: 1fr 1fr; }
@@ -493,56 +533,127 @@
 
     <div id="loginPage" class="login-container">
         <div class="login-card">
-            <div class="login-header">
-                <div class="login-logo"><i class="fas fa-chalkboard-teacher"></i></div>
-                <h1>EduTrack Pro</h1>
-                <p>Shared Teacher Platform</p>
+            
+            <div id="authCredentialsForm">
+                <div class="login-header">
+                    <div class="login-logo"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h1>EduTrack Pro</h1>
+                    <p>Shared Teacher Platform</p>
+                </div>
+                <div style="display: flex; gap: 10px; margin: 20px 0;">
+                    <button class="auth-tab active" onclick="switchAuthTab('login')" id="loginTab">Login</button>
+                    <button class="auth-tab" onclick="switchAuthTab('register')" id="registerTab">Register</button>
+                </div>
+                <div id="loginForm">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="loginEmail" placeholder="Enter your email">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                        </div>
+                    </div>
+                    <button class="auth-btn" onclick="login()" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+                </div>
+                <div id="registerForm" style="display: none;">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="registerName" placeholder="Your full name">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="registerEmail" placeholder="Your email">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="registerPassword" placeholder="Min 6 characters">
+                        </div>
+                    </div>
+                    <button class="auth-btn" onclick="register()" id="registerBtn"><i class="fas fa-user-plus"></i> Create Account</button>
+                </div>
             </div>
-            <div style="display: flex; gap: 10px; margin: 20px 0;">
-                <button class="auth-tab active" onclick="switchAuthTab('login')" id="loginTab">Login</button>
-                <button class="auth-tab" onclick="switchAuthTab('register')" id="registerTab">Register</button>
+
+            <div id="subjectSelectionForm" style="display: none;">
+                <div class="login-header">
+                    <div class="login-logo" style="background: linear-gradient(135deg, #10b981, #6366f1);"><i class="fas fa-book-open"></i></div>
+                    <h1 style="font-size: 21px;">Select Subjects You Teach</h1>
+                    <p style="color: #94a3b8; font-size: 12px; margin-top: 4px;">Choose assignment parameters for this year</p>
+                </div>
+                
+                <div class="subjects-grid">
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Mathematics">
+                        <div class="subject-box"><i class="fas fa-calculator"></i><span>Mathematics</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Science">
+                        <div class="subject-box"><i class="fas fa-flask"></i><span>Science</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="English">
+                        <div class="subject-box"><i class="fas fa-language"></i><span>English</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="History">
+                        <div class="subject-box"><i class="fas fa-landmark"></i><span>History</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Geography">
+                        <div class="subject-box"><i class="fas fa-globe-americas"></i><span>Geography</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="ICT">
+                        <div class="subject-box"><i class="fas fa-laptop-code"></i><span>ICT</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Art">
+                        <div class="subject-box"><i class="fas fa-palette"></i><span>Art</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Music">
+                        <div class="subject-box"><i class="fas fa-music"></i><span>Music</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Health & PE">
+                        <div class="subject-box"><i class="fas fa-heartbeat"></i><span>Health & PE</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Commerce">
+                        <div class="subject-box"><i class="fas fa-chart-bar"></i><span>Commerce</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Literature">
+                        <div class="subject-box"><i class="fas fa-book"></i><span>Literature</span></div>
+                    </label>
+                    <label>
+                        <input type="checkbox" class="subject-checkbox" value="Civics">
+                        <div class="subject-box"><i class="fas fa-balance-scale"></i><span>Civics</span></div>
+                    </label>
+                    <label style="grid-column: span 2;">
+                        <input type="checkbox" class="subject-checkbox" value="Religion">
+                        <div class="subject-box" style="flex-direction: row; gap: 12px;"><i class="fas fa-praying-hands"></i><span>Religion</span></div>
+                    </label>
+                </div>
+
+                <button class="auth-btn" style="background: linear-gradient(135deg, #10b981, #059669); margin-top: 5px;" onclick="saveSelectedSubjectsToDatabase()" id="saveSubjectsBtn">
+                    <i class="fas fa-save"></i> Save & Continue
+                </button>
             </div>
-            <div id="loginForm">
-                <div class="input-group">
-                    <label>Email</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="loginEmail" placeholder="Enter your email">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="loginPassword" placeholder="Enter your password">
-                    </div>
-                </div>
-                <button class="auth-btn" onclick="login()" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
-            </div>
-            <div id="registerForm" style="display: none;">
-                <div class="input-group">
-                    <label>Full Name</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="registerName" placeholder="Your full name">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Email</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="registerEmail" placeholder="Your email">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="registerPassword" placeholder="Min 6 characters">
-                    </div>
-                </div>
-                <button class="auth-btn" onclick="register()" id="registerBtn"><i class="fas fa-user-plus"></i> Create Account</button>
-            </div>
+
             <div id="errorMessage" class="error-message"></div>
         </div>
     </div>
@@ -673,7 +784,20 @@
 
         <div id="exercises-section" class="content-section">
             <div class="card">
-                <div class="card-title"><i class="fas fa-tasks"></i><span>Exercise Checksheets - <span id="exercisesGradeClass">Class</span></span></div>
+                <div class="card-title">
+                    <div><i class="fas fa-tasks"></i> <span>Exercise Checksheets - <span id="exercisesGradeClass">Class</span></span></div>
+                </div>
+
+                <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
+                    <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
+                    <div style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: flex-end;">
+                        <select id="taskSubjectSelect" onchange="loadExerciseData()" style="max-width: 180px; font-weight: 700; color: #8b5cf6;">
+                            <option value="">-- Load Elements --</option>
+                        </select>
+                        <button class="action-btn primary mini" onclick="openSubjectViewManually()"><i class="fas fa-plus"></i> Add Manually</button>
+                    </div>
+                </div>
+
                 <div class="month-selector">
                     <select id="exerciseMonth" onchange="loadExerciseData()">
                         <option>January</option><option>February</option><option>March</option><option>April</option>
@@ -682,6 +806,7 @@
                     </select>
                     <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">-- View Previous Months --</option></select>
                 </div>
+                
                 <div class="student-table-container">
                     <table class="student-table">
                         <thead>
@@ -694,7 +819,7 @@
                             </tr>
                         </thead>
                         <tbody id="exercisesTableBody">
-                            <tr><td colspan="5" class="empty-state">Loading sheets...</td></tr>
+                            <tr><td colspan="5" class="empty-state">Select a subject to populate data metrics...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -754,6 +879,8 @@
         let whatsappGroups = {};
         let currentRecognition = null;
         let exerciseData = {};
+        let teacherSubjects = [];
+        let isEditingManuallyFromApp = false;
 
         function getFullClassName() { return `${currentGrade}${currentClass}`; }
 
@@ -775,14 +902,95 @@
                 btn.innerHTML = '<span class="loading-spinner"></span>';
                 btn.disabled = true;
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                
+                // Save basic profile document inside Cloud Firestore database logs
                 await firebase.firestore().collection('teachers').doc(userCredential.user.uid).set({
                     full_name: name, email: email, created_at: new Date().toISOString(),
-                    whatsapp_groups: {}
+                    whatsapp_groups: {}, subjects: []
                 });
-                showSuccess('Account created! Please login.');
-                switchAuthTab('login');
+                
+                showSuccess('Account created! Choose your subjects.');
+                
+                // Clear any pre-existing checkbox states from old views
+                document.querySelectorAll('.subject-checkbox').forEach(cb => cb.checked = false);
+                
+                // Show subject selection view layout 
+                document.getElementById('authCredentialsForm').style.display = 'none';
+                document.getElementById('subjectSelectionForm').style.display = 'block';
             } catch (error) { showError(error.message); }
             finally { document.getElementById('registerBtn').innerHTML = '<i class="fas fa-user-plus"></i> Create Account'; document.getElementById('registerBtn').disabled = false; }
+        }
+
+        async function saveSelectedSubjectsToDatabase() {
+            if (!firebase.auth().currentUser) return showError('No authentic session data mapped.');
+            const uid = firebase.auth().currentUser.uid;
+            
+            const checkedBoxes = document.querySelectorAll('.subject-checkbox:checked');
+            const selected = Array.from(checkedBoxes).map(cb => cb.value);
+            
+            if (selected.length === 0) return showError('Please choose at least 1 subject box item');
+            
+            try {
+                const btn = document.getElementById('saveSubjectsBtn');
+                btn.innerHTML = '<span class="loading-spinner"></span> Saving...';
+                btn.disabled = true;
+                
+                await firebase.firestore().collection('teachers').doc(uid).update({
+                    subjects: selected
+                });
+                
+                teacherSubjects = selected;
+                populateTaskSubjectDropdown();
+                
+                showSuccess('Subjects saved successfully!');
+                
+                if (isEditingManuallyFromApp) {
+                    // Route back cleanly to tasks screen environment dashboard space
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    switchTab('exercises');
+                    isEditingManuallyFromApp = false;
+                } else {
+                    // Step back to standard login portal configuration settings
+                    document.getElementById('subjectSelectionForm').style.display = 'none';
+                    document.getElementById('authCredentialsForm').style.display = 'block';
+                    switchAuthTab('login');
+                    await firebase.auth().signOut();
+                }
+            } catch(e) { showError(e.message); }
+            finally { 
+                const btn = document.getElementById('saveSubjectsBtn');
+                btn.innerHTML = '<i class="fas fa-save"></i> Save & Continue'; 
+                btn.disabled = false; 
+            }
+        }
+
+        function openSubjectViewManually() {
+            isEditingManuallyFromApp = true;
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('authCredentialsForm').style.display = 'none';
+            document.getElementById('subjectSelectionForm').style.display = 'block';
+            
+            // Loop checkbox matrices and restore active profiles 
+            document.querySelectorAll('.subject-checkbox').forEach(cb => {
+                cb.checked = teacherSubjects.includes(cb.value);
+            });
+        }
+
+        function populateTaskSubjectDropdown() {
+            const select = document.getElementById('taskSubjectSelect');
+            select.innerHTML = '';
+            
+            if (!teacherSubjects || teacherSubjects.length === 0) {
+                select.innerHTML = '<option value="">None Selected</option>';
+                return;
+            }
+            
+            teacherSubjects.forEach(sub => {
+                select.innerHTML += `<option value="${sub}">${sub}</option>`;
+            });
+            loadExerciseData();
         }
 
         async function login() {
@@ -798,24 +1006,42 @@
             finally { document.getElementById('loginBtn').innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In'; document.getElementById('loginBtn').disabled = false; }
         }
 
-        async function logout() { await firebase.auth().signOut(); document.getElementById('loginPage').style.display = 'flex'; document.getElementById('mainApp').style.display = 'none'; }
+        async function logout() { 
+            await firebase.auth().signOut(); 
+            document.getElementById('authCredentialsForm').style.display = 'block';
+            document.getElementById('subjectSelectionForm').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex'; 
+            document.getElementById('mainApp').style.display = 'none'; 
+        }
 
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 const doc = await firebase.firestore().collection('teachers').doc(user.uid).get();
                 if (doc.exists) currentTeacher = { id: user.uid, ...doc.data() };
                 else currentTeacher = { id: user.uid, full_name: user.email.split('@')[0], email: user.email };
+                
                 whatsappGroups = currentTeacher.whatsapp_groups || {};
+                teacherSubjects = currentTeacher.subjects || [];
+                
                 document.getElementById('teacherNameDisplay').innerHTML = currentTeacher.full_name;
                 document.getElementById('teacherEmailDisplay').innerHTML = currentTeacher.email;
+                
+                populateTaskSubjectDropdown();
                 await loadStudents();
-                await loadExerciseData();
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                updateAllDisplays();
-                displayWhatsAppGroups();
-                setupRealtimeListener();
-            } else { document.getElementById('loginPage').style.display = 'flex'; document.getElementById('mainApp').style.display = 'none'; }
+                
+                if (!isEditingManuallyFromApp) {
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    updateAllDisplays();
+                    displayWhatsAppGroups();
+                    setupRealtimeListener();
+                }
+            } else { 
+                if (!isEditingManuallyFromApp) {
+                    document.getElementById('loginPage').style.display = 'flex'; 
+                    document.getElementById('mainApp').style.display = 'none'; 
+                }
+            }
         });
 
         async function loadStudents() {
@@ -842,8 +1068,16 @@
 
         async function loadExerciseData() {
             const month = document.getElementById('exerciseMonth').value;
+            const subject = document.getElementById('taskSubjectSelect').value;
             const fullClass = getFullClassName();
-            const docRef = firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`);
+            
+            if (!subject) {
+                document.getElementById('exercisesTableBody').innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
+                return;
+            }
+
+            // Segment tracking data collections by Subject parameters cleanly
+            const docRef = firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`);
             const doc = await docRef.get();
             if (doc.exists) {
                 exerciseData = doc.data();
@@ -855,18 +1089,19 @@
 
         async function saveExerciseData() {
             const month = document.getElementById('exerciseMonth').value;
+            const subject = document.getElementById('taskSubjectSelect').value;
             const fullClass = getFullClassName();
-            await firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`).set(exerciseData);
+            if (!subject) return;
+            await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).set(exerciseData);
         }
 
         function updateAllDisplays() {
             document.getElementById('selectedGradeClass').innerText = getFullClassName();
             document.getElementById('marksGradeClass').innerText = getFullClassName();
-            document.getElementById('exercisesGradeClass').innerText = getFullClassName();
             document.getElementById('homeworkGradeClass').innerText = getFullClassName();
             displayStudentsTable();
             displayMarksTable();
-            displayExercisesTable();
+            loadExerciseData();
             updateDashboard();
         }
 
@@ -987,6 +1222,12 @@
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
+            const subject = document.getElementById('taskSubjectSelect').value;
+
+            if (!subject) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
+                return;
+            }
             
             if (classStudents.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-users-slash"></i><p>No students tracking active profile configurations.</p></td></tr>`;
@@ -1049,31 +1290,28 @@
         }
 
         async function sendExerciseAlert(student, time) {
-            const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* encountered failures processing homework problems during round trial step: ${time}.\n\nPlease assist optimization workflows at home.\n\nThank you!`;
+            const subject = document.getElementById('taskSubjectSelect').value;
+            const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* encountered problems processing modern *${subject}* homework loops during task trial step: ${time}.\n\nPlease assist optimization workflows at home.\n\nThank you!`;
             
-            // Copies message template text cleanly onto clipboard logs
             await navigator.clipboard.writeText(message);
-            
-            // Clean up numbers out of text symbols (+, -, spaces)
             let phoneNumber = student.parent_phone ? student.parent_phone.toString().replace(/[^0-9]/g, '') : '';
             
             if (phoneNumber) {
-                // Route target straight directly towards specific private text layout window
                 const whatsappUrl = `https://wa.me/${phoneNumber}`;
                 window.open(whatsappUrl, '_blank');
                 showSuccess(`Opening private WhatsApp chat for ${student.name}. Paste to send text.`);
             } else {
-                // Fallback portal layout routine standard interface anchor backup structure
                 window.open('https://web.whatsapp.com/', '_blank');
-                showError(`No private WhatsApp connection string on file log parameters for ${student.name}.`);
+                showError(`No private WhatsApp connection parameters for ${student.name}.`);
             }
         }
 
         async function loadHistoricalExercises() {
             const month = document.getElementById('viewMonthSelect').value;
-            if (!month) return;
+            const subject = document.getElementById('taskSubjectSelect').value;
+            if (!month || !subject) return;
             const fullClass = getFullClassName();
-            const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${month}`).get();
+            const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).get();
             if (doc.exists) {
                 exerciseData = doc.data();
             } else {
@@ -1088,8 +1326,11 @@
             select.innerHTML = '<option value="">-- View Previous Months --</option>';
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const fullClass = getFullClassName();
+            const subject = document.getElementById('taskSubjectSelect').value;
+            if (!subject) return;
+            
             for (let m of months) {
-                const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${m}`).get();
+                const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${m}`).get();
                 if (doc.exists) {
                     select.innerHTML += `<option value="${m}">${m}</option>`;
                 }
@@ -1240,6 +1481,7 @@
         window.markExercise = markExercise; window.loadHistoricalExercises = loadHistoricalExercises;
         window.startSmartVoiceInput = startSmartVoiceInput; window.sendDashboardHomework = sendDashboardHomework; window.sendHomework = sendHomework;
         window.switchTab = switchTab; window.saveWhatsAppGroups = saveWhatsAppGroups; window.saveTimetableToDatabase = saveTimetableToDatabase;
+        window.saveSelectedSubjectsToDatabase = saveSelectedSubjectsToDatabase; window.openSubjectViewManually = openSubjectViewManually;
     </script>
 </body>
 </html>
