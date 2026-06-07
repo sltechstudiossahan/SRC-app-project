@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <link rel="icon" type="image/png" href="app_icon_ios (1).png"> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <meta name="theme-color" content="#0a0f1e">
@@ -45,6 +44,187 @@
             background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
                         radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
             z-index: -1;
+        }
+
+        /* --- New Left Slide Navigation Menu Styles --- */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: #0d1326;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+            z-index: 1002;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-drawer.open {
+            left: 0;
+        }
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 16px;
+        }
+        .drawer-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .drawer-close {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .drawer-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            text-align: left;
+            width: 100%;
+        }
+        .drawer-item i {
+            font-size: 16px;
+            width: 20px;
+        }
+        .drawer-item:hover, .drawer-item.active {
+            background: rgba(99, 102, 241, 0.15);
+            color: #fff;
+        }
+        .drawer-item.active i {
+            color: #6366f1;
+        }
+        .menu-trigger-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* --- User Manual Step-by-Step Styling Architecture --- */
+        .manual-category {
+            margin-bottom: 16px;
+        }
+        .manual-header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+            transition: background 0.2s;
+        }
+        .manual-header:active {
+            background: rgba(99, 102, 241, 0.1);
+        }
+        .manual-header i.chevron {
+            transition: transform 0.2s;
+            color: #8b5cf6;
+        }
+        .manual-header.active i.chevron {
+            transform: rotate(180deg);
+        }
+        .manual-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease-out;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 12px 12px;
+            margin-top: -4px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-top: none;
+        }
+        .manual-body {
+            padding: 16px;
+        }
+        .step-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .step-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+        .step-number {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-weight: 700;
+            font-size: 11px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .step-text strong {
+            color: white;
         }
 
         /* Login & Registration Cards */
@@ -130,9 +310,6 @@
             gap: 10px;
             margin: 20px 0;
         }
-        @media (min-width: 400px) {
-            .subjects-grid { grid-template-columns: repeat(2, 1fr); }
-        }
         .subject-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -179,6 +356,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
         }
         .logo { display: flex; align-items: center; gap: 10px; }
         .logo-icon {
@@ -202,76 +380,6 @@
             align-items: center;
             justify-content: center;
             font-size: 14px;
-        }
-
-        /* Slide-out Left Navigation Drawers Configuration */
-        .side-drawer-nav {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: #090d1a;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 5px 0 25px rgba(0,0,0,0.6);
-            z-index: 10000;
-            transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
-            padding: 24px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .side-drawer-nav.open {
-            transform: translateX(280px);
-        }
-        .drawer-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 9999;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.25s ease;
-        }
-        .drawer-overlay.visible {
-            display: block;
-            opacity: 1;
-        }
-        .drawer-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .drawer-header h2 { font-size: 16px; font-weight: 700; color: white; }
-        .drawer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .drawer-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            color: #94a3b8;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .drawer-item i { font-size: 16px; width: 20px; }
-        .drawer-item:hover, .drawer-item.active {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
-            color: #6366f1;
-            border-left: 3px solid #6366f1;
         }
 
         /* Mobile Bottom Nav design configuration */
@@ -438,7 +546,7 @@
             vertical-align: middle;
         }
         .student-table th:nth-child(2),
-        .student-table td:nth-child(2) { text-align: left; } /* Align names to left */
+        .student-table td:nth-child(2) { text-align: left; }
         
         .student-table input {
             background: rgba(255, 255, 255, 0.05);
@@ -507,7 +615,7 @@
 
         .success-message {
             position: fixed;
-            bottom: 75px; /* Floats safely above our bottom nav design configuration */
+            bottom: 75px;
             left: 14px;
             right: 14px;
             background: linear-gradient(135deg, #10b981, #059669);
@@ -516,7 +624,7 @@
             border-radius: 12px;
             font-size: 13px;
             text-align: center;
-            z-index: 10000;
+            z-index: 1200;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .error-message {
@@ -565,34 +673,15 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Items stack vertically layout architecture on Mobile */
         .two-col { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 12px; }
 
         .timetable-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .timetable-card { background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 12px; padding: 12px; }
+        .timetable-card.current-active-day { border-color: #10b981; background: rgba(16, 185, 129, 0.05); }
         .timetable-card h4 { font-size: 14px; margin-bottom: 6px; color: #8b5cf6; }
         .timetable-card p { font-size: 12px; margin-bottom: 4px; color: #cbd5e1; }
+        .timetable-card p.active-period-highlight { color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 2px 6px; border-radius: 6px; }
 
-        /* Manual Documentation Utilities Styling */
-        .manual-step {
-            margin-bottom: 16px;
-            padding: 12px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 10px;
-            border-left: 3px solid #6366f1;
-        }
-        .manual-step h4 {
-            font-size: 13px;
-            color: #cbd5e1;
-            margin-bottom: 4px;
-        }
-        .manual-step p {
-            font-size: 12px;
-            color: #94a3b8;
-            line-height: 1.5;
-        }
-
-        /* Tablet Scaling Layout Triggers */
         @media (min-width: 550px) { 
             .two-col { grid-template-columns: 1fr 1fr; } 
             .month-selector { grid-template-columns: 1fr 1fr; }
@@ -622,20 +711,20 @@
     <div class="gradient-bg"></div>
 
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
-    <nav class="side-drawer-nav" id="sideDrawer">
+    <div class="side-drawer" id="sideDrawer">
         <div class="drawer-header">
-            <div class="logo-icon" style="width:32px; height:32px; font-size:14px;"><i class="fas fa-graduation-cap"></i></div>
-            <h2>EduTrack Core Nav</h2>
+            <h2>Navigation System</h2>
+            <button class="drawer-close" onclick="toggleDrawer(false)"><i class="fas fa-times"></i></button>
         </div>
-        <div class="drawer-links">
-            <div class="drawer-item active" id="drawer-dashboard" onclick="handleDrawerNavigation('dashboard')">
+        <div class="drawer-menu">
+            <button class="drawer-item active" id="drawer-dash-btn" onclick="handleDrawerNav('dashboard')">
                 <i class="fas fa-th-large"></i> Dashboard View
-            </div>
-            <div class="drawer-item" id="drawer-manual" onclick="handleDrawerNavigation('manual')">
-                <i class="fas fa-book-reader"></i> User Manual Page
-            </div>
+            </button>
+            <button class="drawer-item" id="drawer-manual-btn" onclick="handleDrawerNav('manual')">
+                <i class="fas fa-book-reader"></i> Platform User Manual
+            </button>
         </div>
-    </nav>
+    </div>
 
     <div id="loginPage" class="login-container">
         <div class="login-card">
@@ -766,8 +855,8 @@
 
     <div id="mainApp" class="app-container">
         <header class="header">
+            <button class="menu-trigger-btn" onclick="toggleDrawer(true)"><i class="fas fa-bars"></i></button>
             <div class="logo">
-                <button onclick="toggleDrawer(true)" style="background:transparent; border:none; color:#6366f1; font-size:18px; margin-right:6px; cursor:pointer;"><i class="fas fa-bars"></i></button>
                 <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
                 <div><h1 id="teacherNameDisplay">Loading...</h1><p id="teacherEmailDisplay"></p></div>
             </div>
@@ -778,7 +867,7 @@
             </div>
         </header>
 
-        <div id="dashboardContainerView">
+        <div id="dashboardAppContent">
             <div class="nav-tabs">
                 <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard"><i class="fas fa-home"></i>Dashboard</div>
                 <div class="nav-tab" onclick="switchTab('students')" id="tab-students"><i class="fas fa-users"></i>Students</div>
@@ -968,43 +1057,197 @@
             </div>
         </div>
 
-        <div id="userManualViewPage" style="display: none; animation: fadeIn 0.25s ease-out;">
+        <div id="manualAppContent" style="display: none;">
             <div class="card">
-                <div class="card-title" style="font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
-                    <span><i class="fas fa-book" style="color: #6366f1;"></i> Teacher System Training Manual</span>
-                </div>
-                <p style="color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 16px;">
-                    Welcome to your EduTrack Pro user training log profile manual. Use the details below to master all automated capabilities.
+                <div class="card-title"><i class="fas fa-book-open"></i> <span>EduTrack Pro Documentation</span></div>
+                <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px; line-height: 1.4;">
+                    Welcome to your platform documentation hub. Explore step-by-step guidance below to fully utilize the platform's features.
                 </p>
 
-                <div class="manual-step">
-                    <h4>1. Class Setup &amp; Student Registration</h4>
-                    <p>Go to the <b>Students</b> tab. You can register student identities manually by entering their full name and matching WhatsApp contact links, or tap <b>Upload Registry Image</b> to activate the built-in Tesseract OCR machine which extracts student names automatically from photos of written paperwork logs.</p>
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-key" style="margin-right:8px;"></i> 1. Authentication & Onboarding</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul class="step-list">
+                                <li class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">Toggle between the <strong>Login</strong> or <strong>Register</strong> fields inside the initial startup window card.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">New registrations require completing Full Name, email authentication mapping, and setting up an account password.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">Upon registering, choose the parameters of subjects you teach inside the selection interface grid and hit <strong>Save & Continue</strong> to finalize validation parameters.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="manual-step">
-                    <h4>2. Grade &amp; Term Marks Entry Tracker</h4>
-                    <p>Navigate to the <b>Marks</b> tab. Choose specific testing months and assessment scopes. You can input performance scores key-by-key or tap <b>Scan Marksheet Image via OCR</b>. The background artificial pipeline automatically parses numbers next to corresponding names.</p>
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-users" style="margin-right:8px;"></i> 2. Managing Student Rosters</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul class="step-list">
+                                <li class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">Navigate to the <strong>Students</strong> tab using your main app control tab panel.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text"><strong>Manual Upload:</strong> Input the student full title name alongside their corresponding parent WhatsApp parameters, then save.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text"><strong>Automated OCR Scan:</strong> Hit the <strong>Upload Registry Image</strong> dashboard area. Choose a clear snapshot from the device memory. The internal processing engine runs text reading workflows automatically to generate user accounts instantly.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="manual-step">
-                    <h4>3. Flagging Failures &amp; Alerting Parents</h4>
-                    <p>Once grades are typed or scanned, click <b>Flag Failures</b>. The system compiles a real-time layout of students under 40%. Click <b>Send Alerts to Parents</b> to automatically format a structured broadcast announcement text block, copy it to your device clipboard, and redirect to WhatsApp Web instantly.</p>
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-chart-bar" style="margin-right:8px;"></i> 3. Performance Marks Engine</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul class="step-list">
+                                <li class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">Access the <strong>Marks</strong> tab interface to open global target lists.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">Use the dropdown menus to select the specific evaluation tracking timeline constraints (e.g., Month and Exam type profiles).</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">Input grades manually or select <strong>Scan Marksheet Image via OCR</strong> to map values automatically from image documents. Click <strong>Save Grades</strong>.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">4</div>
+                                    <div class="step-text">Select <strong>Flag Failures</strong> to filter out metrics below 40%. Click <strong>Send Alerts to Parents</strong> to quickly notify parents via WhatsApp.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="manual-step">
-                    <h4>4. Exercise Checksheets &amp; Reminders</h4>
-                    <p>Under the <b>Tasks</b> tab, tap either green checkmarks or red cross symbols to mark exercise attempts. If a student records successive errors on task workflows, the platform immediately offers a distinct direct communication link pipeline to inform that student's parent.</p>
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-tasks" style="margin-right:8px;"></i> 4. Tracking Exercise Checksheets</span>
+                        <button class="drawer-close" style="display:none;"></button>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul class="step-list">
+                                <li class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">Open the <strong>Tasks</strong> page to reveal current progress matrices.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">Choose the current Subject target parameter to populate the active rows. Use the <strong>Add Manually</strong> function if you need to adjust subject parameters.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">Tap the green checkmark icon to confirm correct execution or the red "X" icon to log a failed attempt. The system automatically syncs changes to Firebase.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">4</div>
+                                    <div class="step-text">Logging consecutive errors automatically copies a pre-formatted notification message and redirects you to WhatsApp to alert parents.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="manual-step">
-                    <h4>5. Voice Dictation &amp; Broadcast Announcements</h4>
-                    <p>On both the main <b>Dashboard</b> and <b>Homework</b> view panels, tap the <b>Voice Input / Dictate (Voice)</b> buttons to record text instructions hands-free via the native webkit speech runtime API driver interface.</p>
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-bullhorn" style="margin-right:8px;"></i> 5. Homework Voice Broadcasting</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul class="step-list">
+                                <li class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">Head over to either the <strong>Dashboard Quick Board</strong> module or the dedicated <strong>Homework</strong> section tab.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">Click <strong>Voice Input / Dictate</strong>. Speak into your microphone using Sinhala text articulation (`si-LK`) to watch your text generate live.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">Tap <strong>Broadcast / Share via WhatsApp</strong> to copy the organized text format layout structure to your clipboard and open your messaging dashboard.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                
-                <button class="action-btn primary" onclick="handleDrawerNavigation('dashboard')" style="width: 100%; margin-top: 10px;">
-                    <i class="fas fa-arrow-left"></i> Return to Dashboard Area
-                </button>
+
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-calendar-alt" style="margin-right:8px;"></i> 6. Schedule Timetable Scanning</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul class="step-list">
+                                <li class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">Navigate to the <strong>Schedule</strong> section block area panel.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">Click the upload layout panel card area and supply a screenshot image file of the class master program.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">The OCR engine extracts timetable configurations from text characters and updates the interface cards. Click <strong>Save Schedule Grid</strong> to lock structural data in the cloud database.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fab fa-whatsapp" style="margin-right:8px;"></i> 7. Routing WhatsApp Class API Links</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul class="step-list">
+                                <li class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">Open the <strong>Groups</strong> management interface screen.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">Paste your standard target class room link URLs inside the text areas mapped to sections A, B, C, and D.</div>
+                                </li>
+                                <li class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">Click <strong>Apply Changes</strong>. This saves your communication pathways, ensuring smooth messaging throughout the platform.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -1032,9 +1275,68 @@
         let teacherSubjects = [];
         let isEditingManuallyFromApp = false;
 
-        // Swiping Left-to-Right Screen Gesture Integration Mechanics Tracker Variables
         let touchStartX = 0;
-        let touchStartY = 0;
+        let touchEndX = 0;
+
+        window.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        window.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipeGesture();
+        }, false);
+
+        function handleSwipeGesture() {
+            if (touchEndX - touchStartX > 80 && touchStartX < 50) {
+                toggleDrawer(true);
+            }
+        }
+
+        function toggleDrawer(open) {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            if(open) {
+                drawer.classList.add('open');
+                overlay.classList.add('active');
+            } else {
+                drawer.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        }
+
+        function handleDrawerNav(targetView) {
+            const dashBtn = document.getElementById('drawer-dash-btn');
+            const manualBtn = document.getElementById('drawer-manual-btn');
+            const dashContent = document.getElementById('dashboardAppContent');
+            const manualContent = document.getElementById('manualAppContent');
+
+            dashBtn.classList.remove('active');
+            manualBtn.classList.remove('active');
+
+            if(targetView === 'dashboard') {
+                dashBtn.classList.add('active');
+                dashContent.style.display = 'block';
+                manualContent.style.display = 'none';
+                switchTab('dashboard');
+            } else if(targetView === 'manual') {
+                manualBtn.classList.add('active');
+                dashContent.style.display = 'none';
+                manualContent.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            toggleDrawer(false);
+        }
+
+        function toggleAccordion(headerElement) {
+            headerElement.classList.toggle('active');
+            const content = headerElement.nextElementSibling;
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
 
         function getFullClassName() { return `${currentGrade}${currentClass}`; }
 
@@ -1059,7 +1361,7 @@
                 
                 await firebase.firestore().collection('teachers').doc(userCredential.user.uid).set({
                     full_name: name, email: email, created_at: new Date().toISOString(),
-                    whatsapp_groups: {}, subjects: []
+                    whatsapp_groups: {}, subjects: [], timetable: null
                 });
                 
                 showSuccess('Account created! Choose your subjects.');
@@ -1075,15 +1377,19 @@
             const uid = firebase.auth().currentUser.uid;
             const checkedBoxes = document.querySelectorAll('.subject-checkbox:checked');
             const selected = Array.from(checkedBoxes).map(cb => cb.value);
+            
             if (selected.length === 0) return showError('Please choose at least 1 subject box item');
+            
             try {
                 const btn = document.getElementById('saveSubjectsBtn');
                 btn.innerHTML = '<span class="loading-spinner"></span> Saving...';
                 btn.disabled = true;
+                
                 await firebase.firestore().collection('teachers').doc(uid).update({ subjects: selected });
                 teacherSubjects = selected;
                 populateTaskSubjectDropdown();
                 showSuccess('Subjects saved successfully!');
+                
                 if (isEditingManuallyFromApp) {
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
@@ -1156,6 +1462,7 @@
                 
                 whatsappGroups = currentTeacher.whatsapp_groups || {};
                 teacherSubjects = currentTeacher.subjects || [];
+                extractedTimetable = currentTeacher.timetable || null;
                 
                 document.getElementById('teacherNameDisplay').innerHTML = currentTeacher.full_name;
                 document.getElementById('teacherEmailDisplay').innerHTML = currentTeacher.email;
@@ -1166,9 +1473,14 @@
                 if (!isEditingManuallyFromApp) {
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
+                    
+                    // Run automated time matrix lookups right on system entry
+                    runAutomatedTimetableLookup();
+                    
                     updateAllDisplays();
                     displayWhatsAppGroups();
                     setupRealtimeListener();
+                    handleDrawerNav('dashboard');
                 }
             } else { 
                 if (!isEditingManuallyFromApp) {
@@ -1204,13 +1516,19 @@
             const month = document.getElementById('exerciseMonth').value;
             const subject = document.getElementById('taskSubjectSelect').value;
             const fullClass = getFullClassName();
+            
             if (!subject) {
                 document.getElementById('exercisesTableBody').innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
                 return;
             }
+
             const docRef = firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`);
             const doc = await docRef.get();
-            exerciseData = doc.exists ? doc.data() : {};
+            if (doc.exists) {
+                exerciseData = doc.data();
+            } else {
+                exerciseData = {};
+            }
             displayExercisesTable();
         }
 
@@ -1226,9 +1544,15 @@
             document.getElementById('selectedGradeClass').innerText = getFullClassName();
             document.getElementById('marksGradeClass').innerText = getFullClassName();
             document.getElementById('homeworkGradeClass').innerText = getFullClassName();
+            
+            // Adjust the index dropdown fields to visually match configuration states
+            document.getElementById('gradeSelect').value = currentGrade;
+            document.getElementById('classSelect').value = currentClass;
+            
             displayStudentsTable();
             displayMarksTable();
             loadExerciseData();
+            renderTimetableGrid();
             updateDashboard();
         }
 
@@ -1355,6 +1679,7 @@
                 tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
                 return;
             }
+            
             if (classStudents.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-users-slash"></i><p>No students tracking active profile configurations.</p></td></tr>`;
                 return;
@@ -1385,7 +1710,7 @@
                     <td>
                         <div class="exercise-group">
                             <div class="exercise-pair">
-                                <i class="fas fa-check-circle exercise-icon correct ${studentData.third === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'third', 'correct')"></i>
+                                <i class="fas fa-check-circle exercise-icon correct ${studentData.third === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'third', 'active-correct')"></i>
                                 <i class="fas fa-times-circle exercise-icon wrong ${studentData.third === 'wrong' ? 'active-wrong' : ''}" onclick="markExercise('${student.id}', 'third', 'wrong')"></i>
                             </div>
                         </div>
@@ -1417,10 +1742,13 @@
         async function sendExerciseAlert(student, time) {
             const subject = document.getElementById('taskSubjectSelect').value;
             const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* encountered problems processing modern *${subject}* homework loops during task trial step: ${time}.\n\nPlease assist optimization workflows at home.\n\nThank you!`;
+            
             await navigator.clipboard.writeText(message);
             let phoneNumber = student.parent_phone ? student.parent_phone.toString().replace(/[^0-9]/g, '') : '';
+            
             if (phoneNumber) {
-                window.open(`https://wa.me/${phoneNumber}`, '_blank');
+                const whatsappUrl = `https://wa.me/${phoneNumber}`;
+                window.open(whatsappUrl, '_blank');
                 showSuccess(`Opening private WhatsApp chat for ${student.name}. Paste to send text.`);
             } else {
                 window.open('https://web.whatsapp.com/', '_blank');
@@ -1434,7 +1762,11 @@
             if (!month || !subject) return;
             const fullClass = getFullClassName();
             const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).get();
-            exerciseData = doc.exists ? doc.data() : {};
+            if (doc.exists) {
+                exerciseData = doc.data();
+            } else {
+                exerciseData = {};
+            }
             displayExercisesTable();
             showSuccess(`Loaded archive logs for ${month}`);
         }
@@ -1446,9 +1778,12 @@
             const fullClass = getFullClassName();
             const subject = document.getElementById('taskSubjectSelect').value;
             if (!subject) return;
+            
             for (let m of months) {
                 const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${m}`).get();
-                if (doc.exists) select.innerHTML += `<option value="${m}">${m}</option>`;
+                if (doc.exists) {
+                    select.innerHTML += `<option value="${m}">${m}</option>`;
+                }
             }
         }
 
@@ -1499,27 +1834,117 @@
             } catch(e) { showError('Scanning matrix translation failure'); }
         }
 
+        // --- FIXED OCR PARSING AND RENDERING ENGINE FOR TIMETABLES ---
         async function processTimetableWithOCR(input) {
             if (!input.files[0]) return;
             const file = input.files[0];
-            showSuccess('Compiling schedules...');
+            showSuccess('Compiling schedule lines from snapshot image...');
             try {
                 const worker = await Tesseract.createWorker('eng');
                 const { data: { text } } = await worker.recognize(file);
                 await worker.terminate();
+                
+                const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 5);
                 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-                extractedTimetable = days.map(day => ({ day, period1: 'Class Space', period2: 'Free Slot', period3: 'Active Lab Session' }));
-                const grid = document.getElementById('timetableGrid');
-                grid.innerHTML = extractedTimetable.map(day => `<div class="timetable-card"><h4>${day.day}</h4><p>Period 1: ${day.period1}</p><p>Period 2: ${day.period2}</p><p>Period 3: ${day.period3}</p></div>`).join('');
+                
+                // Process lines looking for standard Class formats like "10B", "9A", "11C"
+                extractedTimetable = days.map((day, dIdx) => {
+                    let searchLine = lines.find(l => l.toLowerCase().includes(day.toLowerCase())) || "";
+                    let classesFound = searchLine.match(/(\d{1,2}[A-D])/g) || [];
+                    
+                    // Fallback to searching index-matched fallback strings if row explicitly lacks Day names
+                    if(classesFound.length === 0 && lines[dIdx]) {
+                        classesFound = lines[dIdx].match(/(\d{1,2}[A-D])/g) || [];
+                    }
+
+                    return {
+                        day: day,
+                        period1: classesFound[0] || 'Free Slot',
+                        period2: classesFound[1] || 'Free Slot',
+                        period3: classesFound[2] || 'Free Slot'
+                    };
+                });
+
+                renderTimetableGrid();
                 document.getElementById('saveTimetableBtn').disabled = false;
-                showSuccess('Schedule structure parsed!');
-            } catch(e) { showError('Parsing timetable engine crash'); }
+                showSuccess('Schedule dataset successfully compiled!');
+            } catch(e) { 
+                console.error(e);
+                showError('Parsing timetable engine crash. Please check image clarity.'); 
+            }
+        }
+
+        function renderTimetableGrid() {
+            if (!extractedTimetable) {
+                document.getElementById('timetableGrid').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>No snapshot program loaded yet.</p></div>';
+                return;
+            }
+            
+            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const todayName = daysOfWeek[new Date().getDay()];
+            const currentPeriod = getCurrentPeriodIndex(); // 1, 2, or 3
+
+            const grid = document.getElementById('timetableGrid');
+            grid.innerHTML = extractedTimetable.map(day => {
+                const isToday = day.day.toLowerCase() === todayName.toLowerCase();
+                const cardClass = isToday ? 'timetable-card current-active-day' : 'timetable-card';
+                
+                return `
+                    <div class="${cardClass}">
+                        <h4>${day.day} ${isToday ? '<span style="font-size:10px; color:#10b981;">(Today)</span>' : ''}</h4>
+                        <p class="${(isToday && currentPeriod === 1) ? 'active-period-highlight' : ''}">Period 1 (08:00 - 09:30): <b>${day.period1}</b></p>
+                        <p class="${(isToday && currentPeriod === 2) ? 'active-period-highlight' : ''}">Period 2 (10:00 - 11:30): <b>${day.period2}</b></p>
+                        <p class="${(isToday && currentPeriod === 3) ? 'active-period-highlight' : ''}">Period 3 (12:30 - 14:00): <b>${day.period3}</b></p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- COMPUTES CURRENT SYSTEM ACTIVE TIME WINDOWS ---
+        function getCurrentPeriodIndex() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minutes = now.getMinutes();
+            const absoluteTime = hour * 60 + minutes; // converts to raw minute value
+
+            if (absoluteTime >= 480 && absoluteTime <= 570) return 1;  // 08:00 - 09:30
+            if (absoluteTime >= 600 && absoluteTime <= 690) return 2;  // 10:00 - 11:30
+            if (absoluteTime >= 750 && absoluteTime <= 840) return 3;  // 12:30 - 14:00
+            return null; // out of standard range
+        }
+
+        // --- AUTOMATED LOOKUPS & STATE CASCADING CONTROLLERS ---
+        function runAutomatedTimetableLookup() {
+            if (!extractedTimetable) return;
+
+            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const todayName = daysOfWeek[new Date().getDay()];
+            const activeDayData = extractedTimetable.find(d => d.day.toLowerCase() === todayName.toLowerCase());
+            
+            if (!activeDayData) return; // Standard weekends or clear states
+            
+            const activePeriodIdx = getCurrentPeriodIndex();
+            if (!activePeriodIdx) return;
+
+            let targetClassString = activeDayData[`period${activePeriodIdx}`];
+            if (!targetClassString || targetClassString.toLowerCase().includes('free')) return;
+
+            // Extract numeric grade parameters and trailing letter symbols safely
+            let gradeMatch = targetClassString.match(/\d+/);
+            let classMatch = targetClassString.match(/[A-D]/i);
+
+            if (gradeMatch && classMatch) {
+                currentGrade = gradeMatch[0];
+                currentClass = classMatch[0].toUpperCase();
+                
+                showSuccess(`Schedule match: Automatically switched workspace to Grade ${currentGrade}-${currentClass}`);
+            }
         }
 
         async function saveTimetableToDatabase() {
             if (!extractedTimetable) return showError('Matrix container is empty');
             await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({ timetable: extractedTimetable });
-            showSuccess('Timetable layout synchronized!');
+            showSuccess('Timetable layout synchronized successfully to cloud database store!');
         }
 
         function startSmartVoiceInput(textareaId, btnId) {
@@ -1571,63 +1996,23 @@
             document.getElementById('averageMarks').innerHTML = '0%';
         }
 
-        // Left Swipe Navigation UI Control Logic Engine Actions
-        function toggleDrawer(shouldOpen) {
-            const drawer = document.getElementById('sideDrawer');
-            const overlay = document.getElementById('drawerOverlay');
-            if (shouldOpen) {
-                drawer.classList.add('open');
-                overlay.classList.add('visible');
-            } else {
-                drawer.classList.remove('open');
-                overlay.classList.remove('visible');
-            }
-        }
-
-        function handleDrawerNavigation(targetView) {
-            document.querySelectorAll('.drawer-item').forEach(el => el.classList.remove('active'));
-            if (targetView === 'dashboard') {
-                document.getElementById('drawer-dashboard').classList.add('active');
-                document.getElementById('dashboardContainerView').style.display = 'block';
-                document.getElementById('userManualViewPage').style.display = 'none';
-            } else if (targetView === 'manual') {
-                document.getElementById('drawer-manual').classList.add('active');
-                document.getElementById('dashboardContainerView').style.display = 'none';
-                document.getElementById('userManualViewPage').style.display = 'block';
-            }
-            toggleDrawer(false);
-        }
-
-        // Screen Side-Swipe Gesture Event Drivers Configuration
-        window.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, {passive: true});
-
-        window.addEventListener('touchend', (e) => {
-            const diffX = e.changedTouches[0].clientX - touchStartX;
-            const diffY = e.changedTouches[0].clientY - touchStartY;
-            
-            // Critical Parameter Check: Verify swipe gesture matches horizontal boundaries cleanly
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 65) {
-                if (diffX > 0 && touchStartX < 45) {
-                    toggleDrawer(true); // Left edge to Right swipe detected
-                } else if (diffX < 0) {
-                    toggleDrawer(false); // Right to Left swipe detected
-                }
-            }
-        }, {passive: true});
-
         function switchTab(tab) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(`tab-${tab}`).classList.add('active');
+            const dynamicTabTarget = document.getElementById(`tab-${tab}`);
+            if(dynamicTabTarget) dynamicTabTarget.classList.add('active');
+            
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(`${tab}-section`).classList.add('active');
+            const dynamicSectionTarget = document.getElementById(`${tab}-section`);
+            if(dynamicSectionTarget) dynamicSectionTarget.classList.add('active');
+            
+            // Runs time lookup check loops dynamically whenever navigating or loading sheets
+            runAutomatedTimetableLookup();
             
             if (tab === 'students') displayStudentsTable();
             else if (tab === 'marks') displayMarksTable();
             else if (tab === 'exercises') { loadExerciseData(); populateHistoricalMonths(); }
             else if (tab === 'whatsapp') displayWhatsAppGroups();
+            else if (tab === 'timetable') renderTimetableGrid();
             else if (tab === 'dashboard') updateDashboard();
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1644,7 +2029,11 @@
         window.startSmartVoiceInput = startSmartVoiceInput; window.sendDashboardHomework = sendDashboardHomework; window.sendHomework = sendHomework;
         window.switchTab = switchTab; window.saveWhatsAppGroups = saveWhatsAppGroups; window.saveTimetableToDatabase = saveTimetableToDatabase;
         window.saveSelectedSubjectsToDatabase = saveSelectedSubjectsToDatabase; window.openSubjectViewManually = openSubjectViewManually;
-        window.toggleDrawer = toggleDrawer; window.handleDrawerNavigation = handleDrawerNavigation;
+        window.processTimetableWithOCR = processTimetableWithOCR;
+        
+        window.toggleDrawer = toggleDrawer;
+        window.handleDrawerNav = handleDrawerNav;
+        window.toggleAccordion = toggleAccordion;
     </script>
 </body>
 </html>
