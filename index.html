@@ -17,12 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: #0a0f1e;
@@ -31,7 +26,6 @@
             overflow-x: hidden;
             padding-bottom: 70px;
         }
-
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #1a1f2e; }
         ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 4px; }
@@ -42,8 +36,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(99,102,241,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139,92,246,0.1) 0%, transparent 50%);
             z-index: -1;
         }
 
@@ -53,7 +47,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
             z-index: 1001;
             opacity: 0;
@@ -61,7 +55,6 @@
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         .drawer-overlay.active { opacity: 1; visibility: visible; }
-
         .side-drawer {
             position: fixed;
             top: 0;
@@ -69,10 +62,10 @@
             width: 280px;
             height: 100%;
             background: #0d1326;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255,255,255,0.08);
             box-shadow: 5px 0 25px rgba(0,0,0,0.5);
             z-index: 1002;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: left 0.3s cubic-bezier(0.4,0,0.2,1);
             padding: 24px 16px;
             display: flex;
             flex-direction: column;
@@ -93,18 +86,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .drawer-close {
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        .drawer-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .drawer-close { background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; }
+        .drawer-menu { display: flex; flex-direction: column; gap: 8px; }
         .drawer-item {
             display: flex;
             align-items: center;
@@ -121,26 +104,22 @@
             text-align: left;
             width: 100%;
         }
-        .drawer-item:hover, .drawer-item.active { background: rgba(99, 102, 241, 0.15); color: #fff; }
+        .drawer-item:hover, .drawer-item.active { background: rgba(99,102,241,0.15); color: #fff; }
         .drawer-item.active i { color: #6366f1; }
         .menu-trigger-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             color: white;
             padding: 8px 12px;
             border-radius: 10px;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
         }
 
         .manual-category { margin-bottom: 16px; }
         .manual-header {
             width: 100%;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 12px;
             padding: 14px 16px;
             color: white;
@@ -151,8 +130,6 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            outline: none;
-            transition: background 0.2s;
         }
         .manual-header i.chevron { transition: transform 0.2s; color: #8b5cf6; }
         .manual-header.active i.chevron { transform: rotate(180deg); }
@@ -160,27 +137,14 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.25s ease-out;
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0,0,0,0.15);
             border-radius: 0 0 12px 12px;
-            margin-top: -4px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.03);
             border-top: none;
         }
         .manual-body { padding: 16px; }
-        .step-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .step-item {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #cbd5e1;
-        }
+        .step-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .step-item { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: #cbd5e1; }
         .step-number {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: white;
@@ -197,17 +161,11 @@
         }
         .step-text strong { color: white; }
 
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
+        .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
         .login-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 28px;
             padding: 28px 24px;
             width: 100%;
@@ -225,10 +183,9 @@
         }
         .login-header h1 { font-size: 24px; text-align: center; }
         .login-header p { font-size: 13px; color: #94a3b8; text-align: center; margin-top: 4px; }
-
         .auth-tab {
             flex: 1;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border: none;
             color: #94a3b8;
             padding: 12px;
@@ -238,7 +195,6 @@
             font-weight: 600;
         }
         .auth-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
-
         .input-group { margin-bottom: 14px; }
         .input-group label { font-size: 12px; margin-bottom: 6px; display: block; color: #94a3b8; }
         .input-wrapper { position: relative; }
@@ -252,8 +208,8 @@
         }
         .input-wrapper input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
             padding: 12px 12px 12px 42px;
             color: white;
@@ -272,15 +228,10 @@
             margin-top: 16px;
         }
 
-        .subjects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
+        .subjects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin: 20px 0; }
         .subject-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 14px;
             padding: 14px 10px;
             text-align: center;
@@ -297,24 +248,18 @@
         .subject-box span { font-size: 12px; font-weight: 500; color: #cbd5e1; }
         .subject-checkbox { display: none; }
         .subject-checkbox:checked + .subject-box {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(99,102,241,0.15);
             border-color: #6366f1;
-            box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 12px rgba(99,102,241,0.2);
         }
         .subject-checkbox:checked + .subject-box i { color: #8b5cf6; }
         .subject-checkbox:checked + .subject-box span { color: white; font-weight: 600; }
 
-        .app-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 12px 12px 24px 12px;
-            display: none;
-        }
-
+        .app-container { max-width: 600px; margin: 0 auto; padding: 12px 12px 24px; display: none; }
         .header {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 16px;
             padding: 12px;
             margin-bottom: 14px;
@@ -336,7 +281,7 @@
         .logo h1 { font-size: 15px; font-weight: 700; line-height: 1.2; }
         .logo p { font-size: 11px; color: #94a3b8; }
         .teacher-profile { display: flex; align-items: center; gap: 8px; }
-        .shared-badge { background: rgba(16, 185, 129, 0.15); padding: 4px 8px; border-radius: 12px; font-size: 10px; color: #10b981; }
+        .shared-badge { background: rgba(16,185,129,0.15); padding: 4px 8px; border-radius: 12px; font-size: 10px; color: #10b981; }
         .teacher-avatar {
             width: 36px; height: 36px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -354,7 +299,7 @@
             left: 0;
             right: 0;
             background: #0d1326;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255,255,255,0.08);
             padding: 8px 6px;
             z-index: 999;
             justify-content: space-around;
@@ -392,8 +337,8 @@
             margin-bottom: 14px;
         }
         .grade-selector, .class-selector, .subject-selector {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 14px;
             padding: 6px 14px;
             display: flex;
@@ -414,14 +359,11 @@
             text-align: right;
             outline: none;
         }
-        .grade-selector select option, .class-selector select option, .subject-selector select option {
-            background: #0d1326;
-            color: white;
-        }
+        .grade-selector select option, .class-selector select option, .subject-selector select option { background: #0d1326; color: white; }
 
         .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 16px;
             padding: 14px;
             margin-bottom: 14px;
@@ -439,13 +381,13 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4,1fr);
             gap: 8px;
             margin-bottom: 14px;
         }
         .stat-card {
-            background: rgba(99, 102, 241, 0.08);
-            border: 1px solid rgba(99, 102, 241, 0.15);
+            background: rgba(99,102,241,0.08);
+            border: 1px solid rgba(99,102,241,0.15);
             padding: 12px 6px;
             border-radius: 14px;
             text-align: center;
@@ -455,8 +397,8 @@
         .stat-card p { font-size: 10px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             color: white;
             padding: 10px 14px;
             border-radius: 12px;
@@ -475,6 +417,7 @@
         .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; }
         .action-btn.success { background: linear-gradient(135deg, #10b981, #059669); border: none; }
         .action-btn.warning { background: linear-gradient(135deg, #f59e0b, #d97706); border: none; }
+        .action-btn.purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); border: none; }
         .action-btn.mini { min-height: 32px; padding: 4px 10px; font-size: 11px; margin: 0; }
 
         .student-table-container {
@@ -482,14 +425,13 @@
             max-height: 420px;
             overflow-y: auto;
             border-radius: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
             margin-top: 8px;
-            -webkit-overflow-scrolling: touch;
         }
         .student-table { width: 100%; border-collapse: collapse; text-align: left; }
         .student-table th {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(99,102,241,0.15);
             padding: 12px 10px;
             font-size: 12px;
             font-weight: 600;
@@ -499,19 +441,11 @@
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .student-table td { 
-            padding: 12px 10px; 
-            font-size: 13px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-            text-align: center;
-            vertical-align: middle;
-        }
-        .student-table th:nth-child(2),
-        .student-table td:nth-child(2) { text-align: left; }
-        
+        .student-table td { padding: 12px 10px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; vertical-align: middle; }
+        .student-table th:nth-child(2), .student-table td:nth-child(2) { text-align: left; }
         .student-table input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
             padding: 8px;
             color: white;
@@ -523,45 +457,30 @@
         .student-table input:focus { border-color: #6366f1; background: rgba(0,0,0,0.2); }
 
         .upload-area {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px dashed rgba(99, 102, 241, 0.3);
+            background: rgba(0,0,0,0.3);
+            border: 2px dashed rgba(99,102,241,0.3);
             border-radius: 14px;
             padding: 20px 14px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .upload-area:active { background: rgba(99, 102, 241, 0.05); border-color: #6366f1; }
+        .upload-area:active { background: rgba(99,102,241,0.05); border-color: #6366f1; }
         .upload-area i { font-size: 32px; margin-bottom: 8px; color: #6366f1; }
         .upload-area h3 { font-size: 13px; font-weight: 600; }
 
-        .exercise-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-        }
-        .exercise-pair {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .exercise-icon { 
-            font-size: 22px; 
-            cursor: pointer; 
-            padding: 6px; 
-            border-radius: 50%; 
-            transition: all 0.15s ease;
-        }
-        .exercise-icon.correct { color: rgba(16, 185, 129, 0.4); }
-        .exercise-icon.wrong { color: rgba(239, 68, 68, 0.4); }
-        .exercise-icon.active-correct { color: #10b981; background: rgba(16, 185, 129, 0.15); }
-        .exercise-icon.active-wrong { color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+        .exercise-group { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .exercise-pair { display: flex; align-items: center; gap: 10px; }
+        .exercise-icon { font-size: 22px; cursor: pointer; padding: 6px; border-radius: 50%; transition: all 0.15s ease; }
+        .exercise-icon.correct { color: rgba(16,185,129,0.4); }
+        .exercise-icon.wrong { color: rgba(239,68,68,0.4); }
+        .exercise-icon.active-correct { color: #10b981; background: rgba(16,185,129,0.15); }
+        .exercise-icon.active-wrong { color: #ef4444; background: rgba(239,68,68,0.15); }
 
         .month-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         .month-selector select {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
             padding: 10px 14px;
             color: white;
@@ -593,8 +512,8 @@
             margin-top: 12px;
             padding: 10px;
             font-size: 13px;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.2);
             border-radius: 10px;
             display: none;
         }
@@ -602,8 +521,8 @@
         .empty-state i { font-size: 36px; margin-bottom: 10px; color: #475569; }
 
         .low-marks-card {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(139, 92, 246, 0.05));
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(139,92,246,0.05));
+            border: 1px solid rgba(239,68,68,0.3);
             border-radius: 14px;
             padding: 14px;
             margin-top: 14px;
@@ -612,8 +531,8 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.2);
             padding: 6px 12px;
             border-radius: 20px;
             margin: 4px;
@@ -621,7 +540,7 @@
         }
 
         .listening { background: linear-gradient(135deg, #ef4444, #dc2626) !important; animation: pulse 1s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
 
         .loading-spinner {
             width: 18px; height: 18px;
@@ -636,11 +555,11 @@
         .two-col { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 12px; }
 
         .timetable-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .timetable-card { background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 12px; padding: 12px; }
-        .timetable-card.current-active-day { border-color: #10b981; background: rgba(16, 185, 129, 0.05); }
+        .timetable-card { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15); border-radius: 12px; padding: 12px; }
+        .timetable-card.current-active-day { border-color: #10b981; background: rgba(16,185,129,0.05); }
         .timetable-card h4 { font-size: 14px; margin-bottom: 6px; color: #8b5cf6; }
         .timetable-card p { font-size: 12px; margin-bottom: 4px; color: #cbd5e1; }
-        .timetable-card p.active-period-highlight { color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 2px 6px; border-radius: 6px; }
+        .timetable-card p.active-period-highlight { color: #10b981; font-weight: 700; background: rgba(16,185,129,0.1); padding: 2px 6px; border-radius: 6px; }
 
         .chart-container {
             background: rgba(255,255,255,0.03);
@@ -649,13 +568,13 @@
             margin-bottom: 14px;
             border: 1px solid rgba(255,255,255,0.05);
         }
-        .chart-container canvas {
-            max-height: 200px;
-            max-width: 100%;
-        }
+        .chart-container canvas { max-height: 200px; max-width: 100%; }
+        .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .chart-row .chart-container { margin-bottom: 0; }
+
         .analysis-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(4,1fr);
             gap: 10px;
             margin-bottom: 12px;
         }
@@ -666,10 +585,12 @@
             padding: 12px;
             text-align: center;
         }
-        .analysis-card .label { font-size: 11px; color: #94a3b8; }
+        .analysis-card .label { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
         .analysis-card .value { font-size: 18px; font-weight: 700; margin-top: 4px; }
         .analysis-card .value.high { color: #10b981; }
         .analysis-card .value.low { color: #ef4444; }
+        .analysis-card .value.warning { color: #f59e0b; }
+        .analysis-card .value.purple { color: #8b5cf6; }
 
         .range-input-group {
             display: flex;
@@ -717,19 +638,8 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-        .student-list-popup-content h3 {
-            font-size: 16px;
-            margin-bottom: 16px;
-            color: #8b5cf6;
-        }
-        .student-list-popup-content .close-btn {
-            float: right;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            font-size: 20px;
-            cursor: pointer;
-        }
+        .student-list-popup-content h3 { font-size: 16px; margin-bottom: 16px; color: #8b5cf6; }
+        .student-list-popup-content .close-btn { float: right; background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; }
         .student-list-popup-content .student-item {
             padding: 8px 12px;
             background: rgba(255,255,255,0.03);
@@ -746,15 +656,48 @@
             font-size: 12px;
             color: #ef4444;
         }
+        .student-list-popup-content .student-item.passing {
+            border-left-color: #10b981;
+        }
+        .student-list-popup-content .student-item.passing .mark-badge {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
 
-        @media (min-width: 550px) { 
-            .two-col { grid-template-columns: 1fr 1fr; } 
+        .section-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        .section-badge.A { background: rgba(99,102,241,0.2); color: #6366f1; }
+        .section-badge.B { background: rgba(16,185,129,0.2); color: #10b981; }
+        .section-badge.C { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .section-badge.D { background: rgba(239,68,68,0.2); color: #ef4444; }
+
+        .grade-progress {
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+        .grade-progress .bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        @media (min-width: 550px) {
+            .two-col { grid-template-columns: 1fr 1fr; }
             .month-selector { grid-template-columns: 1fr 1fr; }
             body { padding-bottom: 20px; }
             .nav-tabs {
                 position: static;
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid rgba(255, 255, 255, 0.05);
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.05);
                 border-radius: 30px;
                 padding: 6px;
                 margin-bottom: 14px;
@@ -770,7 +713,8 @@
             .nav-tab i { font-size: 14px; }
             .nav-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
             .selector-container { grid-template-columns: 1fr 1fr 1fr; }
-            .analysis-grid { grid-template-columns: 1fr 1fr 1fr; }
+            .analysis-grid { grid-template-columns: repeat(4,1fr); }
+            .chart-row { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -780,16 +724,12 @@
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
     <div class="side-drawer" id="sideDrawer">
         <div class="drawer-header">
-            <h2>Navigation System</h2>
+            <h2>Navigation</h2>
             <button class="drawer-close" onclick="toggleDrawer(false)"><i class="fas fa-times"></i></button>
         </div>
         <div class="drawer-menu">
-            <button class="drawer-item active" id="drawer-dash-btn" onclick="handleDrawerNav('dashboard')">
-                <i class="fas fa-th-large"></i> Dashboard View
-            </button>
-            <button class="drawer-item" id="drawer-manual-btn" onclick="handleDrawerNav('manual')">
-                <i class="fas fa-book-reader"></i> Platform User Manual
-            </button>
+            <button class="drawer-item active" onclick="handleDrawerNav('dashboard')"><i class="fas fa-th-large"></i> Dashboard</button>
+            <button class="drawer-item" onclick="handleDrawerNav('manual')"><i class="fas fa-book-reader"></i> Manual</button>
         </div>
     </div>
 
@@ -801,7 +741,7 @@
                     <h1>EduTrack Pro</h1>
                     <p>Shared Teacher Platform</p>
                 </div>
-                <div style="display: flex; gap: 10px; margin: 20px 0;">
+                <div style="display:flex;gap:10px;margin:20px 0;">
                     <button class="auth-tab active" onclick="switchAuthTab('login')" id="loginTab">Login</button>
                     <button class="auth-tab" onclick="switchAuthTab('register')" id="registerTab">Register</button>
                 </div>
@@ -810,18 +750,18 @@
                     <div class="input-group"><label>Password</label><div class="input-wrapper"><input type="password" id="loginPassword" placeholder="Enter your password"></div></div>
                     <button class="auth-btn" onclick="login()" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
                 </div>
-                <div id="registerForm" style="display: none;">
+                <div id="registerForm" style="display:none;">
                     <div class="input-group"><label>Full Name</label><div class="input-wrapper"><input type="text" id="registerName" placeholder="Your full name"></div></div>
                     <div class="input-group"><label>Email</label><div class="input-wrapper"><input type="email" id="registerEmail" placeholder="Your email"></div></div>
                     <div class="input-group"><label>Password</label><div class="input-wrapper"><input type="password" id="registerPassword" placeholder="Min 6 characters"></div></div>
                     <button class="auth-btn" onclick="register()" id="registerBtn"><i class="fas fa-user-plus"></i> Create Account</button>
                 </div>
             </div>
-            <div id="subjectSelectionForm" style="display: none;">
+            <div id="subjectSelectionForm" style="display:none;">
                 <div class="login-header">
-                    <div class="login-logo" style="background: linear-gradient(135deg, #10b981, #6366f1);"><i class="fas fa-book-open"></i></div>
-                    <h1 style="font-size: 21px;">Select Subjects You Teach</h1>
-                    <p style="color: #94a3b8; font-size: 12px; margin-top: 4px;">Choose assignment parameters for this year</p>
+                    <div class="login-logo" style="background:linear-gradient(135deg,#10b981,#6366f1);"><i class="fas fa-book-open"></i></div>
+                    <h1 style="font-size:21px;">Select Subjects You Teach</h1>
+                    <p style="color:#94a3b8;font-size:12px;margin-top:4px;">Choose assignment parameters for this year</p>
                 </div>
                 <div class="subjects-grid">
                     <label><input type="checkbox" class="subject-checkbox" value="Mathematics"><div class="subject-box"><i class="fas fa-calculator"></i><span>Mathematics</span></div></label>
@@ -836,9 +776,9 @@
                     <label><input type="checkbox" class="subject-checkbox" value="Commerce"><div class="subject-box"><i class="fas fa-chart-bar"></i><span>Commerce</span></div></label>
                     <label><input type="checkbox" class="subject-checkbox" value="Literature"><div class="subject-box"><i class="fas fa-book"></i><span>Literature</span></div></label>
                     <label><input type="checkbox" class="subject-checkbox" value="Civics"><div class="subject-box"><i class="fas fa-balance-scale"></i><span>Civics</span></div></label>
-                    <label style="grid-column: span 2;"><input type="checkbox" class="subject-checkbox" value="Religion"><div class="subject-box" style="flex-direction: row; gap: 12px;"><i class="fas fa-praying-hands"></i><span>Religion</span></div></label>
+                    <label style="grid-column:span 2;"><input type="checkbox" class="subject-checkbox" value="Religion"><div class="subject-box" style="flex-direction:row;gap:12px;"><i class="fas fa-praying-hands"></i><span>Religion</span></div></label>
                 </div>
-                <button class="auth-btn" style="background: linear-gradient(135deg, #10b981, #059669); margin-top: 5px;" onclick="saveSelectedSubjectsToDatabase()" id="saveSubjectsBtn"><i class="fas fa-save"></i> Save & Continue</button>
+                <button class="auth-btn" style="background:linear-gradient(135deg,#10b981,#059669);" onclick="saveSelectedSubjectsToDatabase()" id="saveSubjectsBtn"><i class="fas fa-save"></i> Save & Continue</button>
             </div>
             <div id="errorMessage" class="error-message"></div>
         </div>
@@ -850,8 +790,8 @@
             <div class="logo"><div class="logo-icon"><i class="fas fa-graduation-cap"></i></div><div><h1 id="teacherNameDisplay">Loading...</h1><p id="teacherEmailDisplay"></p></div></div>
             <div class="teacher-profile">
                 <span class="shared-badge"><i class="fas fa-globe"></i> Shared</span>
-                <div class="teacher-avatar" id="teacherAvatarDisplay"><i class="fas fa-user"></i></div>
-                <button class="action-btn" onclick="logout()" style="padding: 0 12px; margin: 0; min-height: 36px; border-radius: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+                <div class="teacher-avatar"><i class="fas fa-user"></i></div>
+                <button class="action-btn" onclick="logout()" style="padding:0 12px;min-height:36px;border-radius:10px;"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </header>
 
@@ -867,7 +807,7 @@
                 <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i>Groups</div>
             </div>
 
-            <!-- Dashboard Section -->
+            <!-- Dashboard -->
             <div id="dashboard-section" class="content-section active">
                 <div class="stats-grid">
                     <div class="stat-card"><i class="fas fa-users"></i><h2 id="totalStudents">0</h2><p>Students</p></div>
@@ -877,15 +817,15 @@
                 </div>
                 <div class="card">
                     <div class="card-title"><i class="fas fa-book"></i><span>Quick Homework Board</span></div>
-                    <textarea id="dashboardHomeworkContent" placeholder="Homework details..." rows="3" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; margin-bottom:12px; outline:none; resize:none;"></textarea>
+                    <textarea id="dashboardHomeworkContent" placeholder="Homework details..." rows="3" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;color:white;font-size:13px;margin-bottom:12px;outline:none;resize:none;"></textarea>
                     <div class="btn-group">
-                        <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent','dashboardVoiceBtn')"><i class="fas fa-microphone"></i> Voice Input</button>
+                        <button class="action-btn primary" id="dashboardVoiceBtn" onclick="startSmartVoiceInput('dashboardHomeworkContent','dashboardVoiceBtn')"><i class="fas fa-microphone"></i> Voice</button>
                         <button class="action-btn success" onclick="sendDashboardHomework()"><i class="fab fa-whatsapp"></i> Broadcast</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Students Section -->
+            <!-- Students -->
             <div id="students-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-user-plus"></i><span>Add Students to <span id="selectedGradeClass">Class</span></span></div>
@@ -894,17 +834,17 @@
                             <div class="upload-area" onclick="document.getElementById('nameListInput').click()">
                                 <i class="fas fa-cloud-upload-alt"></i>
                                 <h3>Upload Registry Image</h3>
-                                <p style="font-size:11px; color:#94a3b8; margin-top:4px;">OCR will read names automatically</p>
+                                <p style="font-size:11px;color:#94a3b8;margin-top:4px;">OCR will read names automatically</p>
                             </div>
                             <input type="file" id="nameListInput" accept="image/*" style="display:none;" onchange="processNameListWithOCR(this)">
                         </div>
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <input type="text" id="studentNameInput" placeholder="Student Full Name" style="width:100%; background:rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; outline:none;">
-                            <input type="text" id="parentPhoneInput" placeholder="Parent WhatsApp Number" style="width:100%; background:rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; outline:none;">
-                            <button class="action-btn success" onclick="addStudentManually()" style="width: 100%; margin: 6px 0 0 0;"><i class="fas fa-plus"></i> Save Student</button>
+                        <div style="display:flex;flex-direction:column;gap:4px;">
+                            <input type="text" id="studentNameInput" placeholder="Student Full Name" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;color:white;font-size:13px;outline:none;">
+                            <input type="text" id="parentPhoneInput" placeholder="Parent WhatsApp Number" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;color:white;font-size:13px;outline:none;">
+                            <button class="action-btn success" onclick="addStudentManually()" style="width:100%;margin:6px 0 0 0;"><i class="fas fa-plus"></i> Save Student</button>
                         </div>
                     </div>
-                    <h4 style="font-size: 13px; font-weight:600; margin: 16px 0 6px 2px;"><i class="fas fa-list-ol"></i> Class Roster</h4>
+                    <h4 style="font-size:13px;font-weight:600;margin:16px 0 6px 2px;"><i class="fas fa-list-ol"></i> Class Roster</h4>
                     <div class="student-table-container">
                         <table class="student-table">
                             <thead><tr><th>#</th><th>Name</th><th>Parent Phone</th><th>Actions</th></tr></thead>
@@ -914,60 +854,46 @@
                 </div>
             </div>
 
-            <!-- Marks Section -->
+            <!-- Marks -->
             <div id="marks-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-star"></i><span>Enter Performance Marks (<span id="marksGradeClass">Class</span>)</span></div>
-                    
-                    <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
-                        <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
-                        <select id="marksSubjectSelect" onchange="loadMarksSubjectData()" style="max-width: 180px; font-weight: 700; color: #8b5cf6;">
+                    <div class="subject-selector" style="margin-bottom:12px;background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);">
+                        <label><i class="fas fa-book-open" style="color:#8b5cf6;margin-right:6px;"></i> Subject</label>
+                        <select id="marksSubjectSelect" onchange="loadMarksSubjectData()" style="max-width:180px;font-weight:700;color:#8b5cf6;">
                             <option value="">-- Select Subject --</option>
                         </select>
                     </div>
-
-                    <div class="month-selector" style="margin-bottom: 8px;">
-                        <select id="examMonth">
-                            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
-                            <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
-                        </select>
-                        <select id="examType">
-                            <option>Monthly</option><option>Mid Term</option><option>Final</option><option>Quiz</option>
-                        </select>
+                    <div class="month-selector" style="margin-bottom:8px;">
+                        <select id="examMonth"><option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option><option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option></select>
+                        <select id="examType"><option>Monthly</option><option>Mid Term</option><option>Final</option><option>Quiz</option></select>
                     </div>
-                    
-                    <button class="action-btn primary" onclick="document.getElementById('marksheetInput').click()" style="width:100%; margin-bottom:12px;"><i class="fas fa-camera"></i> Scan Marksheet Image via OCR</button>
+                    <button class="action-btn primary" onclick="document.getElementById('marksheetInput').click()" style="width:100%;margin-bottom:12px;"><i class="fas fa-camera"></i> Scan Marksheet via OCR</button>
                     <input type="file" id="marksheetInput" accept="image/*" style="display:none;" onchange="processMarksheetWithOCR(this)">
-                    
                     <div class="student-table-container">
-                        <table class="student-table">
-                            <thead><tr><th>#</th><th>Student Name</th><th>Marks</th></tr></thead>
-                            <tbody id="marksTableBody"></tbody>
-                        </table>
+                        <table class="student-table"><thead><tr><th>#</th><th>Student Name</th><th>Marks</th></tr></thead><tbody id="marksTableBody"></tbody></table>
                     </div>
-                    
                     <div class="btn-group">
                         <button class="action-btn primary" onclick="saveMarks()"><i class="fas fa-save"></i> Save Grades</button>
                         <button class="action-btn danger" onclick="identifyLowMarks()"><i class="fas fa-exclamation-triangle"></i> Flag Failures</button>
                     </div>
-                    
-                    <div id="lowMarksResults" style="display:none; margin-top:10px;">
+                    <div id="lowMarksResults" style="display:none;margin-top:10px;">
                         <div class="low-marks-card">
-                            <h4 style="font-size:13px; font-weight:600; margin-bottom:6px;">Students Below 40%</h4>
-                            <div id="lowMarksStudentsList" style="margin-bottom: 10px;"></div>
-                            <button class="action-btn danger" onclick="sendLowMarksToParents()" style="width:100%; margin:0;"><i class="fab fa-whatsapp"></i> Send Alerts to Parents</button>
+                            <h4 style="font-size:13px;font-weight:600;margin-bottom:6px;">Students Below 40%</h4>
+                            <div id="lowMarksStudentsList" style="margin-bottom:10px;"></div>
+                            <button class="action-btn danger" onclick="sendLowMarksToParents()" style="width:100%;margin:0;"><i class="fab fa-whatsapp"></i> Send Alerts</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ANALYSIS SECTION - NEW -->
+            <!-- ANALYSIS SECTION - Enhanced -->
             <div id="analysis-section" class="content-section">
                 <div class="card">
-                    <div class="card-title"><i class="fas fa-chart-pie"></i><span>Performance Analysis Dashboard</span></div>
+                    <div class="card-title"><i class="fas fa-chart-pie"></i><span>📊 Performance Analysis Dashboard</span></div>
                     
-                    <!-- Grade, Subject, Class Selectors -->
-                    <div class="selector-container" style="margin-bottom: 12px;">
+                    <!-- Filters -->
+                    <div class="selector-container" style="margin-bottom:12px;">
                         <div class="grade-selector">
                             <label><i class="fas fa-graduation-cap"></i> Grade</label>
                             <select id="analysisGradeSelect" onchange="runAnalysis()">
@@ -979,48 +905,54 @@
                         <div class="class-selector">
                             <label><i class="fas fa-users"></i> Section</label>
                             <select id="analysisClassSelect" onchange="runAnalysis()">
+                                <option value="all">All Sections</option>
                                 <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                             </select>
                         </div>
                         <div class="subject-selector">
                             <label><i class="fas fa-book-open"></i> Subject</label>
                             <select id="analysisSubjectSelect" onchange="runAnalysis()">
-                                <option value="">-- All Subjects --</option>
+                                <option value="">-- All --</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Stats Summary -->
-                    <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
                         <div class="stat-card"><i class="fas fa-users"></i><h2 id="analysisStudentCount">0</h2><p>Students</p></div>
-                        <div class="stat-card"><i class="fas fa-chart-line"></i><h2 id="analysisAverage">0%</h2><p>Class Average</p></div>
-                        <div class="stat-card"><i class="fas fa-exclamation-triangle"></i><h2 id="analysisLowCount">0</h2><p>Below Threshold</p></div>
+                        <div class="stat-card"><i class="fas fa-chart-line"></i><h2 id="analysisAverage">0%</h2><p>Avg Score</p></div>
+                        <div class="stat-card"><i class="fas fa-trophy" style="color:#10b981;"></i><h2 id="analysisHighest">0</h2><p>Highest</p></div>
+                        <div class="stat-card"><i class="fas fa-arrow-down" style="color:#ef4444;"></i><h2 id="analysisLowest">0</h2><p>Lowest</p></div>
+                        <div class="stat-card"><i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i><h2 id="analysisLowCount">0</h2><p>Below Threshold</p></div>
                     </div>
 
-                    <!-- Pie Chart -->
-                    <div class="chart-container">
-                        <canvas id="analysisPieChart"></canvas>
+                    <!-- Charts Row -->
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <h4 style="font-size:12px;color:#94a3b8;margin-bottom:8px;text-align:center;">📈 Mark Distribution</h4>
+                            <canvas id="analysisPieChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h4 style="font-size:12px;color:#94a3b8;margin-bottom:8px;text-align:center;">📊 Section Comparison</h4>
+                            <canvas id="analysisBarChart"></canvas>
+                        </div>
                     </div>
 
-                    <!-- High/Low Stats -->
-                    <div class="analysis-grid">
-                        <div class="analysis-card">
-                            <div class="label">Highest Mark</div>
-                            <div class="value high" id="analysisHighest">-</div>
+                    <!-- Top/Bottom Performers -->
+                    <div class="analysis-grid" style="grid-template-columns:1fr 1fr;margin-bottom:12px;">
+                        <div class="analysis-card" style="border-color:rgba(16,185,129,0.2);">
+                            <div class="label"><i class="fas fa-crown" style="color:#10b981;"></i> Top Performer</div>
+                            <div class="value high" id="analysisTopStudent">-</div>
                         </div>
-                        <div class="analysis-card">
-                            <div class="label">Lowest Mark</div>
-                            <div class="value low" id="analysisLowest">-</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="label">Lowest Student</div>
-                            <div class="value" id="analysisLowestStudent" style="font-size:14px;">-</div>
+                        <div class="analysis-card" style="border-color:rgba(239,68,68,0.2);">
+                            <div class="label"><i class="fas fa-exclamation-circle" style="color:#ef4444;"></i> Needs Support</div>
+                            <div class="value low" id="analysisBottomStudent">-</div>
                         </div>
                     </div>
 
                     <!-- Low Marks Filter -->
-                    <div style="margin-top: 12px; padding: 12px; background: rgba(239,68,68,0.05); border-radius: 12px; border: 1px solid rgba(239,68,68,0.2);">
-                        <h4 style="font-size:13px; font-weight:600; margin-bottom:8px;"><i class="fas fa-filter"></i> Filter Low Performers</h4>
+                    <div style="margin-top:8px;padding:14px;background:rgba(245,158,11,0.05);border-radius:12px;border:1px solid rgba(245,158,11,0.2);">
+                        <h4 style="font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-filter" style="color:#f59e0b;"></i> Filter Low Performers</h4>
                         <div class="range-input-group">
                             <label>Marks between</label>
                             <input type="number" id="lowRangeMin" value="0" min="0" max="100" onchange="runAnalysis()">
@@ -1028,151 +960,131 @@
                             <input type="number" id="lowRangeMax" value="50" min="0" max="100" onchange="runAnalysis()">
                             <button class="action-btn warning mini" onclick="showLowPerformers()" style="margin:0;"><i class="fas fa-eye"></i> Show Names</button>
                         </div>
-                        <div id="lowPerformersCount" style="font-size:13px; color:#94a3b8; margin-top:4px;">Students in range: 0</div>
+                        <div id="lowPerformersCount" style="font-size:13px;color:#94a3b8;margin-top:4px;">Students in range: 0</div>
                     </div>
 
-                    <!-- Section-wise Analysis -->
-                    <div style="margin-top: 12px;">
-                        <h4 style="font-size:13px; font-weight:600; margin-bottom:8px;"><i class="fas fa-layer-group"></i> Section-wise Average</h4>
-                        <div id="sectionWiseAnalysis" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                            <div class="analysis-card"><div class="label">Section A</div><div class="value" id="secAAvg">-</div></div>
-                            <div class="analysis-card"><div class="label">Section B</div><div class="value" id="secBAvg">-</div></div>
-                            <div class="analysis-card"><div class="label">Section C</div><div class="value" id="secCAvg">-</div></div>
-                            <div class="analysis-card"><div class="label">Section D</div><div class="value" id="secDAvg">-</div></div>
+                    <!-- Section-wise Average -->
+                    <div style="margin-top:12px;">
+                        <h4 style="font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-layer-group" style="color:#8b5cf6;"></i> Section-wise Performance</h4>
+                        <div id="sectionWiseAnalysis" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+                            <div class="analysis-card" style="border-left:4px solid #6366f1;"><div class="label">Section A</div><div class="value purple" id="secAAvg">-</div></div>
+                            <div class="analysis-card" style="border-left:4px solid #10b981;"><div class="label">Section B</div><div class="value high" id="secBAvg">-</div></div>
+                            <div class="analysis-card" style="border-left:4px solid #f59e0b;"><div class="label">Section C</div><div class="value warning" id="secCAvg">-</div></div>
+                            <div class="analysis-card" style="border-left:4px solid #ef4444;"><div class="label">Section D</div><div class="value low" id="secDAvg">-</div></div>
+                        </div>
+                    </div>
+
+                    <!-- Grade-wide Analysis -->
+                    <div style="margin-top:12px;padding:12px;background:rgba(99,102,241,0.05);border-radius:12px;border:1px solid rgba(99,102,241,0.1);">
+                        <h4 style="font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-chart-bar" style="color:#8b5cf6;"></i> Grade-wide Performance</h4>
+                        <div id="gradeWideAnalysis" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;gap:6px;">
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G6</div><div class="value purple" id="g6Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G7</div><div class="value purple" id="g7Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G8</div><div class="value purple" id="g8Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G9</div><div class="value purple" id="g9Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G10</div><div class="value purple" id="g10Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G11</div><div class="value purple" id="g11Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G12</div><div class="value purple" id="g12Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G13</div><div class="value purple" id="g13Avg">-</div></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Exercises Section -->
+            <!-- Exercises -->
             <div id="exercises-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><div><i class="fas fa-tasks"></i> <span>Exercise Checksheets - <span id="exercisesGradeClass">Class</span></span></div></div>
-                    <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
-                        <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
-                        <div style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: flex-end;">
-                            <select id="taskSubjectSelect" onchange="loadExerciseData()" style="max-width: 180px; font-weight: 700; color: #8b5cf6;">
-                                <option value="">-- Load Elements --</option>
-                            </select>
-                            <button class="action-btn primary mini" onclick="openSubjectViewManually()"><i class="fas fa-plus"></i> Add Manually</button>
+                    <div class="subject-selector" style="margin-bottom:12px;background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);">
+                        <label><i class="fas fa-book-open" style="color:#8b5cf6;margin-right:6px;"></i> Subject</label>
+                        <div style="display:flex;align-items:center;gap:8px;width:100%;justify-content:flex-end;">
+                            <select id="taskSubjectSelect" onchange="loadExerciseData()" style="max-width:180px;font-weight:700;color:#8b5cf6;"><option value="">-- Load --</option></select>
+                            <button class="action-btn primary mini" onclick="openSubjectViewManually()"><i class="fas fa-plus"></i> Add</button>
                         </div>
                     </div>
                     <div class="month-selector">
-                        <select id="exerciseMonth" onchange="loadExerciseData()">
-                            <option>January</option><option>February</option><option>March</option><option>April</option>
-                            <option>May</option><option>June</option><option>July</option><option>August</option>
-                            <option>September</option><option>October</option><option>November</option><option>December</option>
-                        </select>
-                        <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">-- View Previous Months --</option></select>
+                        <select id="exerciseMonth" onchange="loadExerciseData()"><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+                        <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">-- View Previous --</option></select>
                     </div>
                     <div class="student-table-container">
-                        <table class="student-table">
-                            <thead><tr><th>#</th><th>Student Name</th><th>1st</th><th>2nd</th><th>3rd</th></tr></thead>
-                            <tbody id="exercisesTableBody"><tr><td colspan="5" class="empty-state">Select a subject to populate data metrics...</td></tr></tbody>
-                        </table>
+                        <table class="student-table"><thead><tr><th>#</th><th>Student Name</th><th>1st</th><th>2nd</th><th>3rd</th></tr></thead><tbody id="exercisesTableBody"><tr><td colspan="5" class="empty-state">Select a subject</td></tr></tbody></table>
                     </div>
                 </div>
             </div>
 
-            <!-- Homework Section -->
+            <!-- Homework -->
             <div id="homework-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-book"></i><span>Send Assignment Tasks (<span id="homeworkGradeClass">Class</span>)</span></div>
-                    <textarea id="homeworkContent" placeholder="Write full assignment details down here..." rows="4" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; color:white; font-size:13px; margin-bottom:12px; outline:none; resize:none;"></textarea>
+                    <textarea id="homeworkContent" placeholder="Write full assignment details..." rows="4" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;color:white;font-size:13px;margin-bottom:12px;outline:none;resize:none;"></textarea>
                     <div class="btn-group">
-                        <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent','homeworkVoiceBtn')"><i class="fas fa-microphone"></i> Dictate (Voice)</button>
-                        <button class="action-btn success" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Share via WhatsApp</button>
+                        <button class="action-btn primary" id="homeworkVoiceBtn" onclick="startSmartVoiceInput('homeworkContent','homeworkVoiceBtn')"><i class="fas fa-microphone"></i> Dictate</button>
+                        <button class="action-btn success" onclick="sendHomework()"><i class="fab fa-whatsapp"></i> Share</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Timetable Section -->
+            <!-- Timetable -->
             <div id="timetable-section" class="content-section">
                 <div class="card">
-                    <div class="card-title"><i class="fas fa-calendar-alt"></i><span>Master Schedule Timetable</span></div>
-                    <div class="upload-area" onclick="document.getElementById('timetableInput').click()" style="margin-bottom: 12px;">
+                    <div class="card-title"><i class="fas fa-calendar-alt"></i><span>Master Schedule</span></div>
+                    <div class="upload-area" onclick="document.getElementById('timetableInput').click()" style="margin-bottom:12px;">
                         <i class="fas fa-cloud-upload-alt"></i>
-                        <h3>Upload Timetable Layout Snapshot</h3>
-                        <p style="font-size:11px; color:#94a3b8; margin-top:4px;">OCR will extract schedules automatically</p>
+                        <h3>Upload Timetable Image</h3>
+                        <p style="font-size:11px;color:#94a3b8;margin-top:4px;">OCR will extract schedules</p>
                     </div>
                     <input type="file" id="timetableInput" accept="image/*" style="display:none;" onchange="processTimetableWithOCR(this)">
                     <div id="timetableGrid" class="timetable-grid"></div>
-                    <button class="action-btn primary" onclick="saveTimetableToDatabase()" id="saveTimetableBtn" disabled style="width:100%; margin-top:12px;"><i class="fas fa-save"></i> Save Schedule Grid</button>
+                    <button class="action-btn primary" onclick="saveTimetableToDatabase()" id="saveTimetableBtn" disabled style="width:100%;margin-top:12px;"><i class="fas fa-save"></i> Save Schedule</button>
                 </div>
             </div>
 
-            <!-- WhatsApp Section -->
+            <!-- WhatsApp -->
             <div id="whatsapp-section" class="content-section">
                 <div class="card">
-                    <div class="card-title"><i class="fab fa-whatsapp"></i><span>WhatsApp Integration API URLs</span></div>
+                    <div class="card-title"><i class="fab fa-whatsapp"></i><span>WhatsApp Integration</span></div>
                     <div id="whatsappGroupsList"></div>
-                    <button class="action-btn success" onclick="saveWhatsAppGroups()" style="width:100%; margin-top:12px; margin-right:0; margin-bottom:0;"><i class="fas fa-save"></i> Apply Changes</button>
+                    <button class="action-btn success" onclick="saveWhatsAppGroups()" style="width:100%;margin-top:12px;"><i class="fas fa-save"></i> Apply Changes</button>
                 </div>
             </div>
         </div>
 
-        <!-- Manual Section -->
-        <div id="manualAppContent" style="display: none;">
+        <!-- Manual -->
+        <div id="manualAppContent" style="display:none;">
             <div class="card">
                 <div class="card-title"><i class="fas fa-book-open"></i> <span>EduTrack Pro Documentation</span></div>
-                <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px; line-height: 1.4;">
-                    Welcome to your platform documentation hub. Explore step-by-step guidance below to fully utilize the platform's features.
-                </p>
+                <p style="color:#94a3b8;font-size:13px;margin-bottom:16px;">Welcome to your platform documentation hub.</p>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-key" style="margin-right:8px;"></i> 1. Authentication & Onboarding</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Toggle between the <strong>Login</strong> or <strong>Register</strong> fields inside the initial startup window card.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">New registrations require completing Full Name, email authentication mapping, and setting up an account password.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Upon registering, choose the parameters of subjects you teach inside the selection interface grid and hit <strong>Save & Continue</strong> to finalize validation parameters.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-key"></i> 1. Authentication</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Login or Register using email/password.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Select your subjects during registration.</div></li></ul></div></div>
                 </div>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-users" style="margin-right:8px;"></i> 2. Managing Student Rosters</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Navigate to the <strong>Students</strong> tab using your main app control tab panel.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text"><strong>Manual Upload:</strong> Input the student full title name alongside their corresponding parent WhatsApp parameters, then save.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text"><strong>Automated OCR Scan:</strong> Hit the <strong>Upload Registry Image</strong> dashboard area. Choose a clear snapshot from the device memory. The internal processing engine runs text reading workflows automatically to generate user accounts instantly.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-users"></i> 2. Students</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Add students manually or via OCR image upload.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Enter parent WhatsApp numbers for alerts.</div></li></ul></div></div>
                 </div>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-chart-bar" style="margin-right:8px;"></i> 3. Performance Marks Engine</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Access the <strong>Marks</strong> tab interface to open global target lists.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Use the dropdown menus to select the specific evaluation tracking timeline constraints (e.g., Month and Exam type profiles).</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Input grades manually or select <strong>Scan Marksheet Image via OCR</strong> to map values automatically from image documents. Click <strong>Save Grades</strong>.</div></li><li class="step-item"><div class="step-number">4</div><div class="step-text">Select <strong>Flag Failures</strong> to filter out metrics below 40%. Click <strong>Send Alerts to Parents</strong> to quickly notify parents via WhatsApp.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-chart-bar"></i> 3. Marks</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Select subject, month, and exam type.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Enter marks or use OCR scan.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Click Save Grades.</div></li></ul></div></div>
                 </div>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-chart-pie" style="margin-right:8px;"></i> 4. Analysis Dashboard</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Navigate to the <strong>Analysis</strong> tab to view performance metrics.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Select <strong>Grade, Section, and Subject</strong> to filter data. The pie chart shows mark distribution.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Use the <strong>Low Performers</strong> filter to set a mark range and click <strong>Show Names</strong> to list students.</div></li><li class="step-item"><div class="step-number">4</div><div class="step-text">View <strong>Section-wise averages</strong> to compare performance across different classes.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-chart-pie"></i> 4. Analysis</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Filter by Grade, Section, and Subject.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">View pie chart, bar chart, and stats.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Use low performer filter and click Show Names.</div></li><li class="step-item"><div class="step-number">4</div><div class="step-text">Compare section-wise and grade-wide averages.</div></li></ul></div></div>
                 </div>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-tasks" style="margin-right:8px;"></i> 5. Tracking Exercise Checksheets</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Open the <strong>Tasks</strong> page to reveal current progress matrices.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Choose the current Subject target parameter to populate the active rows. Use the <strong>Add Manually</strong> function if you need to adjust subject parameters.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Tap the green checkmark icon to confirm correct execution or the red "X" icon to log a failed attempt. The system automatically syncs changes to Firebase.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-tasks"></i> 5. Tasks</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Select subject and month.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Mark exercises as correct/wrong.</div></li></ul></div></div>
                 </div>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-bullhorn" style="margin-right:8px;"></i> 6. Homework Voice Broadcasting</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Head over to either the <strong>Dashboard Quick Board</strong> module or the dedicated <strong>Homework</strong> section tab.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click <strong>Voice Input / Dictate</strong>. Speak into your microphone using Sinhala text articulation (`si-LK`) to watch your text generate live.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Tap <strong>Broadcast / Share via WhatsApp</strong> to copy the organized text format layout structure to your clipboard and open your messaging dashboard.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-bullhorn"></i> 6. Homework</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Type or use voice input for homework.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click Share via WhatsApp to copy and send.</div></li></ul></div></div>
                 </div>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-calendar-alt" style="margin-right:8px;"></i> 7. Schedule Timetable Scanning</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Navigate to the <strong>Schedule</strong> section block area panel.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click the upload layout panel card area and supply a screenshot image file of the class master program.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">The OCR engine extracts timetable configurations from text characters and updates the interface cards. Click <strong>Save Schedule Grid</strong> to lock structural data in the cloud database.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-calendar-alt"></i> 7. Schedule</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Upload timetable image for OCR extraction.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Save the extracted schedule.</div></li></ul></div></div>
                 </div>
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fab fa-whatsapp" style="margin-right:8px;"></i> 8. Routing WhatsApp Class API Links</span>
-                        <i class="fas fa-chevron-down chevron"></i>
-                    </button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Open the <strong>Groups</strong> management interface screen.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Paste your standard target class room link URLs inside the text areas mapped to sections A, B, C, and D.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Click <strong>Apply Changes</strong>. This saves your communication pathways, ensuring smooth messaging throughout the platform.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fab fa-whatsapp"></i> 8. WhatsApp</span><i class="fas fa-chevron-down chevron"></i></button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Paste WhatsApp group invite links.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click Apply Changes to save.</div></li></ul></div></div>
                 </div>
             </div>
         </div>
@@ -1208,55 +1120,24 @@
         let exerciseData = {};
         let teacherSubjects = [];
         let isEditingManuallyFromApp = false;
-        let marksData = [];
         let analysisChart = null;
-
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        window.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, false);
-
-        window.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipeGesture();
-        }, false);
-
-        function handleSwipeGesture() {
-            if (touchEndX - touchStartX > 80 && touchStartX < 50) {
-                toggleDrawer(true);
-            }
-        }
+        let analysisBarChart = null;
 
         function toggleDrawer(open) {
             const drawer = document.getElementById('sideDrawer');
             const overlay = document.getElementById('drawerOverlay');
-            if(open) {
-                drawer.classList.add('open');
-                overlay.classList.add('active');
-            } else {
-                drawer.classList.remove('open');
-                overlay.classList.remove('active');
-            }
+            if(open) { drawer.classList.add('open'); overlay.classList.add('active'); }
+            else { drawer.classList.remove('open'); overlay.classList.remove('active'); }
         }
 
         function handleDrawerNav(targetView) {
-            const dashBtn = document.getElementById('drawer-dash-btn');
-            const manualBtn = document.getElementById('drawer-manual-btn');
             const dashContent = document.getElementById('dashboardAppContent');
             const manualContent = document.getElementById('manualAppContent');
-
-            dashBtn.classList.remove('active');
-            manualBtn.classList.remove('active');
-
             if(targetView === 'dashboard') {
-                dashBtn.classList.add('active');
                 dashContent.style.display = 'block';
                 manualContent.style.display = 'none';
                 switchTab('dashboard');
-            } else if(targetView === 'manual') {
-                manualBtn.classList.add('active');
+            } else {
                 dashContent.style.display = 'none';
                 manualContent.style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1264,23 +1145,19 @@
             toggleDrawer(false);
         }
 
-        function toggleAccordion(headerElement) {
-            headerElement.classList.toggle('active');
-            const content = headerElement.nextElementSibling;
-            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
-                content.style.maxHeight = '0px';
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
+        function toggleAccordion(el) {
+            el.classList.toggle('active');
+            const c = el.nextElementSibling;
+            c.style.maxHeight = c.style.maxHeight ? '0px' : c.scrollHeight + 'px';
         }
 
         function getFullClassName() { return `${currentGrade}${currentClass}`; }
 
         function switchAuthTab(tab) {
-            document.getElementById('loginTab').classList.toggle('active', tab === 'login');
-            document.getElementById('registerTab').classList.toggle('active', tab === 'register');
-            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
-            document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+            document.getElementById('loginTab').classList.toggle('active', tab==='login');
+            document.getElementById('registerTab').classList.toggle('active', tab==='register');
+            document.getElementById('loginForm').style.display = tab==='login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = tab==='register' ? 'block' : 'none';
         }
 
         async function register() {
@@ -1294,12 +1171,10 @@
                 btn.innerHTML = '<span class="loading-spinner"></span>';
                 btn.disabled = true;
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                
                 await firebase.firestore().collection('teachers').doc(userCredential.user.uid).set({
                     full_name: name, email: email, created_at: new Date().toISOString(),
                     whatsapp_groups: {}, subjects: [], timetable: null
                 });
-                
                 showSuccess('Account created! Choose your subjects.');
                 document.querySelectorAll('.subject-checkbox').forEach(cb => cb.checked = false);
                 document.getElementById('authCredentialsForm').style.display = 'none';
@@ -1309,40 +1184,24 @@
         }
 
         async function saveSelectedSubjectsToDatabase() {
-            if (!firebase.auth().currentUser) return showError('No authentic session data mapped.');
+            if (!firebase.auth().currentUser) return showError('No session');
             const uid = firebase.auth().currentUser.uid;
             const checkedBoxes = document.querySelectorAll('.subject-checkbox:checked');
             const selected = Array.from(checkedBoxes).map(cb => cb.value);
-            
-            if (selected.length === 0) return showError('Please choose at least 1 subject box item');
-            
+            if (!selected.length) return showError('Select at least one subject');
             try {
                 const btn = document.getElementById('saveSubjectsBtn');
                 btn.innerHTML = '<span class="loading-spinner"></span> Saving...';
                 btn.disabled = true;
-                
                 await firebase.firestore().collection('teachers').doc(uid).update({ subjects: selected });
                 teacherSubjects = selected;
                 populateTaskSubjectDropdown();
-                showSuccess('Subjects saved successfully!');
-                
-                if (isEditingManuallyFromApp) {
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('mainApp').style.display = 'block';
-                    switchTab('exercises');
-                    isEditingManuallyFromApp = false;
-                } else {
-                    document.getElementById('subjectSelectionForm').style.display = 'none';
-                    document.getElementById('authCredentialsForm').style.display = 'block';
-                    switchAuthTab('login');
-                    await firebase.auth().signOut();
-                }
+                showSuccess('Subjects saved!');
+                document.getElementById('subjectSelectionForm').style.display = 'none';
+                document.getElementById('authCredentialsForm').style.display = 'block';
+                await firebase.auth().signOut();
             } catch(e) { showError(e.message); }
-            finally { 
-                const btn = document.getElementById('saveSubjectsBtn');
-                btn.innerHTML = '<i class="fas fa-save"></i> Save & Continue'; 
-                btn.disabled = false; 
-            }
+            finally { document.getElementById('saveSubjectsBtn').innerHTML = '<i class="fas fa-save"></i> Save & Continue'; document.getElementById('saveSubjectsBtn').disabled = false; }
         }
 
         function openSubjectViewManually() {
@@ -1363,9 +1222,7 @@
                 select.innerHTML = '<option value="">None Selected</option>';
                 return;
             }
-            teacherSubjects.forEach(sub => {
-                select.innerHTML += `<option value="${sub}">${sub}</option>`;
-            });
+            teacherSubjects.forEach(sub => { select.innerHTML += `<option value="${sub}">${sub}</option>`; });
             loadExerciseData();
         }
 
@@ -1382,46 +1239,32 @@
             finally { document.getElementById('loginBtn').innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In'; document.getElementById('loginBtn').disabled = false; }
         }
 
-        async function logout() { 
-            await firebase.auth().signOut(); 
-            document.getElementById('authCredentialsForm').style.display = 'block';
-            document.getElementById('subjectSelectionForm').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'flex'; 
-            document.getElementById('mainApp').style.display = 'none'; 
+        async function logout() {
+            await firebase.auth().signOut();
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
         }
 
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 const doc = await firebase.firestore().collection('teachers').doc(user.uid).get();
-                if (doc.exists) currentTeacher = { id: user.uid, ...doc.data() };
-                else currentTeacher = { id: user.uid, full_name: user.email.split('@')[0], email: user.email };
-                
-                whatsappGroups = currentTeacher.whatsapp_groups || {};
+                currentTeacher = doc.exists ? { id: user.uid, ...doc.data() } : { id: user.uid, full_name: user.email.split('@')[0], email: user.email };
                 teacherSubjects = currentTeacher.subjects || [];
+                whatsappGroups = currentTeacher.whatsapp_groups || {};
                 extractedTimetable = currentTeacher.timetable || null;
-                
                 document.getElementById('teacherNameDisplay').innerHTML = currentTeacher.full_name;
                 document.getElementById('teacherEmailDisplay').innerHTML = currentTeacher.email;
-                
-                populateTaskSubjectDropdown();
                 await loadStudents();
-                
-                if (!isEditingManuallyFromApp) {
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('mainApp').style.display = 'block';
-                    
-                    runAutomatedTimetableLookup();
-                    
-                    updateAllDisplays();
-                    displayWhatsAppGroups();
-                    setupRealtimeListener();
-                    handleDrawerNav('dashboard');
-                }
-            } else { 
-                if (!isEditingManuallyFromApp) {
-                    document.getElementById('loginPage').style.display = 'flex'; 
-                    document.getElementById('mainApp').style.display = 'none'; 
-                }
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                populateTaskSubjectDropdown();
+                updateAllDisplays();
+                displayWhatsAppGroups();
+                setupRealtimeListener();
+                handleDrawerNav('dashboard');
+            } else {
+                document.getElementById('loginPage').style.display = 'flex';
+                document.getElementById('mainApp').style.display = 'none';
             }
         });
 
@@ -1446,8 +1289,6 @@
                     updateDashboard();
                 });
             });
-            
-            // Also listen for marks changes
             firebase.firestore().collection('marks').onSnapshot(() => {
                 if (document.getElementById('analysis-section').classList.contains('active')) runAnalysis();
             });
@@ -1457,19 +1298,12 @@
             const month = document.getElementById('exerciseMonth').value;
             const subject = document.getElementById('taskSubjectSelect').value;
             const fullClass = getFullClassName();
-            
             if (!subject) {
-                document.getElementById('exercisesTableBody').innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
+                document.getElementById('exercisesTableBody').innerHTML = `<tr><td colspan="5" class="empty-state">Select a subject</td></tr>`;
                 return;
             }
-
-            const docRef = firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`);
-            const doc = await docRef.get();
-            if (doc.exists) {
-                exerciseData = doc.data();
-            } else {
-                exerciseData = {};
-            }
+            const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).get();
+            exerciseData = doc.exists ? doc.data() : {};
             displayExercisesTable();
         }
 
@@ -1485,12 +1319,9 @@
             document.getElementById('selectedGradeClass').innerText = getFullClassName();
             document.getElementById('marksGradeClass').innerText = getFullClassName();
             document.getElementById('homeworkGradeClass').innerText = getFullClassName();
-            
             document.getElementById('gradeSelect').value = currentGrade;
             document.getElementById('classSelect').value = currentClass;
-            
             populateMarksSubjectDropdown();
-            
             displayStudentsTable();
             displayMarksTable();
             loadExerciseData();
@@ -1502,7 +1333,6 @@
         function changeGrade() { currentGrade = document.getElementById('gradeSelect').value; updateAllDisplays(); }
         function changeClass() { currentClass = document.getElementById('classSelect').value; updateAllDisplays(); }
 
-        // Subject Map for Marks
         const subjectMap = {
             '6': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
             '7': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
@@ -1514,45 +1344,27 @@
             '13': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Commerce','Literature','Civics','Religion']
         };
 
-        function getSubjectsForGrade(grade) {
-            return subjectMap[grade] || subjectMap['10'];
-        }
+        function getSubjectsForGrade(grade) { return subjectMap[grade] || subjectMap['10']; }
 
         function populateMarksSubjectDropdown() {
             const select = document.getElementById('marksSubjectSelect');
             select.innerHTML = '<option value="">-- Select Subject --</option>';
             const subjects = getSubjectsForGrade(currentGrade);
-            subjects.forEach(sub => {
-                select.innerHTML += `<option value="${sub}">${sub}</option>`;
-            });
-            if (subjects.length) {
-                select.value = subjects[0];
-            }
+            subjects.forEach(sub => { select.innerHTML += `<option value="${sub}">${sub}</option>`; });
+            if (subjects.length) { select.value = subjects[0]; }
             loadMarksSubjectData();
         }
 
-        function loadMarksSubjectData() {
-            displayMarksTable();
-        }
+        function loadMarksSubjectData() { displayMarksTable(); }
 
         function displayStudentsTable() {
             const tbody = document.getElementById('studentsTableBody');
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-users-slash"></i><p>No students recorded inside this group configuration.</p></td></tr>`; return; }
-            classStudents.forEach((student, idx) => {
-                tbody.innerHTML += `<tr>
-                    <td>${idx+1}</td>
-                    <td><b>${student.name}</b></td>
-                    <td>${student.parent_phone || '-'}</td>
-                    <td>
-                        <div style="display:flex; gap:4px; justify-content:center;">
-                           <button class="action-btn" onclick="editStudent('${student.id}')" style="padding:4px 8px; margin:0; min-height:32px; font-size:11px;"><i class="fas fa-edit"></i></button>
-                           <button class="action-btn danger" onclick="deleteStudent('${student.id}')" style="padding:4px 8px; margin:0; min-height:32px; font-size:11px;"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>`;
+            if (!classStudents.length) { tbody.innerHTML = `<tr><td colspan="4" class="empty-state">No students</td></tr>`; return; }
+            classStudents.forEach((s, i) => {
+                tbody.innerHTML += `<tr><td>${i+1}</td><td><b>${s.name}</b></td><td>${s.parent_phone||'-'}</td><td><button class="action-btn" onclick="editStudent('${s.id}')" style="padding:4px 8px;margin:0;min-height:32px;font-size:11px;"><i class="fas fa-edit"></i></button><button class="action-btn danger" onclick="deleteStudent('${s.id}')" style="padding:4px 8px;margin:0;min-height:32px;font-size:11px;"><i class="fas fa-trash"></i></button></td></tr>`;
             });
         }
 
@@ -1562,31 +1374,27 @@
             if (!name) return showError('Enter student name');
             await firebase.firestore().collection('students').add({
                 grade: currentGrade, classLetter: currentClass,
-                name: name, parent_phone: phone || '', created_at: new Date().toISOString()
+                name, parent_phone: phone || '', created_at: new Date().toISOString()
             });
             document.getElementById('studentNameInput').value = '';
             document.getElementById('parentPhoneInput').value = '';
             await loadStudents();
             displayStudentsTable();
             updateDashboard();
-            showSuccess('Student added successfully!');
+            showSuccess('Student added');
         }
 
-        async function deleteStudent(id) { if (confirm('Delete student record permanent?')) { await firebase.firestore().collection('students').doc(id).delete(); await loadStudents(); displayStudentsTable(); updateDashboard(); showSuccess('Deleted'); } }
-        async function editStudent(id) { const newName = prompt('Enter modern title adjustments:'); if (newName) { await firebase.firestore().collection('students').doc(id).update({ name: newName }); await loadStudents(); displayStudentsTable(); showSuccess('Updated'); } }
+        async function deleteStudent(id) { if (confirm('Delete?')) { await firebase.firestore().collection('students').doc(id).delete(); await loadStudents(); displayStudentsTable(); updateDashboard(); } }
+        async function editStudent(id) { const newName = prompt('New name:'); if (newName) { await firebase.firestore().collection('students').doc(id).update({ name: newName }); await loadStudents(); displayStudentsTable(); } }
 
         function displayMarksTable() {
             const tbody = document.getElementById('marksTableBody');
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) { tbody.innerHTML = `<tr><td colspan="3" class="empty-state"><i class="fas fa-users-slash"></i><p>No student roster found.</p></td></tr>`; return; }
-            classStudents.forEach((student, idx) => {
-                tbody.innerHTML += `<tr>
-                    <td>${idx+1}</td>
-                    <td><b>${student.name}</b></td>
-                    <td><input type="number" min="0" max="100" id="mark_${student.id}" placeholder="-"></td>
-                </tr>`;
+            if (!classStudents.length) { tbody.innerHTML = `<tr><td colspan="3" class="empty-state">No students</td></tr>`; return; }
+            classStudents.forEach((s, i) => {
+                tbody.innerHTML += `<tr><td>${i+1}</td><td><b>${s.name}</b></td><td><input type="number" min="0" max="100" id="mark_${s.id}" placeholder="-"></td></tr>`;
             });
         }
 
@@ -1594,10 +1402,10 @@
             const month = document.getElementById('examMonth').value;
             const examType = document.getElementById('examType').value;
             const subject = document.getElementById('marksSubjectSelect').value;
-            if (!subject) return showError('Please select a subject');
+            if (!subject) return showError('Select a subject');
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            if (classStudents.length === 0) return showError('No students');
+            if (!classStudents.length) return showError('No students');
             const batch = firebase.firestore().batch();
             let saved = 0;
             for (let s of classStudents) {
@@ -1605,12 +1413,12 @@
                 if (input && input.value) {
                     batch.set(firebase.firestore().collection('marks').doc(), {
                         student_id: s.id, student_name: s.name, grade: currentGrade, classLetter: currentClass,
-                        month, exam_type: examType, subject: subject, marks: parseInt(input.value), saved_at: new Date().toISOString()
+                        month, exam_type: examType, subject, marks: parseInt(input.value), saved_at: new Date().toISOString()
                     });
                     saved++;
                 }
             }
-            if (saved > 0) { await batch.commit(); showSuccess(`Saved ${saved} marks for ${subject}`); }
+            if (saved) { await batch.commit(); showSuccess(`Saved ${saved} marks for ${subject}`); }
             else showError('Enter marks');
         }
 
@@ -1622,116 +1430,55 @@
                 const input = document.getElementById(`mark_${s.id}`);
                 if (input && input.value && parseInt(input.value) < 40) low.push({ name: s.name, marks: parseInt(input.value) });
             });
-            const container = document.getElementById('lowMarksStudentsList');
-            container.innerHTML = low.map(s => `<span class="student-chip">${s.name} (${s.marks}%)</span>`).join('');
+            document.getElementById('lowMarksStudentsList').innerHTML = low.map(s => `<span class="student-chip">${s.name} (${s.marks}%)</span>`).join('');
             document.getElementById('lowMarksResults').style.display = low.length ? 'block' : 'none';
-            if (!low.length) showSuccess('Excellent! Everyone passed parameters!');
+            if (!low.length) showSuccess('All passed!');
         }
 
         async function sendLowMarksToParents() {
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
-            const lowMarks = [];
+            const low = [];
             for (let s of classStudents) {
                 const input = document.getElementById(`mark_${s.id}`);
                 if (input && input.value && parseInt(input.value) < 40 && s.parent_phone) {
-                    lowMarks.push({ name: s.name, marks: parseInt(input.value), phone: s.parent_phone });
+                    low.push({ name: s.name, marks: parseInt(input.value), phone: s.parent_phone });
                 }
             }
-            if (lowMarks.length === 0) return showError('No low marks data logs available');
-            let message = `📢 *LOW MARKS ALERT - ${getFullClassName()}*\n\n`;
-            lowMarks.forEach(s => message += `• ${s.name} - ${s.marks}%\n`);
-            await navigator.clipboard.writeText(message);
+            if (!low.length) return showError('No low marks');
+            let msg = `📢 LOW MARKS ALERT - ${getFullClassName()}\n\n`;
+            low.forEach(s => msg += `• ${s.name} - ${s.marks}%\n`);
+            await navigator.clipboard.writeText(msg);
             window.open('https://web.whatsapp.com/', '_blank');
-            showSuccess(`Copied link data for ${lowMarks.length} students!`);
+            showSuccess(`Copied for ${low.length} students`);
         }
-        
+
         function displayExercisesTable() {
             const tbody = document.getElementById('exercisesTableBody');
             tbody.innerHTML = '';
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
             const subject = document.getElementById('taskSubjectSelect').value;
-
-            if (!subject) {
-                tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-book-open"></i><p>Select an assignment subject target above to visualize matrix entries.</p></td></tr>`;
-                return;
-            }
-            
-            if (classStudents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-users-slash"></i><p>No students tracking active profile configurations.</p></td></tr>`;
-                return;
-            }
-            
-            classStudents.forEach((student, idx) => {
-                const studentData = exerciseData[student.id] || { first: null, second: null, third: null };
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${idx + 1}</td>
-                    <td><b>${student.name}</b></td>
-                    <td>
-                        <div class="exercise-group">
-                            <div class="exercise-pair">
-                                <i class="fas fa-check-circle exercise-icon correct ${studentData.first === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'first', 'correct')"></i>
-                                <i class="fas fa-times-circle exercise-icon wrong ${studentData.first === 'wrong' ? 'active-wrong' : ''}" onclick="markExercise('${student.id}', 'first', 'wrong')"></i>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="exercise-group">
-                            <div class="exercise-pair">
-                                <i class="fas fa-check-circle exercise-icon correct ${studentData.second === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'second', 'correct')"></i>
-                                <i class="fas fa-times-circle exercise-icon wrong ${studentData.second === 'wrong' ? 'active-wrong' : ''}" onclick="markExercise('${student.id}', 'second', 'wrong')"></i>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="exercise-group">
-                            <div class="exercise-pair">
-                                <i class="fas fa-check-circle exercise-icon correct ${studentData.third === 'correct' ? 'active-correct' : ''}" onclick="markExercise('${student.id}', 'third', 'active-correct')"></i>
-                                <i class="fas fa-times-circle exercise-icon wrong ${studentData.third === 'wrong' ? 'active-wrong' : ''}" onclick="markExercise('${student.id}', 'third', 'wrong')"></i>
-                            </div>
-                        </div>
-                    </td>
-                `;
+            if (!subject || !classStudents.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty-state">No data</td></tr>`; return; }
+            classStudents.forEach((s, i) => {
+                const d = exerciseData[s.id] || { first: null, second: null, third: null };
+                tbody.innerHTML += `<tr><td>${i+1}</td><td><b>${s.name}</b></td>
+                    <td><i class="fas fa-check-circle" style="color:${d.first==='correct'?'#10b981':'#475569'};cursor:pointer;" onclick="markExercise('${s.id}','first','correct')"></i> <i class="fas fa-times-circle" style="color:${d.first==='wrong'?'#ef4444':'#475569'};cursor:pointer;" onclick="markExercise('${s.id}','first','wrong')"></i></td>
+                    <td><i class="fas fa-check-circle" style="color:${d.second==='correct'?'#10b981':'#475569'};cursor:pointer;" onclick="markExercise('${s.id}','second','correct')"></i> <i class="fas fa-times-circle" style="color:${d.second==='wrong'?'#ef4444':'#475569'};cursor:pointer;" onclick="markExercise('${s.id}','second','wrong')"></i></td>
+                    <td><i class="fas fa-check-circle" style="color:${d.third==='correct'?'#10b981':'#475569'};cursor:pointer;" onclick="markExercise('${s.id}','third','correct')"></i> <i class="fas fa-times-circle" style="color:${d.third==='wrong'?'#ef4444':'#475569'};cursor:pointer;" onclick="markExercise('${s.id}','third','wrong')"></i></td>
+                </tr>`;
             });
         }
 
         async function markExercise(studentId, time, status) {
-            if (!exerciseData[studentId]) {
-                exerciseData[studentId] = { first: null, second: null, third: null };
-            }
+            if (!exerciseData[studentId]) exerciseData[studentId] = { first: null, second: null, third: null };
             exerciseData[studentId][time] = status;
-            await saveExerciseData();
-            displayExercisesTable();
-            
-            const key = `${currentGrade}_${currentClass}`;
-            const student = (students[key] || []).find(s => s.id === studentId);
-            const statusText = status === 'correct' ? '✓ Correct' : '✗ Wrong';
-            showSuccess(`${student?.name || 'Student'}: ${time} assignment marked ${statusText}`);
-            
-            if (student && status === 'wrong') {
-                if ((time === 'second' && exerciseData[studentId].first === 'wrong') || (time === 'third')) {
-                    await sendExerciseAlert(student, time);
-                }
-            }
-        }
-
-        async function sendExerciseAlert(student, time) {
+            const month = document.getElementById('exerciseMonth').value;
             const subject = document.getElementById('taskSubjectSelect').value;
-            const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* encountered problems processing modern *${subject}* homework loops during task trial step: ${time}.\n\nPlease assist optimization workflows at home.\n\nThank you!`;
-            
-            await navigator.clipboard.writeText(message);
-            let phoneNumber = student.parent_phone ? student.parent_phone.toString().replace(/[^0-9]/g, '') : '';
-            
-            if (phoneNumber) {
-                const whatsappUrl = `https://wa.me/${phoneNumber}`;
-                window.open(whatsappUrl, '_blank');
-                showSuccess(`Opening private WhatsApp chat for ${student.name}. Paste to send text.`);
-            } else {
-                window.open('https://web.whatsapp.com/', '_blank');
-                showError(`No private WhatsApp connection parameters for ${student.name}.`);
-            }
+            const fullClass = getFullClassName();
+            await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).set(exerciseData);
+            displayExercisesTable();
+            showSuccess(`Marked ${time} as ${status}`);
         }
 
         async function loadHistoricalExercises() {
@@ -1740,38 +1487,17 @@
             if (!month || !subject) return;
             const fullClass = getFullClassName();
             const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).get();
-            if (doc.exists) {
-                exerciseData = doc.data();
-            } else {
-                exerciseData = {};
-            }
+            exerciseData = doc.exists ? doc.data() : {};
             displayExercisesTable();
-            showSuccess(`Loaded archive logs for ${month}`);
-        }
-
-        async function populateHistoricalMonths() {
-            const select = document.getElementById('viewMonthSelect');
-            select.innerHTML = '<option value="">-- View Previous Months --</option>';
-            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            const fullClass = getFullClassName();
-            const subject = document.getElementById('taskSubjectSelect').value;
-            if (!subject) return;
-            
-            for (let m of months) {
-                const doc = await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${m}`).get();
-                if (doc.exists) {
-                    select.innerHTML += `<option value="${m}">${m}</option>`;
-                }
-            }
+            showSuccess(`Loaded ${month}`);
         }
 
         async function processNameListWithOCR(input) {
             if (!input.files[0]) return;
-            const file = input.files[0];
-            showSuccess('Running OCR engine...');
+            showSuccess('OCR processing...');
             try {
                 const worker = await Tesseract.createWorker('eng+sin');
-                const { data: { text } } = await worker.recognize(file);
+                const { data: { text } } = await worker.recognize(input.files[0]);
                 await worker.terminate();
                 const names = text.split('\n').filter(l => l.trim().length > 2 && !l.match(/^\d+$/)).slice(0, 20);
                 for (let name of names) {
@@ -1782,17 +1508,16 @@
                 }
                 await loadStudents();
                 displayStudentsTable();
-                showSuccess(`Extracted and processed ${names.length} students!`);
-            } catch(e) { showError('OCR matrix engine mismatch failure'); }
+                showSuccess(`Added ${names.length} students`);
+            } catch(e) { showError('OCR failed'); }
         }
 
         async function processMarksheetWithOCR(input) {
             if (!input.files[0]) return;
-            const file = input.files[0];
-            showSuccess('Scanning dataset metrics...');
+            showSuccess('Scanning marksheet...');
             try {
                 const worker = await Tesseract.createWorker('eng');
-                const { data: { text } } = await worker.recognize(file);
+                const { data: { text } } = await worker.recognize(input.files[0]);
                 await worker.terminate();
                 const lines = text.split('\n');
                 const key = `${currentGrade}_${currentClass}`;
@@ -1801,153 +1526,74 @@
                     for (let line of lines) {
                         if (line.toLowerCase().includes(student.name.toLowerCase())) {
                             const match = line.match(/(\d{1,3})/);
-                            if (match) {
-                                const inputField = document.getElementById(`mark_${student.id}`);
-                                if (inputField) inputField.value = parseInt(match[0]);
-                            }
+                            if (match) { const inputField = document.getElementById(`mark_${student.id}`); if (inputField) inputField.value = parseInt(match[0]); }
                         }
                     }
                 }
-                showSuccess('Data mapped directly into system matrices!');
-            } catch(e) { showError('Scanning matrix translation failure'); }
+                showSuccess('Marks mapped');
+            } catch(e) { showError('OCR failed'); }
         }
 
         async function processTimetableWithOCR(input) {
             if (!input.files[0]) return;
-            const file = input.files[0];
-            showSuccess('Compiling schedule lines from snapshot image...');
+            showSuccess('Processing timetable...');
             try {
                 const worker = await Tesseract.createWorker('eng');
-                const { data: { text } } = await worker.recognize(file);
+                const { data: { text } } = await worker.recognize(input.files[0]);
                 await worker.terminate();
-                
                 const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 5);
-                const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-                
+                const days = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
                 extractedTimetable = days.map((day, dIdx) => {
-                    let searchLine = lines.find(l => l.toLowerCase().includes(day.toLowerCase())) || "";
-                    let classesFound = searchLine.match(/(\d{1,2}[A-D])/g) || [];
-                    
-                    if(classesFound.length === 0 && lines[dIdx]) {
-                        classesFound = lines[dIdx].match(/(\d{1,2}[A-D])/g) || [];
-                    }
-
-                    return {
-                        day: day,
-                        period1: classesFound[0] || 'Free Slot',
-                        period2: classesFound[1] || 'Free Slot',
-                        period3: classesFound[2] || 'Free Slot'
-                    };
+                    let found = lines.find(l => l.toLowerCase().includes(day.toLowerCase())) || lines[dIdx] || '';
+                    let classes = found.match(/(\d{1,2}[A-D])/g) || [];
+                    return { day, period1: classes[0] || 'Free', period2: classes[1] || 'Free', period3: classes[2] || 'Free' };
                 });
-
                 renderTimetableGrid();
                 document.getElementById('saveTimetableBtn').disabled = false;
-                showSuccess('Schedule dataset successfully compiled!');
-            } catch(e) { 
-                console.error(e);
-                showError('Parsing timetable engine crash. Please check image clarity.'); 
-            }
+                showSuccess('Timetable extracted');
+            } catch(e) { showError('OCR failed'); }
         }
 
         function renderTimetableGrid() {
-            if (!extractedTimetable) {
-                document.getElementById('timetableGrid').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>No snapshot program loaded yet.</p></div>';
-                return;
-            }
-            
-            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const todayName = daysOfWeek[new Date().getDay()];
-            const currentPeriod = getCurrentPeriodIndex();
-
             const grid = document.getElementById('timetableGrid');
-            grid.innerHTML = extractedTimetable.map(day => {
-                const isToday = day.day.toLowerCase() === todayName.toLowerCase();
-                const cardClass = isToday ? 'timetable-card current-active-day' : 'timetable-card';
-                
-                return `
-                    <div class="${cardClass}">
-                        <h4>${day.day} ${isToday ? '<span style="font-size:10px; color:#10b981;">(Today)</span>' : ''}</h4>
-                        <p class="${(isToday && currentPeriod === 1) ? 'active-period-highlight' : ''}">Period 1 (08:00 - 09:30): <b>${day.period1}</b></p>
-                        <p class="${(isToday && currentPeriod === 2) ? 'active-period-highlight' : ''}">Period 2 (10:00 - 11:30): <b>${day.period2}</b></p>
-                        <p class="${(isToday && currentPeriod === 3) ? 'active-period-highlight' : ''}">Period 3 (12:30 - 14:00): <b>${day.period3}</b></p>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function getCurrentPeriodIndex() {
-            const now = new Date();
-            const hour = now.getHours();
-            const minutes = now.getMinutes();
-            const absoluteTime = hour * 60 + minutes;
-
-            if (absoluteTime >= 480 && absoluteTime <= 570) return 1;
-            if (absoluteTime >= 600 && absoluteTime <= 690) return 2;
-            if (absoluteTime >= 750 && absoluteTime <= 840) return 3;
-            return null;
-        }
-
-        function runAutomatedTimetableLookup() {
-            if (!extractedTimetable) return;
-
-            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const todayName = daysOfWeek[new Date().getDay()];
-            const activeDayData = extractedTimetable.find(d => d.day.toLowerCase() === todayName.toLowerCase());
-            
-            if (!activeDayData) return;
-            
-            const activePeriodIdx = getCurrentPeriodIndex();
-            if (!activePeriodIdx) return;
-
-            let targetClassString = activeDayData[`period${activePeriodIdx}`];
-            if (!targetClassString || targetClassString.toLowerCase().includes('free')) return;
-
-            let gradeMatch = targetClassString.match(/\d+/);
-            let classMatch = targetClassString.match(/[A-D]/i);
-
-            if (gradeMatch && classMatch) {
-                currentGrade = gradeMatch[0];
-                currentClass = classMatch[0].toUpperCase();
-                showSuccess(`Schedule match: Automatically switched workspace to Grade ${currentGrade}-${currentClass}`);
-            }
+            if (!extractedTimetable) { grid.innerHTML = '<div class="empty-state">No schedule</div>'; return; }
+            grid.innerHTML = extractedTimetable.map(d => `<div class="timetable-card"><h4>${d.day}</h4><p>Period 1: ${d.period1}</p><p>Period 2: ${d.period2}</p><p>Period 3: ${d.period3}</p></div>`).join('');
         }
 
         async function saveTimetableToDatabase() {
-            if (!extractedTimetable) return showError('Matrix container is empty');
+            if (!extractedTimetable) return showError('No timetable');
             await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({ timetable: extractedTimetable });
-            showSuccess('Timetable layout synchronized successfully to cloud database store!');
+            showSuccess('Timetable saved');
         }
 
         function startSmartVoiceInput(textareaId, btnId) {
-            if (!('webkitSpeechRecognition' in window)) return showError('System API lacks Speech driver support');
-            if (currentRecognition) currentRecognition.stop();
+            if (!('webkitSpeechRecognition' in window)) return showError('Speech not supported');
+            if (window.currentRecognition) window.currentRecognition.stop();
             const recognition = new webkitSpeechRecognition();
             recognition.lang = 'si-LK';
             recognition.onstart = () => document.getElementById(btnId).classList.add('listening');
             recognition.onresult = (e) => document.getElementById(textareaId).value = e.results[0][0].transcript;
             recognition.onend = () => document.getElementById(btnId).classList.remove('listening');
             recognition.start();
-            currentRecognition = recognition;
+            window.currentRecognition = recognition;
         }
 
-        async function sendHomeworkToWhatsApp(content, className) {
-            if (!content) return showError('Text content field is empty');
-            const msg = `📚 *HOMEWORK ALERT - ${className}*\n\n📅 ${new Date().toLocaleDateString()}\n👨‍🏫 ${currentTeacher.full_name}\n\n📝 ${content}`;
-            await navigator.clipboard.writeText(msg);
-            window.open('https://web.whatsapp.com/', '_blank');
-            showSuccess('Copied successfully! Paste into your destination group app chat room.');
-        }
         function sendDashboardHomework() { sendHomeworkToWhatsApp(document.getElementById('dashboardHomeworkContent').value, getFullClassName()); }
         function sendHomework() { sendHomeworkToWhatsApp(document.getElementById('homeworkContent').value, getFullClassName()); }
+
+        async function sendHomeworkToWhatsApp(content, className) {
+            if (!content) return showError('No content');
+            const msg = `📚 HOMEWORK - ${className}\n📅 ${new Date().toLocaleDateString()}\n👨‍🏫 ${currentTeacher.full_name}\n\n${content}`;
+            await navigator.clipboard.writeText(msg);
+            window.open('https://web.whatsapp.com/', '_blank');
+            showSuccess('Copied to clipboard');
+        }
 
         function displayWhatsAppGroups() {
             const container = document.getElementById('whatsappGroupsList');
             container.innerHTML = '';
-            ['A','B','C','D'].forEach(letter => {
-                container.innerHTML += `<div style="margin-bottom:12px; padding:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:14px;">
-                    <label style="font-size:12px; font-weight:600; color:#94a3b8; display:block; margin-bottom:6px;">Grade ${currentGrade} — Section ${letter}</label>
-                    <input type="text" id="whatsapp_${letter}" value="${whatsappGroups[`${currentGrade}_${letter}`] || ''}" placeholder="Paste WhatsApp Invite API Connection Link URL" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:10px 12px; color:white; font-size:13px; outline:none;">
-                </div>`;
+            ['A','B','C','D'].forEach(l => {
+                container.innerHTML += `<div style="margin-bottom:12px;padding:12px;background:rgba(255,255,255,0.03);border-radius:14px;"><label style="font-size:12px;font-weight:600;color:#94a3b8;">Grade ${currentGrade} Section ${l}</label><input type="text" id="whatsapp_${l}" value="${whatsappGroups[`${currentGrade}_${l}`] || ''}" placeholder="WhatsApp invite link" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px;color:white;font-size:13px;outline:none;"></div>`;
             });
         }
 
@@ -1956,7 +1602,7 @@
             ['A','B','C','D'].forEach(l => { groups[`${currentGrade}_${l}`] = document.getElementById(`whatsapp_${l}`)?.value || ''; });
             await firebase.firestore().collection('teachers').doc(currentTeacher.id).update({ whatsapp_groups: { ...whatsappGroups, ...groups } });
             whatsappGroups = { ...whatsappGroups, ...groups };
-            showSuccess('API endpoints updated successfully!');
+            showSuccess('WhatsApp groups updated');
         }
 
         function updateDashboard() {
@@ -1968,14 +1614,12 @@
             document.getElementById('highestMarks').innerHTML = '0';
         }
 
-        // ============= ANALYSIS FUNCTIONS =============
+        // ============= ENHANCED ANALYSIS =============
         function populateAnalysisSubjects() {
             const select = document.getElementById('analysisSubjectSelect');
             select.innerHTML = '<option value="">-- All Subjects --</option>';
             const subjects = getSubjectsForGrade(document.getElementById('analysisGradeSelect').value);
-            subjects.forEach(sub => {
-                select.innerHTML += `<option value="${sub}">${sub}</option>`;
-            });
+            subjects.forEach(sub => { select.innerHTML += `<option value="${sub}">${sub}</option>`; });
         }
 
         async function runAnalysis() {
@@ -1983,76 +1627,92 @@
             const section = document.getElementById('analysisClassSelect').value;
             const subject = document.getElementById('analysisSubjectSelect').value;
             
-            // Get all marks for this grade and section
-            const marksSnapshot = await firebase.firestore().collection('marks')
-                .where('grade', '==', grade)
-                .where('classLetter', '==', section)
-                .get();
+            // Get marks
+            let marksQuery = firebase.firestore().collection('marks').where('grade', '==', grade);
+            if (section !== 'all') {
+                marksQuery = marksQuery.where('classLetter', '==', section);
+            }
+            const marksSnapshot = await marksQuery.get();
             
             let marks = [];
-            marksSnapshot.forEach(doc => {
-                marks.push({ id: doc.id, ...doc.data() });
-            });
+            marksSnapshot.forEach(doc => { marks.push({ id: doc.id, ...doc.data() }); });
             
-            // Filter by subject if selected
-            if (subject) {
-                marks = marks.filter(m => m.subject === subject);
+            if (subject) { marks = marks.filter(m => m.subject === subject); }
+            
+            const classStudents = students[`${grade}_${section}`] || [];
+            if (section === 'all') {
+                // Combine all sections for this grade
+                const allStudents = [];
+                ['A','B','C','D'].forEach(sec => {
+                    if (students[`${grade}_${sec}`]) allStudents.push(...students[`${grade}_${sec}`]);
+                });
+                // Use all students for the grade
+                const studentMarks = {};
+                marks.forEach(m => {
+                    if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                    studentMarks[m.student_id].push(m);
+                });
+                const latestMarks = {};
+                Object.keys(studentMarks).forEach(sid => {
+                    const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                    if (sorted.length) latestMarks[sid] = sorted[0].marks;
+                });
+                const markValues = Object.values(latestMarks);
+                const studentNames = {};
+                allStudents.forEach(s => { studentNames[s.id] = s.name; });
+                updateAnalysisUI(markValues, studentNames, latestMarks, grade, section, subject);
+            } else {
+                const studentMarks = {};
+                marks.forEach(m => {
+                    if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                    studentMarks[m.student_id].push(m);
+                });
+                const latestMarks = {};
+                Object.keys(studentMarks).forEach(sid => {
+                    const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                    if (sorted.length) latestMarks[sid] = sorted[0].marks;
+                });
+                const markValues = Object.values(latestMarks);
+                const studentNames = {};
+                classStudents.forEach(s => { studentNames[s.id] = s.name; });
+                updateAnalysisUI(markValues, studentNames, latestMarks, grade, section, subject);
             }
             
-            // Get student names
-            const classStudents = students[`${grade}_${section}`] || [];
+            // Section-wise analysis
+            await runSectionWiseAnalysis(grade, subject);
             
-            // Calculate stats per student (latest marks)
-            const studentMarks = {};
-            marks.forEach(m => {
-                if (!studentMarks[m.student_id]) {
-                    studentMarks[m.student_id] = [];
-                }
-                studentMarks[m.student_id].push(m);
-            });
-            
-            // Get latest mark for each student
-            const latestMarks = {};
-            Object.keys(studentMarks).forEach(sid => {
-                const sorted = studentMarks[sid].sort((a, b) => new Date(b.saved_at) - new Date(a.saved_at));
-                if (sorted.length > 0) {
-                    latestMarks[sid] = sorted[0].marks;
-                }
-            });
-            
-            const markValues = Object.values(latestMarks);
-            const studentNames = {};
-            classStudents.forEach(s => {
-                studentNames[s.id] = s.name;
-            });
-            
-            // Update stats
+            // Grade-wide analysis
+            await runGradeWideAnalysis(subject);
+        }
+
+        function updateAnalysisUI(markValues, studentNames, latestMarks, grade, section, subject) {
             document.getElementById('analysisStudentCount').textContent = markValues.length;
             
             if (markValues.length > 0) {
-                const avg = markValues.reduce((a, b) => a + b, 0) / markValues.length;
-                document.getElementById('analysisAverage').textContent = avg.toFixed(1) + '%';
-                
+                const avg = markValues.reduce((a,b) => a+b, 0) / markValues.length;
                 const highest = Math.max(...markValues);
                 const lowest = Math.min(...markValues);
+                document.getElementById('analysisAverage').textContent = avg.toFixed(1) + '%';
                 document.getElementById('analysisHighest').textContent = highest + '%';
                 document.getElementById('analysisLowest').textContent = lowest + '%';
                 
-                // Find lowest student
-                let lowestStudent = '';
-                let lowestMark = 101;
+                // Top and bottom students
+                let topStudent = '', topMark = -1, bottomStudent = '', bottomMark = 101;
                 Object.keys(latestMarks).forEach(sid => {
-                    if (latestMarks[sid] < lowestMark) {
-                        lowestMark = latestMarks[sid];
-                        lowestStudent = studentNames[sid] || 'Unknown';
-                    }
+                    const name = studentNames[sid] || 'Unknown';
+                    const mark = latestMarks[sid];
+                    if (mark > topMark) { topMark = mark; topStudent = name; }
+                    if (mark < bottomMark) { bottomMark = mark; bottomStudent = name; }
                 });
-                document.getElementById('analysisLowestStudent').textContent = lowestStudent + ' (' + lowestMark + '%)';
+                document.getElementById('analysisTopStudent').textContent = topStudent + ' (' + topMark + '%)';
+                document.getElementById('analysisBottomStudent').textContent = bottomStudent + ' (' + bottomMark + '%)';
                 
                 // Update pie chart
                 updatePieChart(markValues);
+                // Update bar chart
+                updateBarChart(markValues, grade, section);
                 
-                // Count low performers
+                // Low performers
                 const minRange = parseInt(document.getElementById('lowRangeMin').value) || 0;
                 const maxRange = parseInt(document.getElementById('lowRangeMax').value) || 50;
                 const lowCount = markValues.filter(m => m >= minRange && m <= maxRange).length;
@@ -2062,76 +1722,20 @@
                 document.getElementById('analysisAverage').textContent = '0%';
                 document.getElementById('analysisHighest').textContent = '-';
                 document.getElementById('analysisLowest').textContent = '-';
-                document.getElementById('analysisLowestStudent').textContent = '-';
+                document.getElementById('analysisTopStudent').textContent = '-';
+                document.getElementById('analysisBottomStudent').textContent = '-';
                 document.getElementById('analysisLowCount').textContent = '0';
                 document.getElementById('lowPerformersCount').textContent = 'Students in range: 0';
-                if (analysisChart) {
-                    analysisChart.destroy();
-                    analysisChart = null;
-                }
-            }
-            
-            // Section-wise analysis
-            await runSectionWiseAnalysis(grade, subject);
-        }
-
-        async function runSectionWiseAnalysis(grade, subject) {
-            const sections = ['A', 'B', 'C', 'D'];
-            for (let sec of sections) {
-                const marksSnapshot = await firebase.firestore().collection('marks')
-                    .where('grade', '==', grade)
-                    .where('classLetter', '==', sec)
-                    .get();
-                
-                let marks = [];
-                marksSnapshot.forEach(doc => {
-                    marks.push({ id: doc.id, ...doc.data() });
-                });
-                
-                if (subject) {
-                    marks = marks.filter(m => m.subject === subject);
-                }
-                
-                const studentMarks = {};
-                marks.forEach(m => {
-                    if (!studentMarks[m.student_id]) {
-                        studentMarks[m.student_id] = [];
-                    }
-                    studentMarks[m.student_id].push(m);
-                });
-                
-                const latestMarks = {};
-                Object.keys(studentMarks).forEach(sid => {
-                    const sorted = studentMarks[sid].sort((a, b) => new Date(b.saved_at) - new Date(a.saved_at));
-                    if (sorted.length > 0) {
-                        latestMarks[sid] = sorted[0].marks;
-                    }
-                });
-                
-                const values = Object.values(latestMarks);
-                let avg = '-';
-                if (values.length > 0) {
-                    avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(1) + '%';
-                }
-                document.getElementById(`sec${sec}Avg`).textContent = avg;
+                if (analysisChart) { analysisChart.destroy(); analysisChart = null; }
+                if (analysisBarChart) { analysisBarChart.destroy(); analysisBarChart = null; }
             }
         }
 
         function updatePieChart(values) {
             const ctx = document.getElementById('analysisPieChart').getContext('2d');
+            if (analysisChart) { analysisChart.destroy(); }
             
-            if (analysisChart) {
-                analysisChart.destroy();
-            }
-            
-            // Categorize marks
-            const categories = {
-                '0-40': 0,
-                '41-60': 0,
-                '61-75': 0,
-                '76-100': 0
-            };
-            
+            const categories = { '0-40': 0, '41-60': 0, '61-75': 0, '76-100': 0 };
             values.forEach(v => {
                 if (v <= 40) categories['0-40']++;
                 else if (v <= 60) categories['41-60']++;
@@ -2139,33 +1743,218 @@
                 else categories['76-100']++;
             });
             
-            const labels = Object.keys(categories);
-            const data = Object.values(categories);
             const colors = ['#ef4444', '#f59e0b', '#6366f1', '#10b981'];
-            
             analysisChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: colors,
-                        borderColor: '#0a0f1e',
-                        borderWidth: 2
-                    }]
+                    labels: Object.keys(categories),
+                    datasets: [{ data: Object.values(categories), backgroundColor: colors, borderColor: '#0a0f1e', borderWidth: 2 }]
                 },
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: {
-                            labels: {
-                                color: '#cbd5e1',
-                                font: { size: 10 }
-                            }
-                        }
+                        legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
                     }
                 }
             });
+        }
+
+        function updateBarChart(values, grade, section) {
+            const ctx = document.getElementById('analysisBarChart').getContext('2d');
+            if (analysisBarChart) { analysisBarChart.destroy(); }
+            
+            // Get section averages
+            const sections = ['A','B','C','D'];
+            const avgData = [];
+            const colors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444'];
+            
+            // Use the values passed in - if section is 'all', show grade-level breakdown
+            if (section === 'all') {
+                // Show grade-wide distribution
+                const ranges = ['0-40', '41-60', '61-75', '76-100'];
+                const rangeData = [0,0,0,0];
+                values.forEach(v => {
+                    if (v <= 40) rangeData[0]++;
+                    else if (v <= 60) rangeData[1]++;
+                    else if (v <= 75) rangeData[2]++;
+                    else rangeData[3]++;
+                });
+                analysisBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ranges,
+                        datasets: [{ label: 'Students', data: rangeData, backgroundColor: ['#ef4444','#f59e0b','#6366f1','#10b981'], borderRadius: 6 }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, ticks: { color: '#94a3b8', stepSize: 1 } },
+                            x: { ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+                return;
+            }
+            
+            // Section-wise bar chart
+            sections.forEach(sec => {
+                const secStudents = students[`${grade}_${sec}`] || [];
+                if (secStudents.length === 0) { avgData.push(0); return; }
+                // Get marks for this section
+                firebase.firestore().collection('marks')
+                    .where('grade', '==', grade)
+                    .where('classLetter', '==', sec)
+                    .get()
+                    .then(snapshot => {
+                        let secMarks = [];
+                        snapshot.forEach(doc => { secMarks.push({ id: doc.id, ...doc.data() }); });
+                        const subject = document.getElementById('analysisSubjectSelect').value;
+                        if (subject) { secMarks = secMarks.filter(m => m.subject === subject); }
+                        const studentMarks = {};
+                        secMarks.forEach(m => {
+                            if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                            studentMarks[m.student_id].push(m);
+                        });
+                        const latest = {};
+                        Object.keys(studentMarks).forEach(sid => {
+                            const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                            if (sorted.length) latest[sid] = sorted[0].marks;
+                        });
+                        const vals = Object.values(latest);
+                        if (vals.length > 0) {
+                            const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+                            // Update the chart with all data
+                            updateBarChartData(ctx, grade, sections, colors);
+                        } else {
+                            updateBarChartData(ctx, grade, sections, colors);
+                        }
+                    });
+            });
+            
+            // Initial chart with zeros
+            if (!analysisBarChart) {
+                analysisBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['A', 'B', 'C', 'D'],
+                        datasets: [{ label: 'Avg %', data: [0,0,0,0], backgroundColor: colors, borderRadius: 6 }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { labels: { color: '#cbd5e1', font: { size: 10 } } } },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, ticks: { color: '#94a3b8' } },
+                            x: { ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateBarChartData(ctx, grade, sections, colors) {
+            // This is a placeholder - actual data is loaded async
+            // We'll rebuild the chart with section averages
+            Promise.all(sections.map(sec => {
+                return firebase.firestore().collection('marks')
+                    .where('grade', '==', grade)
+                    .where('classLetter', '==', sec)
+                    .get()
+                    .then(snapshot => {
+                        let secMarks = [];
+                        snapshot.forEach(doc => { secMarks.push({ id: doc.id, ...doc.data() }); });
+                        const subject = document.getElementById('analysisSubjectSelect').value;
+                        if (subject) { secMarks = secMarks.filter(m => m.subject === subject); }
+                        const studentMarks = {};
+                        secMarks.forEach(m => {
+                            if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                            studentMarks[m.student_id].push(m);
+                        });
+                        const latest = {};
+                        Object.keys(studentMarks).forEach(sid => {
+                            const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                            if (sorted.length) latest[sid] = sorted[0].marks;
+                        });
+                        const vals = Object.values(latest);
+                        if (vals.length > 0) { return vals.reduce((a,b) => a+b, 0) / vals.length; }
+                        return 0;
+                    });
+            })).then(results => {
+                if (analysisBarChart) {
+                    analysisBarChart.destroy();
+                }
+                analysisBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['A', 'B', 'C', 'D'],
+                        datasets: [{ label: 'Avg %', data: results, backgroundColor: colors, borderRadius: 6 }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { labels: { color: '#cbd5e1', font: { size: 10 } } } },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, ticks: { color: '#94a3b8' } },
+                            x: { ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+            });
+        }
+
+        async function runSectionWiseAnalysis(grade, subject) {
+            const sections = ['A','B','C','D'];
+            const secMap = { 'A':'secAAvg', 'B':'secBAvg', 'C':'secCAvg', 'D':'secDAvg' };
+            for (let sec of sections) {
+                const marksSnapshot = await firebase.firestore().collection('marks')
+                    .where('grade', '==', grade)
+                    .where('classLetter', '==', sec)
+                    .get();
+                let marks = [];
+                marksSnapshot.forEach(doc => { marks.push({ id: doc.id, ...doc.data() }); });
+                if (subject) { marks = marks.filter(m => m.subject === subject); }
+                const studentMarks = {};
+                marks.forEach(m => {
+                    if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                    studentMarks[m.student_id].push(m);
+                });
+                const latest = {};
+                Object.keys(studentMarks).forEach(sid => {
+                    const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                    if (sorted.length) latest[sid] = sorted[0].marks;
+                });
+                const vals = Object.values(latest);
+                let avg = '-';
+                if (vals.length > 0) { avg = (vals.reduce((a,b) => a+b, 0) / vals.length).toFixed(1) + '%'; }
+                document.getElementById(secMap[sec]).textContent = avg;
+            }
+        }
+
+        async function runGradeWideAnalysis(subject) {
+            const grades = ['6','7','8','9','10','11','12','13'];
+            for (let g of grades) {
+                const marksSnapshot = await firebase.firestore().collection('marks')
+                    .where('grade', '==', g)
+                    .get();
+                let marks = [];
+                marksSnapshot.forEach(doc => { marks.push({ id: doc.id, ...doc.data() }); });
+                if (subject) { marks = marks.filter(m => m.subject === subject); }
+                const studentMarks = {};
+                marks.forEach(m => {
+                    if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                    studentMarks[m.student_id].push(m);
+                });
+                const latest = {};
+                Object.keys(studentMarks).forEach(sid => {
+                    const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                    if (sorted.length) latest[sid] = sorted[0].marks;
+                });
+                const vals = Object.values(latest);
+                let avg = '-';
+                if (vals.length > 0) { avg = (vals.reduce((a,b) => a+b, 0) / vals.length).toFixed(1) + '%'; }
+                document.getElementById(`g${g}Avg`).textContent = avg;
+            }
         }
 
         function showLowPerformers() {
@@ -2175,69 +1964,58 @@
             const minRange = parseInt(document.getElementById('lowRangeMin').value) || 0;
             const maxRange = parseInt(document.getElementById('lowRangeMax').value) || 50;
             
-            const classStudents = students[`${grade}_${section}`] || [];
-            const studentNames = {};
-            classStudents.forEach(s => {
-                studentNames[s.id] = s.name;
-            });
+            let targetStudents = [];
+            if (section === 'all') {
+                ['A','B','C','D'].forEach(sec => {
+                    if (students[`${grade}_${sec}`]) targetStudents.push(...students[`${grade}_${sec}`]);
+                });
+            } else {
+                targetStudents = students[`${grade}_${section}`] || [];
+            }
             
-            // Get marks
+            const studentNames = {};
+            targetStudents.forEach(s => { studentNames[s.id] = s.name; });
+            
             firebase.firestore().collection('marks')
                 .where('grade', '==', grade)
-                .where('classLetter', '==', section)
                 .get()
                 .then(snapshot => {
                     let marks = [];
-                    snapshot.forEach(doc => {
-                        marks.push({ id: doc.id, ...doc.data() });
-                    });
-                    
-                    if (subject) {
-                        marks = marks.filter(m => m.subject === subject);
-                    }
+                    snapshot.forEach(doc => { marks.push({ id: doc.id, ...doc.data() }); });
+                    if (section !== 'all') { marks = marks.filter(m => m.classLetter === section); }
+                    if (subject) { marks = marks.filter(m => m.subject === subject); }
                     
                     const studentMarks = {};
                     marks.forEach(m => {
-                        if (!studentMarks[m.student_id]) {
-                            studentMarks[m.student_id] = [];
-                        }
+                        if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
                         studentMarks[m.student_id].push(m);
                     });
-                    
                     const latestMarks = {};
                     Object.keys(studentMarks).forEach(sid => {
-                        const sorted = studentMarks[sid].sort((a, b) => new Date(b.saved_at) - new Date(a.saved_at));
-                        if (sorted.length > 0) {
-                            latestMarks[sid] = sorted[0].marks;
-                        }
+                        const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                        if (sorted.length) latestMarks[sid] = sorted[0].marks;
                     });
                     
                     const lowStudents = [];
                     Object.keys(latestMarks).forEach(sid => {
                         const mark = latestMarks[sid];
                         if (mark >= minRange && mark <= maxRange) {
-                            lowStudents.push({
-                                name: studentNames[sid] || 'Unknown',
-                                mark: mark
-                            });
+                            lowStudents.push({ name: studentNames[sid] || 'Unknown', mark, section: '?' });
                         }
                     });
                     
-                    // Show popup
                     const popup = document.getElementById('studentListPopup');
                     const list = document.getElementById('popupStudentList');
                     const title = document.getElementById('popupTitle');
-                    
                     title.textContent = `Low Performers (${minRange}-${maxRange}%) - ${lowStudents.length} students`;
                     
                     if (lowStudents.length === 0) {
-                        list.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">No students found in this range.</p>';
+                        list.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:20px;">No students found in this range.</p>';
                     } else {
                         list.innerHTML = lowStudents.map(s => 
                             `<div class="student-item">${s.name} <span class="mark-badge">${s.mark}%</span></div>`
                         ).join('');
                     }
-                    
                     popup.classList.add('active');
                 });
         }
@@ -2248,26 +2026,17 @@
 
         function switchTab(tab) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            const dynamicTabTarget = document.getElementById(`tab-${tab}`);
-            if(dynamicTabTarget) dynamicTabTarget.classList.add('active');
-            
+            document.getElementById(`tab-${tab}`)?.classList.add('active');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            const dynamicSectionTarget = document.getElementById(`${tab}-section`);
-            if(dynamicSectionTarget) dynamicSectionTarget.classList.add('active');
-            
-            runAutomatedTimetableLookup();
+            document.getElementById(`${tab}-section`)?.classList.add('active');
             
             if (tab === 'students') displayStudentsTable();
             else if (tab === 'marks') { populateMarksSubjectDropdown(); displayMarksTable(); }
-            else if (tab === 'exercises') { loadExerciseData(); populateHistoricalMonths(); }
-            else if (tab === 'analysis') { 
-                populateAnalysisSubjects(); 
-                runAnalysis(); 
-            }
+            else if (tab === 'exercises') { loadExerciseData(); }
+            else if (tab === 'analysis') { populateAnalysisSubjects(); runAnalysis(); }
             else if (tab === 'whatsapp') displayWhatsAppGroups();
             else if (tab === 'timetable') renderTimetableGrid();
             else if (tab === 'dashboard') updateDashboard();
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
