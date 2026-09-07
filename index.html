@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.5/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,7 +29,7 @@
             color: #fff;
             font-size: 14px;
             overflow-x: hidden;
-            padding-bottom: 70px; /* Safe padding space for sticky bottom mobile nav */
+            padding-bottom: 70px;
         }
 
         ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -46,7 +47,6 @@
             z-index: -1;
         }
 
-        /* --- New Left Slide Navigation Menu Styles --- */
         .drawer-overlay {
             position: fixed;
             top: 0;
@@ -60,10 +60,7 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .drawer-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
 
         .side-drawer {
             position: fixed;
@@ -80,9 +77,7 @@
             display: flex;
             flex-direction: column;
         }
-        .side-drawer.open {
-            left: 0;
-        }
+        .side-drawer.open { left: 0; }
         .drawer-header {
             display: flex;
             align-items: center;
@@ -116,7 +111,6 @@
             gap: 12px;
             padding: 14px 16px;
             color: #94a3b8;
-            text-decoration: none;
             border-radius: 12px;
             font-size: 14px;
             font-weight: 600;
@@ -127,17 +121,8 @@
             text-align: left;
             width: 100%;
         }
-        .drawer-item i {
-            font-size: 16px;
-            width: 20px;
-        }
-        .drawer-item:hover, .drawer-item.active {
-            background: rgba(99, 102, 241, 0.15);
-            color: #fff;
-        }
-        .drawer-item.active i {
-            color: #6366f1;
-        }
+        .drawer-item:hover, .drawer-item.active { background: rgba(99, 102, 241, 0.15); color: #fff; }
+        .drawer-item.active i { color: #6366f1; }
         .menu-trigger-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -151,10 +136,7 @@
             font-size: 14px;
         }
 
-        /* --- User Manual Step-by-Step Styling Architecture --- */
-        .manual-category {
-            margin-bottom: 16px;
-        }
+        .manual-category { margin-bottom: 16px; }
         .manual-header {
             width: 100%;
             background: rgba(255, 255, 255, 0.04);
@@ -172,16 +154,8 @@
             outline: none;
             transition: background 0.2s;
         }
-        .manual-header:active {
-            background: rgba(99, 102, 241, 0.1);
-        }
-        .manual-header i.chevron {
-            transition: transform 0.2s;
-            color: #8b5cf6;
-        }
-        .manual-header.active i.chevron {
-            transform: rotate(180deg);
-        }
+        .manual-header i.chevron { transition: transform 0.2s; color: #8b5cf6; }
+        .manual-header.active i.chevron { transform: rotate(180deg); }
         .manual-content {
             max-height: 0;
             overflow: hidden;
@@ -192,9 +166,7 @@
             border: 1px solid rgba(255, 255, 255, 0.03);
             border-top: none;
         }
-        .manual-body {
-            padding: 16px;
-        }
+        .manual-body { padding: 16px; }
         .step-list {
             list-style: none;
             display: flex;
@@ -223,11 +195,8 @@
             flex-shrink: 0;
             margin-top: 2px;
         }
-        .step-text strong {
-            color: white;
-        }
+        .step-text strong { color: white; }
 
-        /* Login & Registration Cards */
         .login-container {
             min-height: 100vh;
             display: flex;
@@ -303,7 +272,6 @@
             margin-top: 16px;
         }
 
-        /* Dynamic Subject Selector Layout Component */
         .subjects-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -327,8 +295,6 @@
         }
         .subject-box i { font-size: 20px; color: #94a3b8; }
         .subject-box span { font-size: 12px; font-weight: 500; color: #cbd5e1; }
-        
-        /* Subject Checkbox Hidden Logic Hidden elements */
         .subject-checkbox { display: none; }
         .subject-checkbox:checked + .subject-box {
             background: rgba(99, 102, 241, 0.15);
@@ -338,7 +304,6 @@
         .subject-checkbox:checked + .subject-box i { color: #8b5cf6; }
         .subject-checkbox:checked + .subject-box span { color: white; font-weight: 600; }
 
-        /* Main App Container */
         .app-container {
             max-width: 600px;
             margin: 0 auto;
@@ -382,7 +347,6 @@
             font-size: 14px;
         }
 
-        /* Mobile Bottom Nav design configuration */
         .nav-tabs {
             display: flex;
             position: fixed;
@@ -419,14 +383,11 @@
 
         .content-section { display: none; animation: fadeIn 0.25s ease-out; }
         .content-section.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
         .selector-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
             margin-bottom: 14px;
         }
@@ -478,7 +439,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 8px;
             margin-bottom: 14px;
         }
@@ -490,7 +451,7 @@
             text-align: center;
         }
         .stat-card i { font-size: 18px; margin-bottom: 6px; display: block; color: #6366f1; }
-        .stat-card h2 { font-size: 18px; font-weight: 700; }
+        .stat-card h2 { font-size: 16px; font-weight: 700; }
         .stat-card p { font-size: 10px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .action-btn {
@@ -513,9 +474,9 @@
         .action-btn.primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; }
         .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; }
         .action-btn.success { background: linear-gradient(135deg, #10b981, #059669); border: none; }
+        .action-btn.warning { background: linear-gradient(135deg, #f59e0b, #d97706); border: none; }
         .action-btn.mini { min-height: 32px; padding: 4px 10px; font-size: 11px; margin: 0; }
 
-        /* Perfect Mobile Data Table Styling */
         .student-table-container {
             overflow-x: auto;
             max-height: 420px;
@@ -574,7 +535,6 @@
         .upload-area i { font-size: 32px; margin-bottom: 8px; color: #6366f1; }
         .upload-area h3 { font-size: 13px; font-weight: 600; }
 
-        /* Exercise Grid Groups (One row configuration) */
         .exercise-group {
             display: flex;
             align-items: center;
@@ -598,7 +558,7 @@
         .exercise-icon.active-correct { color: #10b981; background: rgba(16, 185, 129, 0.15); }
         .exercise-icon.active-wrong { color: #ef4444; background: rgba(239, 68, 68, 0.15); }
 
-        .month-selector { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 12px; }
+        .month-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         .month-selector select {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -682,6 +642,111 @@
         .timetable-card p { font-size: 12px; margin-bottom: 4px; color: #cbd5e1; }
         .timetable-card p.active-period-highlight { color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 2px 6px; border-radius: 6px; }
 
+        .chart-container {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .chart-container canvas {
+            max-height: 200px;
+            max-width: 100%;
+        }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .analysis-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        .analysis-card .label { font-size: 11px; color: #94a3b8; }
+        .analysis-card .value { font-size: 18px; font-weight: 700; margin-top: 4px; }
+        .analysis-card .value.high { color: #10b981; }
+        .analysis-card .value.low { color: #ef4444; }
+
+        .range-input-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+        .range-input-group label { font-size: 13px; color: #94a3b8; }
+        .range-input-group input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: white;
+            width: 70px;
+            font-size: 13px;
+            outline: none;
+            text-align: center;
+        }
+        .range-input-group input:focus { border-color: #6366f1; }
+
+        .student-list-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .student-list-popup.active { display: flex; }
+        .student-list-popup-content {
+            background: #0d1326;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .student-list-popup-content h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #8b5cf6;
+        }
+        .student-list-popup-content .close-btn {
+            float: right;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .student-list-popup-content .student-item {
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 13px;
+            border-left: 3px solid #ef4444;
+        }
+        .student-list-popup-content .student-item .mark-badge {
+            float: right;
+            background: rgba(239,68,68,0.2);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #ef4444;
+        }
+
         @media (min-width: 550px) { 
             .two-col { grid-template-columns: 1fr 1fr; } 
             .month-selector { grid-template-columns: 1fr 1fr; }
@@ -704,6 +769,8 @@
             }
             .nav-tab i { font-size: 14px; }
             .nav-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+            .selector-container { grid-template-columns: 1fr 1fr 1fr; }
+            .analysis-grid { grid-template-columns: 1fr 1fr 1fr; }
         }
     </style>
 </head>
@@ -728,7 +795,6 @@
 
     <div id="loginPage" class="login-container">
         <div class="login-card">
-            
             <div id="authCredentialsForm">
                 <div class="login-header">
                     <div class="login-logo"><i class="fas fa-chalkboard-teacher"></i></div>
@@ -740,115 +806,40 @@
                     <button class="auth-tab" onclick="switchAuthTab('register')" id="registerTab">Register</button>
                 </div>
                 <div id="loginForm">
-                    <div class="input-group">
-                        <label>Email</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="loginEmail" placeholder="Enter your email">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Password</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="loginPassword" placeholder="Enter your password">
-                        </div>
-                    </div>
+                    <div class="input-group"><label>Email</label><div class="input-wrapper"><input type="email" id="loginEmail" placeholder="Enter your email"></div></div>
+                    <div class="input-group"><label>Password</label><div class="input-wrapper"><input type="password" id="loginPassword" placeholder="Enter your password"></div></div>
                     <button class="auth-btn" onclick="login()" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
                 </div>
                 <div id="registerForm" style="display: none;">
-                    <div class="input-group">
-                        <label>Full Name</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="registerName" placeholder="Your full name">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Email</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="registerEmail" placeholder="Your email">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Password</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="registerPassword" placeholder="Min 6 characters">
-                        </div>
-                    </div>
+                    <div class="input-group"><label>Full Name</label><div class="input-wrapper"><input type="text" id="registerName" placeholder="Your full name"></div></div>
+                    <div class="input-group"><label>Email</label><div class="input-wrapper"><input type="email" id="registerEmail" placeholder="Your email"></div></div>
+                    <div class="input-group"><label>Password</label><div class="input-wrapper"><input type="password" id="registerPassword" placeholder="Min 6 characters"></div></div>
                     <button class="auth-btn" onclick="register()" id="registerBtn"><i class="fas fa-user-plus"></i> Create Account</button>
                 </div>
             </div>
-
             <div id="subjectSelectionForm" style="display: none;">
                 <div class="login-header">
                     <div class="login-logo" style="background: linear-gradient(135deg, #10b981, #6366f1);"><i class="fas fa-book-open"></i></div>
                     <h1 style="font-size: 21px;">Select Subjects You Teach</h1>
                     <p style="color: #94a3b8; font-size: 12px; margin-top: 4px;">Choose assignment parameters for this year</p>
                 </div>
-                
                 <div class="subjects-grid">
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Mathematics">
-                        <div class="subject-box"><i class="fas fa-calculator"></i><span>Mathematics</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Science">
-                        <div class="subject-box"><i class="fas fa-flask"></i><span>Science</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="English">
-                        <div class="subject-box"><i class="fas fa-language"></i><span>English</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="History">
-                        <div class="subject-box"><i class="fas fa-landmark"></i><span>History</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Geography">
-                        <div class="subject-box"><i class="fas fa-globe-americas"></i><span>Geography</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="ICT">
-                        <div class="subject-box"><i class="fas fa-laptop-code"></i><span>ICT</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Art">
-                        <div class="subject-box"><i class="fas fa-palette"></i><span>Art</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Music">
-                        <div class="subject-box"><i class="fas fa-music"></i><span>Music</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Health & PE">
-                        <div class="subject-box"><i class="fas fa-heartbeat"></i><span>Health & PE</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Commerce">
-                        <div class="subject-box"><i class="fas fa-chart-bar"></i><span>Commerce</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Literature">
-                        <div class="subject-box"><i class="fas fa-book"></i><span>Literature</span></div>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="subject-checkbox" value="Civics">
-                        <div class="subject-box"><i class="fas fa-balance-scale"></i><span>Civics</span></div>
-                    </label>
-                    <label style="grid-column: span 2;">
-                        <input type="checkbox" class="subject-checkbox" value="Religion">
-                        <div class="subject-box" style="flex-direction: row; gap: 12px;"><i class="fas fa-praying-hands"></i><span>Religion</span></div>
-                    </label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Mathematics"><div class="subject-box"><i class="fas fa-calculator"></i><span>Mathematics</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Science"><div class="subject-box"><i class="fas fa-flask"></i><span>Science</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="English"><div class="subject-box"><i class="fas fa-language"></i><span>English</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="History"><div class="subject-box"><i class="fas fa-landmark"></i><span>History</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Geography"><div class="subject-box"><i class="fas fa-globe-americas"></i><span>Geography</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="ICT"><div class="subject-box"><i class="fas fa-laptop-code"></i><span>ICT</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Art"><div class="subject-box"><i class="fas fa-palette"></i><span>Art</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Music"><div class="subject-box"><i class="fas fa-music"></i><span>Music</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Health & PE"><div class="subject-box"><i class="fas fa-heartbeat"></i><span>Health & PE</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Commerce"><div class="subject-box"><i class="fas fa-chart-bar"></i><span>Commerce</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Literature"><div class="subject-box"><i class="fas fa-book"></i><span>Literature</span></div></label>
+                    <label><input type="checkbox" class="subject-checkbox" value="Civics"><div class="subject-box"><i class="fas fa-balance-scale"></i><span>Civics</span></div></label>
+                    <label style="grid-column: span 2;"><input type="checkbox" class="subject-checkbox" value="Religion"><div class="subject-box" style="flex-direction: row; gap: 12px;"><i class="fas fa-praying-hands"></i><span>Religion</span></div></label>
                 </div>
-
-                <button class="auth-btn" style="background: linear-gradient(135deg, #10b981, #059669); margin-top: 5px;" onclick="saveSelectedSubjectsToDatabase()" id="saveSubjectsBtn">
-                    <i class="fas fa-save"></i> Save & Continue
-                </button>
+                <button class="auth-btn" style="background: linear-gradient(135deg, #10b981, #059669); margin-top: 5px;" onclick="saveSelectedSubjectsToDatabase()" id="saveSubjectsBtn"><i class="fas fa-save"></i> Save & Continue</button>
             </div>
-
             <div id="errorMessage" class="error-message"></div>
         </div>
     </div>
@@ -856,10 +847,7 @@
     <div id="mainApp" class="app-container">
         <header class="header">
             <button class="menu-trigger-btn" onclick="toggleDrawer(true)"><i class="fas fa-bars"></i></button>
-            <div class="logo">
-                <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
-                <div><h1 id="teacherNameDisplay">Loading...</h1><p id="teacherEmailDisplay"></p></div>
-            </div>
+            <div class="logo"><div class="logo-icon"><i class="fas fa-graduation-cap"></i></div><div><h1 id="teacherNameDisplay">Loading...</h1><p id="teacherEmailDisplay"></p></div></div>
             <div class="teacher-profile">
                 <span class="shared-badge"><i class="fas fa-globe"></i> Shared</span>
                 <div class="teacher-avatar" id="teacherAvatarDisplay"><i class="fas fa-user"></i></div>
@@ -872,34 +860,20 @@
                 <div class="nav-tab active" onclick="switchTab('dashboard')" id="tab-dashboard"><i class="fas fa-home"></i>Dashboard</div>
                 <div class="nav-tab" onclick="switchTab('students')" id="tab-students"><i class="fas fa-users"></i>Students</div>
                 <div class="nav-tab" onclick="switchTab('marks')" id="tab-marks"><i class="fas fa-chart-line"></i>Marks</div>
+                <div class="nav-tab" onclick="switchTab('analysis')" id="tab-analysis"><i class="fas fa-chart-pie"></i>Analysis</div>
                 <div class="nav-tab" onclick="switchTab('exercises')" id="tab-exercises"><i class="fas fa-tasks"></i>Tasks</div>
                 <div class="nav-tab" onclick="switchTab('homework')" id="tab-homework"><i class="fas fa-book"></i>Homework</div>
                 <div class="nav-tab" onclick="switchTab('timetable')" id="tab-timetable"><i class="fas fa-calendar"></i>Schedule</div>
                 <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i>Groups</div>
             </div>
 
-            <div class="selector-container">
-                <div class="grade-selector">
-                    <label><i class="fas fa-graduation-cap" style="margin-right: 6px;"></i> Grade</label>
-                    <select id="gradeSelect" onchange="changeGrade()">
-                        <option value="6">G6</option><option value="7">G7</option><option value="8">G8</option>
-                        <option value="9">G9</option><option value="10">G10</option><option value="11">G11</option>
-                        <option value="12">G12</option><option value="13">G13</option>
-                    </select>
-                </div>
-                <div class="class-selector">
-                    <label><i class="fas fa-users" style="margin-right: 6px;"></i> Class</label>
-                    <select id="classSelect" onchange="changeClass()">
-                        <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
-                    </select>
-                </div>
-            </div>
-
+            <!-- Dashboard Section -->
             <div id="dashboard-section" class="content-section active">
                 <div class="stats-grid">
                     <div class="stat-card"><i class="fas fa-users"></i><h2 id="totalStudents">0</h2><p>Students</p></div>
                     <div class="stat-card"><i class="fas fa-exclamation-triangle"></i><h2 id="lowMarksCount">0</h2><p>Need Help</p></div>
                     <div class="stat-card"><i class="fas fa-check-circle"></i><h2 id="averageMarks">0%</h2><p>Average</p></div>
+                    <div class="stat-card"><i class="fas fa-trophy"></i><h2 id="highestMarks">0</h2><p>Highest</p></div>
                 </div>
                 <div class="card">
                     <div class="card-title"><i class="fas fa-book"></i><span>Quick Homework Board</span></div>
@@ -911,6 +885,7 @@
                 </div>
             </div>
 
+            <!-- Students Section -->
             <div id="students-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-user-plus"></i><span>Add Students to <span id="selectedGradeClass">Class</span></span></div>
@@ -929,7 +904,6 @@
                             <button class="action-btn success" onclick="addStudentManually()" style="width: 100%; margin: 6px 0 0 0;"><i class="fas fa-plus"></i> Save Student</button>
                         </div>
                     </div>
-                    
                     <h4 style="font-size: 13px; font-weight:600; margin: 16px 0 6px 2px;"><i class="fas fa-list-ol"></i> Class Roster</h4>
                     <div class="student-table-container">
                         <table class="student-table">
@@ -940,11 +914,11 @@
                 </div>
             </div>
 
+            <!-- Marks Section -->
             <div id="marks-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-star"></i><span>Enter Performance Marks (<span id="marksGradeClass">Class</span>)</span></div>
                     
-                    <!-- NEW: Subject Selection Bar under month adding place -->
                     <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
                         <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
                         <select id="marksSubjectSelect" onchange="loadMarksSubjectData()" style="max-width: 180px; font-weight: 700; color: #8b5cf6;">
@@ -952,7 +926,6 @@
                         </select>
                     </div>
 
-                    <!-- Month and Exam Type -->
                     <div class="month-selector" style="margin-bottom: 8px;">
                         <select id="examMonth">
                             <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
@@ -988,12 +961,93 @@
                 </div>
             </div>
 
-            <div id="exercises-section" class="content-section">
+            <!-- ANALYSIS SECTION - NEW -->
+            <div id="analysis-section" class="content-section">
                 <div class="card">
-                    <div class="card-title">
-                        <div><i class="fas fa-tasks"></i> <span>Exercise Checksheets - <span id="exercisesGradeClass">Class</span></span></div>
+                    <div class="card-title"><i class="fas fa-chart-pie"></i><span>Performance Analysis Dashboard</span></div>
+                    
+                    <!-- Grade, Subject, Class Selectors -->
+                    <div class="selector-container" style="margin-bottom: 12px;">
+                        <div class="grade-selector">
+                            <label><i class="fas fa-graduation-cap"></i> Grade</label>
+                            <select id="analysisGradeSelect" onchange="runAnalysis()">
+                                <option value="6">G6</option><option value="7">G7</option><option value="8">G8</option>
+                                <option value="9">G9</option><option value="10" selected>G10</option><option value="11">G11</option>
+                                <option value="12">G12</option><option value="13">G13</option>
+                            </select>
+                        </div>
+                        <div class="class-selector">
+                            <label><i class="fas fa-users"></i> Section</label>
+                            <select id="analysisClassSelect" onchange="runAnalysis()">
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+                        <div class="subject-selector">
+                            <label><i class="fas fa-book-open"></i> Subject</label>
+                            <select id="analysisSubjectSelect" onchange="runAnalysis()">
+                                <option value="">-- All Subjects --</option>
+                            </select>
+                        </div>
                     </div>
 
+                    <!-- Stats Summary -->
+                    <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="stat-card"><i class="fas fa-users"></i><h2 id="analysisStudentCount">0</h2><p>Students</p></div>
+                        <div class="stat-card"><i class="fas fa-chart-line"></i><h2 id="analysisAverage">0%</h2><p>Class Average</p></div>
+                        <div class="stat-card"><i class="fas fa-exclamation-triangle"></i><h2 id="analysisLowCount">0</h2><p>Below Threshold</p></div>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="chart-container">
+                        <canvas id="analysisPieChart"></canvas>
+                    </div>
+
+                    <!-- High/Low Stats -->
+                    <div class="analysis-grid">
+                        <div class="analysis-card">
+                            <div class="label">Highest Mark</div>
+                            <div class="value high" id="analysisHighest">-</div>
+                        </div>
+                        <div class="analysis-card">
+                            <div class="label">Lowest Mark</div>
+                            <div class="value low" id="analysisLowest">-</div>
+                        </div>
+                        <div class="analysis-card">
+                            <div class="label">Lowest Student</div>
+                            <div class="value" id="analysisLowestStudent" style="font-size:14px;">-</div>
+                        </div>
+                    </div>
+
+                    <!-- Low Marks Filter -->
+                    <div style="margin-top: 12px; padding: 12px; background: rgba(239,68,68,0.05); border-radius: 12px; border: 1px solid rgba(239,68,68,0.2);">
+                        <h4 style="font-size:13px; font-weight:600; margin-bottom:8px;"><i class="fas fa-filter"></i> Filter Low Performers</h4>
+                        <div class="range-input-group">
+                            <label>Marks between</label>
+                            <input type="number" id="lowRangeMin" value="0" min="0" max="100" onchange="runAnalysis()">
+                            <span style="color:#94a3b8;">and</span>
+                            <input type="number" id="lowRangeMax" value="50" min="0" max="100" onchange="runAnalysis()">
+                            <button class="action-btn warning mini" onclick="showLowPerformers()" style="margin:0;"><i class="fas fa-eye"></i> Show Names</button>
+                        </div>
+                        <div id="lowPerformersCount" style="font-size:13px; color:#94a3b8; margin-top:4px;">Students in range: 0</div>
+                    </div>
+
+                    <!-- Section-wise Analysis -->
+                    <div style="margin-top: 12px;">
+                        <h4 style="font-size:13px; font-weight:600; margin-bottom:8px;"><i class="fas fa-layer-group"></i> Section-wise Average</h4>
+                        <div id="sectionWiseAnalysis" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <div class="analysis-card"><div class="label">Section A</div><div class="value" id="secAAvg">-</div></div>
+                            <div class="analysis-card"><div class="label">Section B</div><div class="value" id="secBAvg">-</div></div>
+                            <div class="analysis-card"><div class="label">Section C</div><div class="value" id="secCAvg">-</div></div>
+                            <div class="analysis-card"><div class="label">Section D</div><div class="value" id="secDAvg">-</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercises Section -->
+            <div id="exercises-section" class="content-section">
+                <div class="card">
+                    <div class="card-title"><div><i class="fas fa-tasks"></i> <span>Exercise Checksheets - <span id="exercisesGradeClass">Class</span></span></div></div>
                     <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
                         <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
                         <div style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: flex-end;">
@@ -1003,7 +1057,6 @@
                             <button class="action-btn primary mini" onclick="openSubjectViewManually()"><i class="fas fa-plus"></i> Add Manually</button>
                         </div>
                     </div>
-
                     <div class="month-selector">
                         <select id="exerciseMonth" onchange="loadExerciseData()">
                             <option>January</option><option>February</option><option>March</option><option>April</option>
@@ -1012,26 +1065,16 @@
                         </select>
                         <select id="viewMonthSelect" onchange="loadHistoricalExercises()"><option value="">-- View Previous Months --</option></select>
                     </div>
-                    
                     <div class="student-table-container">
                         <table class="student-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Student Name</th>
-                                    <th>1st</th>
-                                    <th>2nd</th>
-                                    <th>3rd</th>
-                                </tr>
-                            </thead>
-                            <tbody id="exercisesTableBody">
-                                <tr><td colspan="5" class="empty-state">Select a subject to populate data metrics...</td></tr>
-                            </tbody>
+                            <thead><tr><th>#</th><th>Student Name</th><th>1st</th><th>2nd</th><th>3rd</th></tr></thead>
+                            <tbody id="exercisesTableBody"><tr><td colspan="5" class="empty-state">Select a subject to populate data metrics...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
+            <!-- Homework Section -->
             <div id="homework-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-book"></i><span>Send Assignment Tasks (<span id="homeworkGradeClass">Class</span>)</span></div>
@@ -1043,6 +1086,7 @@
                 </div>
             </div>
 
+            <!-- Timetable Section -->
             <div id="timetable-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-calendar-alt"></i><span>Master Schedule Timetable</span></div>
@@ -1057,6 +1101,7 @@
                 </div>
             </div>
 
+            <!-- WhatsApp Section -->
             <div id="whatsapp-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fab fa-whatsapp"></i><span>WhatsApp Integration API URLs</span></div>
@@ -1066,200 +1111,80 @@
             </div>
         </div>
 
+        <!-- Manual Section -->
         <div id="manualAppContent" style="display: none;">
             <div class="card">
                 <div class="card-title"><i class="fas fa-book-open"></i> <span>EduTrack Pro Documentation</span></div>
                 <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px; line-height: 1.4;">
                     Welcome to your platform documentation hub. Explore step-by-step guidance below to fully utilize the platform's features.
                 </p>
-
                 <div class="manual-category">
                     <button class="manual-header" onclick="toggleAccordion(this)">
                         <span><i class="fas fa-key" style="margin-right:8px;"></i> 1. Authentication & Onboarding</span>
                         <i class="fas fa-chevron-down chevron"></i>
                     </button>
-                    <div class="manual-content">
-                        <div class="manual-body">
-                            <ul class="step-list">
-                                <li class="step-item">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Toggle between the <strong>Login</strong> or <strong>Register</strong> fields inside the initial startup window card.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text">New registrations require completing Full Name, email authentication mapping, and setting up an account password.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text">Upon registering, choose the parameters of subjects you teach inside the selection interface grid and hit <strong>Save & Continue</strong> to finalize validation parameters.</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Toggle between the <strong>Login</strong> or <strong>Register</strong> fields inside the initial startup window card.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">New registrations require completing Full Name, email authentication mapping, and setting up an account password.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Upon registering, choose the parameters of subjects you teach inside the selection interface grid and hit <strong>Save & Continue</strong> to finalize validation parameters.</div></li></ul></div></div>
                 </div>
-
                 <div class="manual-category">
                     <button class="manual-header" onclick="toggleAccordion(this)">
                         <span><i class="fas fa-users" style="margin-right:8px;"></i> 2. Managing Student Rosters</span>
                         <i class="fas fa-chevron-down chevron"></i>
                     </button>
-                    <div class="manual-content">
-                        <div class="manual-body">
-                            <ul class="step-list">
-                                <li class="step-item">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Navigate to the <strong>Students</strong> tab using your main app control tab panel.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text"><strong>Manual Upload:</strong> Input the student full title name alongside their corresponding parent WhatsApp parameters, then save.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text"><strong>Automated OCR Scan:</strong> Hit the <strong>Upload Registry Image</strong> dashboard area. Choose a clear snapshot from the device memory. The internal processing engine runs text reading workflows automatically to generate user accounts instantly.</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Navigate to the <strong>Students</strong> tab using your main app control tab panel.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text"><strong>Manual Upload:</strong> Input the student full title name alongside their corresponding parent WhatsApp parameters, then save.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text"><strong>Automated OCR Scan:</strong> Hit the <strong>Upload Registry Image</strong> dashboard area. Choose a clear snapshot from the device memory. The internal processing engine runs text reading workflows automatically to generate user accounts instantly.</div></li></ul></div></div>
                 </div>
-
                 <div class="manual-category">
                     <button class="manual-header" onclick="toggleAccordion(this)">
                         <span><i class="fas fa-chart-bar" style="margin-right:8px;"></i> 3. Performance Marks Engine</span>
                         <i class="fas fa-chevron-down chevron"></i>
                     </button>
-                    <div class="manual-content">
-                        <div class="manual-body">
-                            <ul class="step-list">
-                                <li class="step-item">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Access the <strong>Marks</strong> tab interface to open global target lists.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text">Use the dropdown menus to select the specific evaluation tracking timeline constraints (e.g., Month and Exam type profiles).</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text">Input grades manually or select <strong>Scan Marksheet Image via OCR</strong> to map values automatically from image documents. Click <strong>Save Grades</strong>.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">4</div>
-                                    <div class="step-text">Select <strong>Flag Failures</strong> to filter out metrics below 40%. Click <strong>Send Alerts to Parents</strong> to quickly notify parents via WhatsApp.</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Access the <strong>Marks</strong> tab interface to open global target lists.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Use the dropdown menus to select the specific evaluation tracking timeline constraints (e.g., Month and Exam type profiles).</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Input grades manually or select <strong>Scan Marksheet Image via OCR</strong> to map values automatically from image documents. Click <strong>Save Grades</strong>.</div></li><li class="step-item"><div class="step-number">4</div><div class="step-text">Select <strong>Flag Failures</strong> to filter out metrics below 40%. Click <strong>Send Alerts to Parents</strong> to quickly notify parents via WhatsApp.</div></li></ul></div></div>
                 </div>
-
                 <div class="manual-category">
                     <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-tasks" style="margin-right:8px;"></i> 4. Tracking Exercise Checksheets</span>
-                        <button class="drawer-close" style="display:none;"></button>
+                        <span><i class="fas fa-chart-pie" style="margin-right:8px;"></i> 4. Analysis Dashboard</span>
                         <i class="fas fa-chevron-down chevron"></i>
                     </button>
-                    <div class="manual-content">
-                        <div class="manual-body">
-                            <ul class="step-list">
-                                <li class="step-item">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Open the <strong>Tasks</strong> page to reveal current progress matrices.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text">Choose the current Subject target parameter to populate the active rows. Use the <strong>Add Manually</strong> function if you need to adjust subject parameters.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text">Tap the green checkmark icon to confirm correct execution or the red "X" icon to log a failed attempt. The system automatically syncs changes to Firebase.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">4</div>
-                                    <div class="step-text">Logging consecutive errors automatically copies a pre-formatted notification message and redirects you to WhatsApp to alert parents.</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Navigate to the <strong>Analysis</strong> tab to view performance metrics.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Select <strong>Grade, Section, and Subject</strong> to filter data. The pie chart shows mark distribution.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Use the <strong>Low Performers</strong> filter to set a mark range and click <strong>Show Names</strong> to list students.</div></li><li class="step-item"><div class="step-number">4</div><div class="step-text">View <strong>Section-wise averages</strong> to compare performance across different classes.</div></li></ul></div></div>
                 </div>
-
                 <div class="manual-category">
                     <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-bullhorn" style="margin-right:8px;"></i> 5. Homework Voice Broadcasting</span>
+                        <span><i class="fas fa-tasks" style="margin-right:8px;"></i> 5. Tracking Exercise Checksheets</span>
                         <i class="fas fa-chevron-down chevron"></i>
                     </button>
-                    <div class="manual-content">
-                        <div class="manual-body">
-                            <ul class="step-list">
-                                <li class="step-item">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Head over to either the <strong>Dashboard Quick Board</strong> module or the dedicated <strong>Homework</strong> section tab.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text">Click <strong>Voice Input / Dictate</strong>. Speak into your microphone using Sinhala text articulation (`si-LK`) to watch your text generate live.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text">Tap <strong>Broadcast / Share via WhatsApp</strong> to copy the organized text format layout structure to your clipboard and open your messaging dashboard.</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Open the <strong>Tasks</strong> page to reveal current progress matrices.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Choose the current Subject target parameter to populate the active rows. Use the <strong>Add Manually</strong> function if you need to adjust subject parameters.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Tap the green checkmark icon to confirm correct execution or the red "X" icon to log a failed attempt. The system automatically syncs changes to Firebase.</div></li></ul></div></div>
                 </div>
-
                 <div class="manual-category">
                     <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fas fa-calendar-alt" style="margin-right:8px;"></i> 6. Schedule Timetable Scanning</span>
+                        <span><i class="fas fa-bullhorn" style="margin-right:8px;"></i> 6. Homework Voice Broadcasting</span>
                         <i class="fas fa-chevron-down chevron"></i>
                     </button>
-                    <div class="manual-content">
-                        <div class="manual-body">
-                            <ul class="step-list">
-                                <li class="step-item">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Navigate to the <strong>Schedule</strong> section block area panel.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text">Click the upload layout panel card area and supply a screenshot image file of the class master program.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text">The OCR engine extracts timetable configurations from text characters and updates the interface cards. Click <strong>Save Schedule Grid</strong> to lock structural data in the cloud database.</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Head over to either the <strong>Dashboard Quick Board</strong> module or the dedicated <strong>Homework</strong> section tab.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click <strong>Voice Input / Dictate</strong>. Speak into your microphone using Sinhala text articulation (`si-LK`) to watch your text generate live.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Tap <strong>Broadcast / Share via WhatsApp</strong> to copy the organized text format layout structure to your clipboard and open your messaging dashboard.</div></li></ul></div></div>
                 </div>
-
                 <div class="manual-category">
                     <button class="manual-header" onclick="toggleAccordion(this)">
-                        <span><i class="fab fa-whatsapp" style="margin-right:8px;"></i> 7. Routing WhatsApp Class API Links</span>
+                        <span><i class="fas fa-calendar-alt" style="margin-right:8px;"></i> 7. Schedule Timetable Scanning</span>
                         <i class="fas fa-chevron-down chevron"></i>
                     </button>
-                    <div class="manual-content">
-                        <div class="manual-body">
-                            <ul class="step-list">
-                                <li class="step-item">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Open the <strong>Groups</strong> management interface screen.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text">Paste your standard target class room link URLs inside the text areas mapped to sections A, B, C, and D.</div>
-                                </li>
-                                <li class="step-item">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text">Click <strong>Apply Changes</strong>. This saves your communication pathways, ensuring smooth messaging throughout the platform.</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Navigate to the <strong>Schedule</strong> section block area panel.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click the upload layout panel card area and supply a screenshot image file of the class master program.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">The OCR engine extracts timetable configurations from text characters and updates the interface cards. Click <strong>Save Schedule Grid</strong> to lock structural data in the cloud database.</div></li></ul></div></div>
                 </div>
-
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fab fa-whatsapp" style="margin-right:8px;"></i> 8. Routing WhatsApp Class API Links</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Open the <strong>Groups</strong> management interface screen.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Paste your standard target class room link URLs inside the text areas mapped to sections A, B, C, and D.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Click <strong>Apply Changes</strong>. This saves your communication pathways, ensuring smooth messaging throughout the platform.</div></li></ul></div></div>
+                </div>
             </div>
         </div>
 
+        <!-- Student List Popup -->
+        <div class="student-list-popup" id="studentListPopup">
+            <div class="student-list-popup-content">
+                <button class="close-btn" onclick="closeStudentPopup()"><i class="fas fa-times"></i></button>
+                <h3 id="popupTitle">Low Performers</h3>
+                <div id="popupStudentList"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1283,6 +1208,8 @@
         let exerciseData = {};
         let teacherSubjects = [];
         let isEditingManuallyFromApp = false;
+        let marksData = [];
+        let analysisChart = null;
 
         let touchStartX = 0;
         let touchEndX = 0;
@@ -1483,7 +1410,6 @@
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     
-                    // Run automated time matrix lookups right on system entry
                     runAutomatedTimetableLookup();
                     
                     updateAllDisplays();
@@ -1516,8 +1442,14 @@
                     if (document.getElementById('students-section').classList.contains('active')) displayStudentsTable();
                     if (document.getElementById('marks-section').classList.contains('active')) displayMarksTable();
                     if (document.getElementById('exercises-section').classList.contains('active')) displayExercisesTable();
+                    if (document.getElementById('analysis-section').classList.contains('active')) runAnalysis();
                     updateDashboard();
                 });
+            });
+            
+            // Also listen for marks changes
+            firebase.firestore().collection('marks').onSnapshot(() => {
+                if (document.getElementById('analysis-section').classList.contains('active')) runAnalysis();
             });
         }
 
@@ -1554,11 +1486,9 @@
             document.getElementById('marksGradeClass').innerText = getFullClassName();
             document.getElementById('homeworkGradeClass').innerText = getFullClassName();
             
-            // Adjust the index dropdown fields to visually match configuration states
             document.getElementById('gradeSelect').value = currentGrade;
             document.getElementById('classSelect').value = currentClass;
             
-            // Populate marks subject dropdown based on grade
             populateMarksSubjectDropdown();
             
             displayStudentsTable();
@@ -1566,12 +1496,13 @@
             loadExerciseData();
             renderTimetableGrid();
             updateDashboard();
+            runAnalysis();
         }
 
         function changeGrade() { currentGrade = document.getElementById('gradeSelect').value; updateAllDisplays(); }
         function changeClass() { currentClass = document.getElementById('classSelect').value; updateAllDisplays(); }
 
-        // ----- SUBJECT LIST PER GRADE (for marks subject dropdown) -----
+        // Subject Map for Marks
         const subjectMap = {
             '6': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
             '7': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
@@ -1594,7 +1525,6 @@
             subjects.forEach(sub => {
                 select.innerHTML += `<option value="${sub}">${sub}</option>`;
             });
-            // Auto-select first subject
             if (subjects.length) {
                 select.value = subjects[0];
             }
@@ -1602,7 +1532,6 @@
         }
 
         function loadMarksSubjectData() {
-            // This function is called when subject changes; we just refresh the marks table
             displayMarksTable();
         }
 
@@ -1883,7 +1812,6 @@
             } catch(e) { showError('Scanning matrix translation failure'); }
         }
 
-        // --- FIXED OCR PARSING AND RENDERING ENGINE FOR TIMETABLES ---
         async function processTimetableWithOCR(input) {
             if (!input.files[0]) return;
             const file = input.files[0];
@@ -1896,12 +1824,10 @@
                 const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 5);
                 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
                 
-                // Process lines looking for standard Class formats like "10B", "9A", "11C"
                 extractedTimetable = days.map((day, dIdx) => {
                     let searchLine = lines.find(l => l.toLowerCase().includes(day.toLowerCase())) || "";
                     let classesFound = searchLine.match(/(\d{1,2}[A-D])/g) || [];
                     
-                    // Fallback to searching index-matched fallback strings if row explicitly lacks Day names
                     if(classesFound.length === 0 && lines[dIdx]) {
                         classesFound = lines[dIdx].match(/(\d{1,2}[A-D])/g) || [];
                     }
@@ -1931,7 +1857,7 @@
             
             const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             const todayName = daysOfWeek[new Date().getDay()];
-            const currentPeriod = getCurrentPeriodIndex(); // 1, 2, or 3
+            const currentPeriod = getCurrentPeriodIndex();
 
             const grid = document.getElementById('timetableGrid');
             grid.innerHTML = extractedTimetable.map(day => {
@@ -1949,20 +1875,18 @@
             }).join('');
         }
 
-        // --- COMPUTES CURRENT SYSTEM ACTIVE TIME WINDOWS ---
         function getCurrentPeriodIndex() {
             const now = new Date();
             const hour = now.getHours();
             const minutes = now.getMinutes();
-            const absoluteTime = hour * 60 + minutes; // converts to raw minute value
+            const absoluteTime = hour * 60 + minutes;
 
-            if (absoluteTime >= 480 && absoluteTime <= 570) return 1;  // 08:00 - 09:30
-            if (absoluteTime >= 600 && absoluteTime <= 690) return 2;  // 10:00 - 11:30
-            if (absoluteTime >= 750 && absoluteTime <= 840) return 3;  // 12:30 - 14:00
-            return null; // out of standard range
+            if (absoluteTime >= 480 && absoluteTime <= 570) return 1;
+            if (absoluteTime >= 600 && absoluteTime <= 690) return 2;
+            if (absoluteTime >= 750 && absoluteTime <= 840) return 3;
+            return null;
         }
 
-        // --- AUTOMATED LOOKUPS & STATE CASCADING CONTROLLERS ---
         function runAutomatedTimetableLookup() {
             if (!extractedTimetable) return;
 
@@ -1970,7 +1894,7 @@
             const todayName = daysOfWeek[new Date().getDay()];
             const activeDayData = extractedTimetable.find(d => d.day.toLowerCase() === todayName.toLowerCase());
             
-            if (!activeDayData) return; // Standard weekends or clear states
+            if (!activeDayData) return;
             
             const activePeriodIdx = getCurrentPeriodIndex();
             if (!activePeriodIdx) return;
@@ -1978,14 +1902,12 @@
             let targetClassString = activeDayData[`period${activePeriodIdx}`];
             if (!targetClassString || targetClassString.toLowerCase().includes('free')) return;
 
-            // Extract numeric grade parameters and trailing letter symbols safely
             let gradeMatch = targetClassString.match(/\d+/);
             let classMatch = targetClassString.match(/[A-D]/i);
 
             if (gradeMatch && classMatch) {
                 currentGrade = gradeMatch[0];
                 currentClass = classMatch[0].toUpperCase();
-                
                 showSuccess(`Schedule match: Automatically switched workspace to Grade ${currentGrade}-${currentClass}`);
             }
         }
@@ -2043,6 +1965,285 @@
             document.getElementById('totalStudents').innerHTML = total;
             document.getElementById('lowMarksCount').innerHTML = '0';
             document.getElementById('averageMarks').innerHTML = '0%';
+            document.getElementById('highestMarks').innerHTML = '0';
+        }
+
+        // ============= ANALYSIS FUNCTIONS =============
+        function populateAnalysisSubjects() {
+            const select = document.getElementById('analysisSubjectSelect');
+            select.innerHTML = '<option value="">-- All Subjects --</option>';
+            const subjects = getSubjectsForGrade(document.getElementById('analysisGradeSelect').value);
+            subjects.forEach(sub => {
+                select.innerHTML += `<option value="${sub}">${sub}</option>`;
+            });
+        }
+
+        async function runAnalysis() {
+            const grade = document.getElementById('analysisGradeSelect').value;
+            const section = document.getElementById('analysisClassSelect').value;
+            const subject = document.getElementById('analysisSubjectSelect').value;
+            
+            // Get all marks for this grade and section
+            const marksSnapshot = await firebase.firestore().collection('marks')
+                .where('grade', '==', grade)
+                .where('classLetter', '==', section)
+                .get();
+            
+            let marks = [];
+            marksSnapshot.forEach(doc => {
+                marks.push({ id: doc.id, ...doc.data() });
+            });
+            
+            // Filter by subject if selected
+            if (subject) {
+                marks = marks.filter(m => m.subject === subject);
+            }
+            
+            // Get student names
+            const classStudents = students[`${grade}_${section}`] || [];
+            
+            // Calculate stats per student (latest marks)
+            const studentMarks = {};
+            marks.forEach(m => {
+                if (!studentMarks[m.student_id]) {
+                    studentMarks[m.student_id] = [];
+                }
+                studentMarks[m.student_id].push(m);
+            });
+            
+            // Get latest mark for each student
+            const latestMarks = {};
+            Object.keys(studentMarks).forEach(sid => {
+                const sorted = studentMarks[sid].sort((a, b) => new Date(b.saved_at) - new Date(a.saved_at));
+                if (sorted.length > 0) {
+                    latestMarks[sid] = sorted[0].marks;
+                }
+            });
+            
+            const markValues = Object.values(latestMarks);
+            const studentNames = {};
+            classStudents.forEach(s => {
+                studentNames[s.id] = s.name;
+            });
+            
+            // Update stats
+            document.getElementById('analysisStudentCount').textContent = markValues.length;
+            
+            if (markValues.length > 0) {
+                const avg = markValues.reduce((a, b) => a + b, 0) / markValues.length;
+                document.getElementById('analysisAverage').textContent = avg.toFixed(1) + '%';
+                
+                const highest = Math.max(...markValues);
+                const lowest = Math.min(...markValues);
+                document.getElementById('analysisHighest').textContent = highest + '%';
+                document.getElementById('analysisLowest').textContent = lowest + '%';
+                
+                // Find lowest student
+                let lowestStudent = '';
+                let lowestMark = 101;
+                Object.keys(latestMarks).forEach(sid => {
+                    if (latestMarks[sid] < lowestMark) {
+                        lowestMark = latestMarks[sid];
+                        lowestStudent = studentNames[sid] || 'Unknown';
+                    }
+                });
+                document.getElementById('analysisLowestStudent').textContent = lowestStudent + ' (' + lowestMark + '%)';
+                
+                // Update pie chart
+                updatePieChart(markValues);
+                
+                // Count low performers
+                const minRange = parseInt(document.getElementById('lowRangeMin').value) || 0;
+                const maxRange = parseInt(document.getElementById('lowRangeMax').value) || 50;
+                const lowCount = markValues.filter(m => m >= minRange && m <= maxRange).length;
+                document.getElementById('analysisLowCount').textContent = lowCount;
+                document.getElementById('lowPerformersCount').textContent = `Students in range (${minRange}-${maxRange}): ${lowCount}`;
+            } else {
+                document.getElementById('analysisAverage').textContent = '0%';
+                document.getElementById('analysisHighest').textContent = '-';
+                document.getElementById('analysisLowest').textContent = '-';
+                document.getElementById('analysisLowestStudent').textContent = '-';
+                document.getElementById('analysisLowCount').textContent = '0';
+                document.getElementById('lowPerformersCount').textContent = 'Students in range: 0';
+                if (analysisChart) {
+                    analysisChart.destroy();
+                    analysisChart = null;
+                }
+            }
+            
+            // Section-wise analysis
+            await runSectionWiseAnalysis(grade, subject);
+        }
+
+        async function runSectionWiseAnalysis(grade, subject) {
+            const sections = ['A', 'B', 'C', 'D'];
+            for (let sec of sections) {
+                const marksSnapshot = await firebase.firestore().collection('marks')
+                    .where('grade', '==', grade)
+                    .where('classLetter', '==', sec)
+                    .get();
+                
+                let marks = [];
+                marksSnapshot.forEach(doc => {
+                    marks.push({ id: doc.id, ...doc.data() });
+                });
+                
+                if (subject) {
+                    marks = marks.filter(m => m.subject === subject);
+                }
+                
+                const studentMarks = {};
+                marks.forEach(m => {
+                    if (!studentMarks[m.student_id]) {
+                        studentMarks[m.student_id] = [];
+                    }
+                    studentMarks[m.student_id].push(m);
+                });
+                
+                const latestMarks = {};
+                Object.keys(studentMarks).forEach(sid => {
+                    const sorted = studentMarks[sid].sort((a, b) => new Date(b.saved_at) - new Date(a.saved_at));
+                    if (sorted.length > 0) {
+                        latestMarks[sid] = sorted[0].marks;
+                    }
+                });
+                
+                const values = Object.values(latestMarks);
+                let avg = '-';
+                if (values.length > 0) {
+                    avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(1) + '%';
+                }
+                document.getElementById(`sec${sec}Avg`).textContent = avg;
+            }
+        }
+
+        function updatePieChart(values) {
+            const ctx = document.getElementById('analysisPieChart').getContext('2d');
+            
+            if (analysisChart) {
+                analysisChart.destroy();
+            }
+            
+            // Categorize marks
+            const categories = {
+                '0-40': 0,
+                '41-60': 0,
+                '61-75': 0,
+                '76-100': 0
+            };
+            
+            values.forEach(v => {
+                if (v <= 40) categories['0-40']++;
+                else if (v <= 60) categories['41-60']++;
+                else if (v <= 75) categories['61-75']++;
+                else categories['76-100']++;
+            });
+            
+            const labels = Object.keys(categories);
+            const data = Object.values(categories);
+            const colors = ['#ef4444', '#f59e0b', '#6366f1', '#10b981'];
+            
+            analysisChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: '#0a0f1e',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#cbd5e1',
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function showLowPerformers() {
+            const grade = document.getElementById('analysisGradeSelect').value;
+            const section = document.getElementById('analysisClassSelect').value;
+            const subject = document.getElementById('analysisSubjectSelect').value;
+            const minRange = parseInt(document.getElementById('lowRangeMin').value) || 0;
+            const maxRange = parseInt(document.getElementById('lowRangeMax').value) || 50;
+            
+            const classStudents = students[`${grade}_${section}`] || [];
+            const studentNames = {};
+            classStudents.forEach(s => {
+                studentNames[s.id] = s.name;
+            });
+            
+            // Get marks
+            firebase.firestore().collection('marks')
+                .where('grade', '==', grade)
+                .where('classLetter', '==', section)
+                .get()
+                .then(snapshot => {
+                    let marks = [];
+                    snapshot.forEach(doc => {
+                        marks.push({ id: doc.id, ...doc.data() });
+                    });
+                    
+                    if (subject) {
+                        marks = marks.filter(m => m.subject === subject);
+                    }
+                    
+                    const studentMarks = {};
+                    marks.forEach(m => {
+                        if (!studentMarks[m.student_id]) {
+                            studentMarks[m.student_id] = [];
+                        }
+                        studentMarks[m.student_id].push(m);
+                    });
+                    
+                    const latestMarks = {};
+                    Object.keys(studentMarks).forEach(sid => {
+                        const sorted = studentMarks[sid].sort((a, b) => new Date(b.saved_at) - new Date(a.saved_at));
+                        if (sorted.length > 0) {
+                            latestMarks[sid] = sorted[0].marks;
+                        }
+                    });
+                    
+                    const lowStudents = [];
+                    Object.keys(latestMarks).forEach(sid => {
+                        const mark = latestMarks[sid];
+                        if (mark >= minRange && mark <= maxRange) {
+                            lowStudents.push({
+                                name: studentNames[sid] || 'Unknown',
+                                mark: mark
+                            });
+                        }
+                    });
+                    
+                    // Show popup
+                    const popup = document.getElementById('studentListPopup');
+                    const list = document.getElementById('popupStudentList');
+                    const title = document.getElementById('popupTitle');
+                    
+                    title.textContent = `Low Performers (${minRange}-${maxRange}%) - ${lowStudents.length} students`;
+                    
+                    if (lowStudents.length === 0) {
+                        list.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">No students found in this range.</p>';
+                    } else {
+                        list.innerHTML = lowStudents.map(s => 
+                            `<div class="student-item">${s.name} <span class="mark-badge">${s.mark}%</span></div>`
+                        ).join('');
+                    }
+                    
+                    popup.classList.add('active');
+                });
+        }
+
+        function closeStudentPopup() {
+            document.getElementById('studentListPopup').classList.remove('active');
         }
 
         function switchTab(tab) {
@@ -2054,12 +2255,15 @@
             const dynamicSectionTarget = document.getElementById(`${tab}-section`);
             if(dynamicSectionTarget) dynamicSectionTarget.classList.add('active');
             
-            // Runs time lookup check loops dynamically whenever navigating or loading sheets
             runAutomatedTimetableLookup();
             
             if (tab === 'students') displayStudentsTable();
             else if (tab === 'marks') { populateMarksSubjectDropdown(); displayMarksTable(); }
             else if (tab === 'exercises') { loadExerciseData(); populateHistoricalMonths(); }
+            else if (tab === 'analysis') { 
+                populateAnalysisSubjects(); 
+                runAnalysis(); 
+            }
             else if (tab === 'whatsapp') displayWhatsAppGroups();
             else if (tab === 'timetable') renderTimetableGrid();
             else if (tab === 'dashboard') updateDashboard();
@@ -2079,11 +2283,10 @@
         window.switchTab = switchTab; window.saveWhatsAppGroups = saveWhatsAppGroups; window.saveTimetableToDatabase = saveTimetableToDatabase;
         window.saveSelectedSubjectsToDatabase = saveSelectedSubjectsToDatabase; window.openSubjectViewManually = openSubjectViewManually;
         window.processTimetableWithOCR = processTimetableWithOCR;
-        
-        window.toggleDrawer = toggleDrawer;
-        window.handleDrawerNav = handleDrawerNav;
-        window.toggleAccordion = toggleAccordion;
+        window.toggleDrawer = toggleDrawer; window.handleDrawerNav = handleDrawerNav; window.toggleAccordion = toggleAccordion;
         window.loadMarksSubjectData = loadMarksSubjectData;
+        window.runAnalysis = runAnalysis; window.showLowPerformers = showLowPerformers; window.closeStudentPopup = closeStudentPopup;
+        window.populateAnalysisSubjects = populateAnalysisSubjects;
     </script>
 </body>
 </html>
