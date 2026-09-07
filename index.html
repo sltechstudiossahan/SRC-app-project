@@ -944,6 +944,15 @@
                 <div class="card">
                     <div class="card-title"><i class="fas fa-star"></i><span>Enter Performance Marks (<span id="marksGradeClass">Class</span>)</span></div>
                     
+                    <!-- NEW: Subject Selection Bar under month adding place -->
+                    <div class="subject-selector" style="margin-bottom: 12px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15);">
+                        <label><i class="fas fa-book-open" style="color: #8b5cf6; margin-right: 6px;"></i> Subject</label>
+                        <select id="marksSubjectSelect" onchange="loadMarksSubjectData()" style="max-width: 180px; font-weight: 700; color: #8b5cf6;">
+                            <option value="">-- Select Subject --</option>
+                        </select>
+                    </div>
+
+                    <!-- Month and Exam Type -->
                     <div class="month-selector" style="margin-bottom: 8px;">
                         <select id="examMonth">
                             <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
@@ -1549,6 +1558,9 @@
             document.getElementById('gradeSelect').value = currentGrade;
             document.getElementById('classSelect').value = currentClass;
             
+            // Populate marks subject dropdown based on grade
+            populateMarksSubjectDropdown();
+            
             displayStudentsTable();
             displayMarksTable();
             loadExerciseData();
@@ -1558,6 +1570,41 @@
 
         function changeGrade() { currentGrade = document.getElementById('gradeSelect').value; updateAllDisplays(); }
         function changeClass() { currentClass = document.getElementById('classSelect').value; updateAllDisplays(); }
+
+        // ----- SUBJECT LIST PER GRADE (for marks subject dropdown) -----
+        const subjectMap = {
+            '6': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
+            '7': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
+            '8': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
+            '9': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Health & PE','Commerce','Literature','Civics','Religion'],
+            '10': ['Sinhala','English','Tamil','Commerce','Science','Eastern Music','Western Music','Art','Dancing','ICT','Drama'],
+            '11': ['Sinhala','English','Tamil','Commerce','Science','Eastern Music','Western Music','Art','Dancing','ICT','Drama'],
+            '12': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Commerce','Literature','Civics','Religion'],
+            '13': ['Mathematics','Science','English','History','Geography','ICT','Art','Music','Commerce','Literature','Civics','Religion']
+        };
+
+        function getSubjectsForGrade(grade) {
+            return subjectMap[grade] || subjectMap['10'];
+        }
+
+        function populateMarksSubjectDropdown() {
+            const select = document.getElementById('marksSubjectSelect');
+            select.innerHTML = '<option value="">-- Select Subject --</option>';
+            const subjects = getSubjectsForGrade(currentGrade);
+            subjects.forEach(sub => {
+                select.innerHTML += `<option value="${sub}">${sub}</option>`;
+            });
+            // Auto-select first subject
+            if (subjects.length) {
+                select.value = subjects[0];
+            }
+            loadMarksSubjectData();
+        }
+
+        function loadMarksSubjectData() {
+            // This function is called when subject changes; we just refresh the marks table
+            displayMarksTable();
+        }
 
         function displayStudentsTable() {
             const tbody = document.getElementById('studentsTableBody');
@@ -1617,6 +1664,8 @@
         async function saveMarks() {
             const month = document.getElementById('examMonth').value;
             const examType = document.getElementById('examType').value;
+            const subject = document.getElementById('marksSubjectSelect').value;
+            if (!subject) return showError('Please select a subject');
             const key = `${currentGrade}_${currentClass}`;
             const classStudents = students[key] || [];
             if (classStudents.length === 0) return showError('No students');
@@ -1627,12 +1676,12 @@
                 if (input && input.value) {
                     batch.set(firebase.firestore().collection('marks').doc(), {
                         student_id: s.id, student_name: s.name, grade: currentGrade, classLetter: currentClass,
-                        month, exam_type: examType, marks: parseInt(input.value), saved_at: new Date().toISOString()
+                        month, exam_type: examType, subject: subject, marks: parseInt(input.value), saved_at: new Date().toISOString()
                     });
                     saved++;
                 }
             }
-            if (saved > 0) { await batch.commit(); showSuccess(`Saved ${saved} marks`); }
+            if (saved > 0) { await batch.commit(); showSuccess(`Saved ${saved} marks for ${subject}`); }
             else showError('Enter marks');
         }
 
@@ -2009,7 +2058,7 @@
             runAutomatedTimetableLookup();
             
             if (tab === 'students') displayStudentsTable();
-            else if (tab === 'marks') displayMarksTable();
+            else if (tab === 'marks') { populateMarksSubjectDropdown(); displayMarksTable(); }
             else if (tab === 'exercises') { loadExerciseData(); populateHistoricalMonths(); }
             else if (tab === 'whatsapp') displayWhatsAppGroups();
             else if (tab === 'timetable') renderTimetableGrid();
@@ -2034,6 +2083,7 @@
         window.toggleDrawer = toggleDrawer;
         window.handleDrawerNav = handleDrawerNav;
         window.toggleAccordion = toggleAccordion;
+        window.loadMarksSubjectData = loadMarksSubjectData;
     </script>
 </body>
 </html>
