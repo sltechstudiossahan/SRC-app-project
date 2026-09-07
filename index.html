@@ -381,7 +381,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(5,1fr);
+            grid-template-columns: repeat(4,1fr);
             gap: 8px;
             margin-bottom: 14px;
         }
@@ -392,9 +392,9 @@
             border-radius: 14px;
             text-align: center;
         }
-        .stat-card i { font-size: 16px; margin-bottom: 4px; display: block; color: #6366f1; }
-        .stat-card h2 { font-size: 14px; font-weight: 700; }
-        .stat-card p { font-size: 9px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .stat-card i { font-size: 18px; margin-bottom: 6px; display: block; color: #6366f1; }
+        .stat-card h2 { font-size: 16px; font-weight: 700; }
+        .stat-card p { font-size: 10px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .action-btn {
             background: rgba(255,255,255,0.05);
@@ -568,7 +568,7 @@
             margin-bottom: 14px;
             border: 1px solid rgba(255,255,255,0.05);
         }
-        .chart-container canvas { max-height: 180px; max-width: 100%; }
+        .chart-container canvas { max-height: 200px; max-width: 100%; }
         .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .chart-row .chart-container { margin-bottom: 0; }
 
@@ -586,7 +586,7 @@
             text-align: center;
         }
         .analysis-card .label { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
-        .analysis-card .value { font-size: 16px; font-weight: 700; margin-top: 4px; }
+        .analysis-card .value { font-size: 18px; font-weight: 700; margin-top: 4px; }
         .analysis-card .value.high { color: #10b981; }
         .analysis-card .value.low { color: #ef4444; }
         .analysis-card .value.warning { color: #f59e0b; }
@@ -656,6 +656,13 @@
             font-size: 12px;
             color: #ef4444;
         }
+        .student-list-popup-content .student-item.passing {
+            border-left-color: #10b981;
+        }
+        .student-list-popup-content .student-item.passing .mark-badge {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
 
         .section-badge {
             display: inline-block;
@@ -669,6 +676,19 @@
         .section-badge.B { background: rgba(16,185,129,0.2); color: #10b981; }
         .section-badge.C { background: rgba(245,158,11,0.2); color: #f59e0b; }
         .section-badge.D { background: rgba(239,68,68,0.2); color: #ef4444; }
+
+        .grade-progress {
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+        .grade-progress .bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
 
         @media (min-width: 550px) {
             .two-col { grid-template-columns: 1fr 1fr; }
@@ -695,7 +715,6 @@
             .selector-container { grid-template-columns: 1fr 1fr 1fr; }
             .analysis-grid { grid-template-columns: repeat(4,1fr); }
             .chart-row { grid-template-columns: 1fr 1fr; }
-            .stats-grid { grid-template-columns: repeat(5,1fr); }
         }
     </style>
 </head>
@@ -795,7 +814,6 @@
                     <div class="stat-card"><i class="fas fa-exclamation-triangle"></i><h2 id="lowMarksCount">0</h2><p>Need Help</p></div>
                     <div class="stat-card"><i class="fas fa-check-circle"></i><h2 id="averageMarks">0%</h2><p>Average</p></div>
                     <div class="stat-card"><i class="fas fa-trophy"></i><h2 id="highestMarks">0</h2><p>Highest</p></div>
-                    <div class="stat-card"><i class="fas fa-arrow-down"></i><h2 id="lowestMarksDash">0</h2><p>Lowest</p></div>
                 </div>
                 <div class="card">
                     <div class="card-title"><i class="fas fa-book"></i><span>Quick Homework Board</span></div>
@@ -869,12 +887,12 @@
                 </div>
             </div>
 
-            <!-- ANALYSIS SECTION -->
+            <!-- ANALYSIS SECTION - Enhanced -->
             <div id="analysis-section" class="content-section">
                 <div class="card">
                     <div class="card-title"><i class="fas fa-chart-pie"></i><span>📊 Performance Analysis Dashboard</span></div>
                     
-                    <!-- Filter Selectors -->
+                    <!-- Filters -->
                     <div class="selector-container" style="margin-bottom:12px;">
                         <div class="grade-selector">
                             <label><i class="fas fa-graduation-cap"></i> Grade</label>
@@ -900,7 +918,7 @@
                     </div>
 
                     <!-- Stats Summary -->
-                    <div class="stats-grid">
+                    <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
                         <div class="stat-card"><i class="fas fa-users"></i><h2 id="analysisStudentCount">0</h2><p>Students</p></div>
                         <div class="stat-card"><i class="fas fa-chart-line"></i><h2 id="analysisAverage">0%</h2><p>Avg Score</p></div>
                         <div class="stat-card"><i class="fas fa-trophy" style="color:#10b981;"></i><h2 id="analysisHighest">0</h2><p>Highest</p></div>
@@ -959,15 +977,15 @@
                     <!-- Grade-wide Analysis -->
                     <div style="margin-top:12px;padding:12px;background:rgba(99,102,241,0.05);border-radius:12px;border:1px solid rgba(99,102,241,0.1);">
                         <h4 style="font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-chart-bar" style="color:#8b5cf6;"></i> Grade-wide Performance</h4>
-                        <div id="gradeWideAnalysis" style="display:grid;grid-template-columns:repeat(8,1fr);gap:6px;">
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G6</div><div class="value purple" style="font-size:13px;" id="g6Avg">-</div></div>
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G7</div><div class="value purple" style="font-size:13px;" id="g7Avg">-</div></div>
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G8</div><div class="value purple" style="font-size:13px;" id="g8Avg">-</div></div>
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G9</div><div class="value purple" style="font-size:13px;" id="g9Avg">-</div></div>
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G10</div><div class="value purple" style="font-size:13px;" id="g10Avg">-</div></div>
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G11</div><div class="value purple" style="font-size:13px;" id="g11Avg">-</div></div>
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G12</div><div class="value purple" style="font-size:13px;" id="g12Avg">-</div></div>
-                            <div class="analysis-card" style="padding:6px;"><div class="label" style="font-size:8px;">G13</div><div class="value purple" style="font-size:13px;" id="g13Avg">-</div></div>
+                        <div id="gradeWideAnalysis" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;gap:6px;">
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G6</div><div class="value purple" id="g6Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G7</div><div class="value purple" id="g7Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G8</div><div class="value purple" id="g8Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G9</div><div class="value purple" id="g9Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G10</div><div class="value purple" id="g10Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G11</div><div class="value purple" id="g11Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G12</div><div class="value purple" id="g12Avg">-</div></div>
+                            <div class="analysis-card" style="padding:8px;"><div class="label">G13</div><div class="value purple" id="g13Avg">-</div></div>
                         </div>
                     </div>
                 </div>
@@ -1594,10 +1612,9 @@
             document.getElementById('lowMarksCount').innerHTML = '0';
             document.getElementById('averageMarks').innerHTML = '0%';
             document.getElementById('highestMarks').innerHTML = '0';
-            document.getElementById('lowestMarksDash').innerHTML = '0';
         }
 
-        // ============= ANALYSIS FUNCTIONS =============
+        // ============= ENHANCED ANALYSIS =============
         function populateAnalysisSubjects() {
             const select = document.getElementById('analysisSubjectSelect');
             select.innerHTML = '<option value="">-- All Subjects --</option>';
@@ -1610,7 +1627,7 @@
             const section = document.getElementById('analysisClassSelect').value;
             const subject = document.getElementById('analysisSubjectSelect').value;
             
-            // Build query
+            // Get marks
             let marksQuery = firebase.firestore().collection('marks').where('grade', '==', grade);
             if (section !== 'all') {
                 marksQuery = marksQuery.where('classLetter', '==', section);
@@ -1622,36 +1639,53 @@
             
             if (subject) { marks = marks.filter(m => m.subject === subject); }
             
-            // Get student names for the selected grade/section
-            let studentNames = {};
+            const classStudents = students[`${grade}_${section}`] || [];
             if (section === 'all') {
+                // Combine all sections for this grade
+                const allStudents = [];
                 ['A','B','C','D'].forEach(sec => {
-                    if (students[`${grade}_${sec}`]) {
-                        students[`${grade}_${sec}`].forEach(s => { studentNames[s.id] = s.name; });
-                    }
+                    if (students[`${grade}_${sec}`]) allStudents.push(...students[`${grade}_${sec}`]);
                 });
+                // Use all students for the grade
+                const studentMarks = {};
+                marks.forEach(m => {
+                    if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                    studentMarks[m.student_id].push(m);
+                });
+                const latestMarks = {};
+                Object.keys(studentMarks).forEach(sid => {
+                    const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                    if (sorted.length) latestMarks[sid] = sorted[0].marks;
+                });
+                const markValues = Object.values(latestMarks);
+                const studentNames = {};
+                allStudents.forEach(s => { studentNames[s.id] = s.name; });
+                updateAnalysisUI(markValues, studentNames, latestMarks, grade, section, subject);
             } else {
-                if (students[`${grade}_${section}`]) {
-                    students[`${grade}_${section}`].forEach(s => { studentNames[s.id] = s.name; });
-                }
+                const studentMarks = {};
+                marks.forEach(m => {
+                    if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                    studentMarks[m.student_id].push(m);
+                });
+                const latestMarks = {};
+                Object.keys(studentMarks).forEach(sid => {
+                    const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                    if (sorted.length) latestMarks[sid] = sorted[0].marks;
+                });
+                const markValues = Object.values(latestMarks);
+                const studentNames = {};
+                classStudents.forEach(s => { studentNames[s.id] = s.name; });
+                updateAnalysisUI(markValues, studentNames, latestMarks, grade, section, subject);
             }
             
-            // Process latest marks per student
-            const studentMarks = {};
-            marks.forEach(m => {
-                if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
-                studentMarks[m.student_id].push(m);
-            });
+            // Section-wise analysis
+            await runSectionWiseAnalysis(grade, subject);
             
-            const latestMarks = {};
-            Object.keys(studentMarks).forEach(sid => {
-                const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
-                if (sorted.length) latestMarks[sid] = sorted[0].marks;
-            });
-            
-            const markValues = Object.values(latestMarks);
-            
-            // Update UI
+            // Grade-wide analysis
+            await runGradeWideAnalysis(subject);
+        }
+
+        function updateAnalysisUI(markValues, studentNames, latestMarks, grade, section, subject) {
             document.getElementById('analysisStudentCount').textContent = markValues.length;
             
             if (markValues.length > 0) {
@@ -1673,9 +1707,10 @@
                 document.getElementById('analysisTopStudent').textContent = topStudent + ' (' + topMark + '%)';
                 document.getElementById('analysisBottomStudent').textContent = bottomStudent + ' (' + bottomMark + '%)';
                 
-                // Update charts
+                // Update pie chart
                 updatePieChart(markValues);
-                updateBarChart(grade, subject);
+                // Update bar chart
+                updateBarChart(markValues, grade, section);
                 
                 // Low performers
                 const minRange = parseInt(document.getElementById('lowRangeMin').value) || 0;
@@ -1694,10 +1729,6 @@
                 if (analysisChart) { analysisChart.destroy(); analysisChart = null; }
                 if (analysisBarChart) { analysisBarChart.destroy(); analysisBarChart = null; }
             }
-            
-            // Section-wise and grade-wide analysis (always run these)
-            await runSectionWiseAnalysis(grade, subject);
-            await runGradeWideAnalysis(subject);
         }
 
         function updatePieChart(values) {
@@ -1728,13 +1759,104 @@
             });
         }
 
-        function updateBarChart(grade, subject) {
+        function updateBarChart(values, grade, section) {
             const ctx = document.getElementById('analysisBarChart').getContext('2d');
             if (analysisBarChart) { analysisBarChart.destroy(); }
             
+            // Get section averages
             const sections = ['A','B','C','D'];
+            const avgData = [];
             const colors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444'];
             
+            // Use the values passed in - if section is 'all', show grade-level breakdown
+            if (section === 'all') {
+                // Show grade-wide distribution
+                const ranges = ['0-40', '41-60', '61-75', '76-100'];
+                const rangeData = [0,0,0,0];
+                values.forEach(v => {
+                    if (v <= 40) rangeData[0]++;
+                    else if (v <= 60) rangeData[1]++;
+                    else if (v <= 75) rangeData[2]++;
+                    else rangeData[3]++;
+                });
+                analysisBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ranges,
+                        datasets: [{ label: 'Students', data: rangeData, backgroundColor: ['#ef4444','#f59e0b','#6366f1','#10b981'], borderRadius: 6 }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, ticks: { color: '#94a3b8', stepSize: 1 } },
+                            x: { ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+                return;
+            }
+            
+            // Section-wise bar chart
+            sections.forEach(sec => {
+                const secStudents = students[`${grade}_${sec}`] || [];
+                if (secStudents.length === 0) { avgData.push(0); return; }
+                // Get marks for this section
+                firebase.firestore().collection('marks')
+                    .where('grade', '==', grade)
+                    .where('classLetter', '==', sec)
+                    .get()
+                    .then(snapshot => {
+                        let secMarks = [];
+                        snapshot.forEach(doc => { secMarks.push({ id: doc.id, ...doc.data() }); });
+                        const subject = document.getElementById('analysisSubjectSelect').value;
+                        if (subject) { secMarks = secMarks.filter(m => m.subject === subject); }
+                        const studentMarks = {};
+                        secMarks.forEach(m => {
+                            if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
+                            studentMarks[m.student_id].push(m);
+                        });
+                        const latest = {};
+                        Object.keys(studentMarks).forEach(sid => {
+                            const sorted = studentMarks[sid].sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+                            if (sorted.length) latest[sid] = sorted[0].marks;
+                        });
+                        const vals = Object.values(latest);
+                        if (vals.length > 0) {
+                            const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+                            // Update the chart with all data
+                            updateBarChartData(ctx, grade, sections, colors);
+                        } else {
+                            updateBarChartData(ctx, grade, sections, colors);
+                        }
+                    });
+            });
+            
+            // Initial chart with zeros
+            if (!analysisBarChart) {
+                analysisBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['A', 'B', 'C', 'D'],
+                        datasets: [{ label: 'Avg %', data: [0,0,0,0], backgroundColor: colors, borderRadius: 6 }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { labels: { color: '#cbd5e1', font: { size: 10 } } } },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, ticks: { color: '#94a3b8' } },
+                            x: { ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateBarChartData(ctx, grade, sections, colors) {
+            // This is a placeholder - actual data is loaded async
+            // We'll rebuild the chart with section averages
             Promise.all(sections.map(sec => {
                 return firebase.firestore().collection('marks')
                     .where('grade', '==', grade)
@@ -1743,6 +1865,7 @@
                     .then(snapshot => {
                         let secMarks = [];
                         snapshot.forEach(doc => { secMarks.push({ id: doc.id, ...doc.data() }); });
+                        const subject = document.getElementById('analysisSubjectSelect').value;
                         if (subject) { secMarks = secMarks.filter(m => m.subject === subject); }
                         const studentMarks = {};
                         secMarks.forEach(m => {
@@ -1759,6 +1882,9 @@
                         return 0;
                     });
             })).then(results => {
+                if (analysisBarChart) {
+                    analysisBarChart.destroy();
+                }
                 analysisBarChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -1874,7 +2000,7 @@
                     Object.keys(latestMarks).forEach(sid => {
                         const mark = latestMarks[sid];
                         if (mark >= minRange && mark <= maxRange) {
-                            lowStudents.push({ name: studentNames[sid] || 'Unknown', mark });
+                            lowStudents.push({ name: studentNames[sid] || 'Unknown', mark, section: '?' });
                         }
                     });
                     
