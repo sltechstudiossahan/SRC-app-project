@@ -130,36 +130,36 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
+            transition: background 0.2s;
         }
+        .manual-header:hover { background: rgba(255,255,255,0.08); }
         .manual-header i.chevron { transition: transform 0.2s; color: #8b5cf6; }
         .manual-header.active i.chevron { transform: rotate(180deg); }
         .manual-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.25s ease-out;
+            transition: max-height 0.35s ease-out;
             background: rgba(0,0,0,0.15);
             border-radius: 0 0 12px 12px;
             border: 1px solid rgba(255,255,255,0.03);
             border-top: none;
         }
+        .manual-content.open { max-height: 2000px; }
         .manual-body { padding: 16px; }
-        .step-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-        .step-item { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: #cbd5e1; }
-        .step-number {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            font-weight: 700;
-            font-size: 11px;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 2px;
+        .manual-body p { color: #cbd5e1; line-height: 1.6; margin-bottom: 12px; font-size: 13px; }
+        .manual-body ul, .manual-body ol { padding-left: 20px; color: #cbd5e1; line-height: 1.8; font-size: 13px; }
+        .manual-body li { margin-bottom: 4px; }
+        .manual-body strong { color: #fff; }
+        .manual-body .highlight { background: rgba(99,102,241,0.15); padding: 2px 8px; border-radius: 4px; color: #8b5cf6; }
+        .manual-body .step-box {
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-left: 3px solid #6366f1;
         }
-        .step-text strong { color: white; }
+        .manual-body .step-box .step-title { font-weight: 600; color: #8b5cf6; font-size: 13px; }
+        .manual-body .step-box .step-desc { color: #cbd5e1; font-size: 13px; margin-top: 4px; }
 
         .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
         .login-card {
@@ -412,7 +412,9 @@
             margin-right: 4px;
             margin-bottom: 8px;
             min-height: 40px;
+            transition: all 0.2s ease;
         }
+        .action-btn:hover { opacity: 0.85; transform: scale(0.98); }
         .action-btn.primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; }
         .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; }
         .action-btn.success { background: linear-gradient(135deg, #10b981, #059669); border: none; }
@@ -465,6 +467,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
+        .upload-area:hover { border-color: #6366f1; background: rgba(99,102,241,0.05); }
         .upload-area:active { background: rgba(99,102,241,0.05); border-color: #6366f1; }
         .upload-area i { font-size: 32px; margin-bottom: 8px; color: #6366f1; }
         .upload-area h3 { font-size: 13px; font-weight: 600; }
@@ -476,6 +479,7 @@
         .exercise-icon.wrong { color: rgba(239,68,68,0.4); }
         .exercise-icon.active-correct { color: #10b981; background: rgba(16,185,129,0.15); }
         .exercise-icon.active-wrong { color: #ef4444; background: rgba(239,68,68,0.15); }
+        .exercise-icon:hover { transform: scale(1.2); }
 
         .month-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         .month-selector select {
@@ -505,7 +509,9 @@
             text-align: center;
             z-index: 1200;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease;
         }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .error-message {
             color: #ef4444;
             text-align: center;
@@ -657,6 +663,19 @@
             color: #ef4444;
         }
 
+        .manual-icon { margin-right: 10px; width: 24px; text-align: center; color: #8b5cf6; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+        .feature-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+        .feature-card i { font-size: 24px; color: #8b5cf6; margin-bottom: 6px; display: block; }
+        .feature-card .f-title { font-weight: 600; font-size: 12px; color: #fff; }
+        .feature-card .f-desc { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
         @media (min-width: 550px) {
             .two-col { grid-template-columns: 1fr 1fr; }
             .month-selector { grid-template-columns: 1fr 1fr; }
@@ -683,6 +702,7 @@
             .analysis-grid { grid-template-columns: repeat(4,1fr); }
             .chart-row { grid-template-columns: 1fr 1fr; }
             .stats-grid { grid-template-columns: repeat(5,1fr); }
+            .feature-grid { grid-template-columns: 1fr 1fr 1fr; }
         }
     </style>
 </head>
@@ -697,7 +717,7 @@
         </div>
         <div class="drawer-menu">
             <button class="drawer-item active" onclick="handleDrawerNav('dashboard')"><i class="fas fa-th-large"></i> Dashboard</button>
-            <button class="drawer-item" onclick="handleDrawerNav('manual')"><i class="fas fa-book-reader"></i> Manual</button>
+            <button class="drawer-item" onclick="handleDrawerNav('manual')"><i class="fas fa-book-reader"></i> User Manual</button>
         </div>
     </div>
 
@@ -775,7 +795,7 @@
                 <div class="nav-tab" onclick="switchTab('whatsapp')" id="tab-whatsapp"><i class="fab fa-whatsapp"></i>Groups</div>
             </div>
 
-            <!-- GRADE & CLASS SELECTOR (Restored for all pages) -->
+            <!-- GRADE & CLASS SELECTOR -->
             <div class="selector-container">
                 <div class="grade-selector">
                     <label><i class="fas fa-graduation-cap" style="margin-right:6px;"></i> Grade</label>
@@ -846,7 +866,6 @@
                 <div class="card">
                     <div class="card-title"><i class="fas fa-star"></i><span>Enter Performance Marks (<span id="marksGradeClass">Class</span>)</span></div>
                     
-                    <!-- Subject Selection Bar under month -->
                     <div class="subject-selector" style="margin-bottom:12px;background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);">
                         <label><i class="fas fa-book-open" style="color:#8b5cf6;margin-right:6px;"></i> Subject</label>
                         <select id="marksSubjectSelect" onchange="loadMarksSubjectData()" style="max-width:180px;font-weight:700;color:#8b5cf6;">
@@ -886,7 +905,6 @@
                 <div class="card">
                     <div class="card-title"><i class="fas fa-chart-pie"></i><span>📊 Performance Analysis Dashboard</span></div>
                     
-                    <!-- Analysis specific filters (Grade, Section, Subject) -->
                     <div class="selector-container" style="margin-bottom:12px;">
                         <div class="grade-selector">
                             <label><i class="fas fa-graduation-cap"></i> Grade</label>
@@ -911,7 +929,6 @@
                         </div>
                     </div>
 
-                    <!-- Stats Summary -->
                     <div class="stats-grid">
                         <div class="stat-card"><i class="fas fa-users"></i><h2 id="analysisStudentCount">0</h2><p>Students</p></div>
                         <div class="stat-card"><i class="fas fa-chart-line"></i><h2 id="analysisAverage">0%</h2><p>Avg Score</p></div>
@@ -920,7 +937,6 @@
                         <div class="stat-card"><i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i><h2 id="analysisLowCount">0</h2><p>Below Threshold</p></div>
                     </div>
 
-                    <!-- Charts Row -->
                     <div class="chart-row">
                         <div class="chart-container">
                             <h4 style="font-size:12px;color:#94a3b8;margin-bottom:8px;text-align:center;">📈 Mark Distribution</h4>
@@ -932,7 +948,6 @@
                         </div>
                     </div>
 
-                    <!-- Top/Bottom Performers -->
                     <div class="analysis-grid" style="grid-template-columns:1fr 1fr;margin-bottom:12px;">
                         <div class="analysis-card" style="border-color:rgba(16,185,129,0.2);">
                             <div class="label"><i class="fas fa-crown" style="color:#10b981;"></i> Top Performer</div>
@@ -944,7 +959,6 @@
                         </div>
                     </div>
 
-                    <!-- Low Marks Filter -->
                     <div style="margin-top:8px;padding:14px;background:rgba(245,158,11,0.05);border-radius:12px;border:1px solid rgba(245,158,11,0.2);">
                         <h4 style="font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-filter" style="color:#f59e0b;"></i> Filter Low Performers</h4>
                         <div class="range-input-group">
@@ -957,7 +971,6 @@
                         <div id="lowPerformersCount" style="font-size:13px;color:#94a3b8;margin-top:4px;">Students in range: 0</div>
                     </div>
 
-                    <!-- Section-wise Average -->
                     <div style="margin-top:12px;">
                         <h4 style="font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-layer-group" style="color:#8b5cf6;"></i> Section-wise Performance</h4>
                         <div id="sectionWiseAnalysis" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
@@ -968,7 +981,6 @@
                         </div>
                     </div>
 
-                    <!-- Grade-wide Analysis -->
                     <div style="margin-top:12px;padding:12px;background:rgba(99,102,241,0.05);border-radius:12px;border:1px solid rgba(99,102,241,0.1);">
                         <h4 style="font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-chart-bar" style="color:#8b5cf6;"></i> Grade-wide Performance</h4>
                         <div id="gradeWideAnalysis" style="display:grid;grid-template-columns:repeat(8,1fr);gap:6px;">
@@ -1043,43 +1055,362 @@
             </div>
         </div>
 
-        <!-- Manual -->
+        <!-- MANUAL - Expanded with Full Details -->
         <div id="manualAppContent" style="display:none;">
             <div class="card">
-                <div class="card-title"><i class="fas fa-book-open"></i> <span>EduTrack Pro Documentation</span></div>
-                <p style="color:#94a3b8;font-size:13px;margin-bottom:16px;">Welcome to your platform documentation hub.</p>
+                <div class="card-title"><i class="fas fa-book-open"></i> <span>📖 EduTrack Pro - Complete User Manual</span></div>
+                <p style="color:#94a3b8;font-size:13px;margin-bottom:16px;line-height:1.6;">
+                    Welcome to <strong>EduTrack Pro</strong> — a comprehensive teacher platform for managing students, marks, exercises, homework, schedules, and communication. 
+                    This manual explains every feature in detail to help you make the most of the platform.
+                </p>
+
+                <!-- Platform Overview -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-key"></i> 1. Authentication</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Login or Register using email/password.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Select your subjects during registration.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-info-circle manual-icon"></i> Platform Overview</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p><strong>EduTrack Pro</strong> is a cloud-based teacher management system built with Firebase. It allows teachers to:</p>
+                            <ul>
+                                <li>📚 <strong>Manage Student Rosters</strong> — Add, edit, and delete students with parent contact information.</li>
+                                <li>📊 <strong>Record Performance Marks</strong> — Enter marks by subject, month, and exam type.</li>
+                                <li>📈 <strong>Analyze Performance</strong> — View charts, statistics, and identify students who need support.</li>
+                                <li>✅ <strong>Track Exercise Completion</strong> — Mark student exercises as correct or wrong with automatic alerts.</li>
+                                <li>📝 <strong>Send Homework</strong> — Create and broadcast homework assignments via WhatsApp.</li>
+                                <li>📅 <strong>Manage Timetables</strong> — Upload and store class schedules using OCR.</li>
+                                <li>💬 <strong>WhatsApp Integration</strong> — Store and manage WhatsApp group links for parent communication.</li>
+                            </ul>
+                            <p style="margin-top:12px;">All data is stored securely in Firebase and syncs in real-time across all devices.</p>
+                            
+                            <div class="feature-grid">
+                                <div class="feature-card"><i class="fas fa-cloud"></i><div class="f-title">Cloud Sync</div><div class="f-desc">Real-time data sync across devices</div></div>
+                                <div class="feature-card"><i class="fas fa-robot"></i><div class="f-title">OCR Scanning</div><div class="f-desc">Extract text from images automatically</div></div>
+                                <div class="feature-card"><i class="fas fa-voice"></i><div class="f-title">Voice Input</div><div class="f-desc">Dictate homework using speech recognition</div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 1. Authentication -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-users"></i> 2. Students</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Add students manually or via OCR image upload.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Enter parent WhatsApp numbers for alerts.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-key manual-icon"></i> 1. Authentication & Onboarding</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <div class="step-box">
+                                <div class="step-title">🔐 Login</div>
+                                <div class="step-desc">Enter your registered email and password on the login screen. Click <strong>"Sign In"</strong> to access your dashboard.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📝 Register</div>
+                                <div class="step-desc">New users can click the <strong>"Register"</strong> tab and fill in your full name, email, and password (minimum 6 characters). After registration, you'll be prompted to select the subjects you teach.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📚 Subject Selection</div>
+                                <div class="step-desc">After registration, select all subjects you teach from the grid. Click <strong>"Save & Continue"</strong> to finalize your profile. You can always add more subjects later via the <strong>"Add Manually"</strong> button in the Tasks tab.</div>
+                            </div>
+                            <p><strong>Note:</strong> Your account is created in Firebase Authentication. All your data is tied to your account and is private to you.</p>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 2. Navigation -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-chart-bar"></i> 3. Marks</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Select subject, month, and exam type.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Enter marks or use OCR scan.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Click Save Grades.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-compass manual-icon"></i> 2. Navigation & Layout</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p><strong>Top Bar:</strong> Shows your name, email, and the platform logo. Use the <span class="highlight">☰ menu button</span> to open the side navigation drawer for quick access to Dashboard and User Manual.</p>
+                            <p><strong>Grade & Class Selectors:</strong> Located just below the navigation tabs. These control which class you're viewing across all sections. Changing the grade or class updates the data on every tab.</p>
+                            <p><strong>Navigation Tabs:</strong> The main navigation is at the bottom of the screen (mobile) or top (desktop). Tabs include:</p>
+                            <ul>
+                                <li><span class="highlight">Dashboard</span> — Quick overview and homework broadcast</li>
+                                <li><span class="highlight">Students</span> — Manage student rosters</li>
+                                <li><span class="highlight">Marks</span> — Enter and manage performance marks</li>
+                                <li><span class="highlight">Analysis</span> — View charts and performance insights</li>
+                                <li><span class="highlight">Tasks</span> — Track exercise completion</li>
+                                <li><span class="highlight">Homework</span> — Create and send assignments</li>
+                                <li><span class="highlight">Schedule</span> — Manage timetables</li>
+                                <li><span class="highlight">Groups</span> — WhatsApp integration</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 3. Dashboard -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-chart-pie"></i> 4. Analysis</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Filter by Grade, Section, and Subject.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">View pie chart, bar chart, and stats.</div></li><li class="step-item"><div class="step-number">3</div><div class="step-text">Use low performer filter and click Show Names.</div></li><li class="step-item"><div class="step-number">4</div><div class="step-text">Compare section-wise and grade-wide averages.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-th-large manual-icon"></i> 3. Dashboard</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Dashboard provides a quick overview of your class and a homework broadcasting tool.</p>
+                            <div class="step-box">
+                                <div class="step-title">📊 Statistics Cards</div>
+                                <div class="step-desc">Shows total students, students needing help (below 40%), average marks, highest marks, and lowest marks for the selected grade and class.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📝 Quick Homework Board</div>
+                                <div class="step-desc">Type homework details in the text area. Use the <strong>"Voice Input"</strong> button to dictate using Sinhala speech recognition. Click <strong>"Broadcast"</strong> to copy the homework to your clipboard and open WhatsApp Web to paste and send.</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 4. Students -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-tasks"></i> 5. Tasks</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Select subject and month.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Mark exercises as correct/wrong.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-users manual-icon"></i> 4. Managing Student Rosters</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Students tab allows you to add, edit, and delete students for the selected grade and class.</p>
+                            <div class="step-box">
+                                <div class="step-title">📤 Upload Registry Image (OCR)</div>
+                                <div class="step-desc">Click the <strong>"Upload Registry Image"</strong> area and select a clear image of your student list. The system will use OCR (Tesseract.js) to automatically extract student names and add them to your roster.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">✍️ Manual Add</div>
+                                <div class="step-desc">Enter the student's full name and parent's WhatsApp number (with country code). Click <strong>"Save Student"</strong> to add them to the class roster.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">✏️ Edit / 🗑️ Delete</div>
+                                <div class="step-desc">Each student in the roster has edit and delete buttons. Edit allows you to update the student's name. Delete permanently removes the student from the database.</div>
+                            </div>
+                            <p><strong>Note:</strong> Parent WhatsApp numbers are used for sending alerts and homework notifications via WhatsApp.</p>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 5. Marks -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-bullhorn"></i> 6. Homework</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Type or use voice input for homework.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click Share via WhatsApp to copy and send.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-chart-bar manual-icon"></i> 5. Performance Marks Engine</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Marks tab lets you record and manage student performance marks by subject, month, and exam type.</p>
+                            <div class="step-box">
+                                <div class="step-title">📚 Subject Selection</div>
+                                <div class="step-desc">Select the subject from the dropdown. The list changes based on the selected grade (Grades 6-9 show 13 subjects, Grades 10-11 show specialized subjects like Sinhala, English, Tamil, Commerce, etc.).</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📅 Month & Exam Type</div>
+                                <div class="step-desc">Choose the month (Jan-Dec) and exam type (Monthly, Mid Term, Final, Quiz) to organize marks chronologically.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📸 Scan Marksheet (OCR)</div>
+                                <div class="step-desc">Click <strong>"Scan Marksheet Image via OCR"</strong> and upload a photo of your marksheet. The system will attempt to read marks and fill them in automatically.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">✏️ Manual Entry</div>
+                                <div class="step-desc">Enter marks directly into the input fields next to each student's name (0-100).</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">💾 Save Grades</div>
+                                <div class="step-desc">Click <strong>"Save Grades"</strong> to store all entered marks in Firebase. Marks are saved with subject, month, and exam type metadata.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">🚨 Flag Failures</div>
+                                <div class="step-desc">Click <strong>"Flag Failures"</strong> to identify students scoring below 40%. A list will appear, and you can click <strong>"Send Alerts to Parents"</strong> to copy a message to your clipboard and open WhatsApp to send it.</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 6. Analysis -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fas fa-calendar-alt"></i> 7. Schedule</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Upload timetable image for OCR extraction.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Save the extracted schedule.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-chart-pie manual-icon"></i> 6. Performance Analysis Dashboard</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Analysis tab provides visual insights into student performance with interactive charts and statistics.</p>
+                            <div class="step-box">
+                                <div class="step-title">🔍 Filters</div>
+                                <div class="step-desc">Use the Grade, Section (All or A-D), and Subject dropdowns to filter data. The dashboard updates automatically when you change any filter.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📊 Statistics Cards</div>
+                                <div class="step-desc">Shows total students, average score, highest mark, lowest mark, and count of students below the threshold for the selected filters.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📈 Mark Distribution (Pie Chart)</div>
+                                <div class="step-desc">Shows the percentage of students in four score ranges: 0-40, 41-60, 61-75, 76-100. Color-coded for easy identification of struggling students.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📊 Section Comparison (Bar Chart)</div>
+                                <div class="step-desc">Compares average scores across Sections A, B, C, and D for the selected grade and subject.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">👑 Top Performer & Needs Support</div>
+                                <div class="step-desc">Identifies the highest and lowest scoring students based on the current filters. Shows name and percentage.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">🔽 Filter Low Performers</div>
+                                <div class="step-desc">Set a custom mark range (e.g., 0-50). Click <strong>"Show Names"</strong> to open a popup listing all students whose latest marks fall within that range.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📊 Section-wise Performance</div>
+                                <div class="step-desc">Shows average scores for each section (A, B, C, D) with color-coded indicators.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📈 Grade-wide Performance</div>
+                                <div class="step-desc">Shows average scores for all grades (6-13) for the selected subject, giving you a full picture of performance across the school.</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 7. Tasks -->
                 <div class="manual-category">
-                    <button class="manual-header" onclick="toggleAccordion(this)"><span><i class="fab fa-whatsapp"></i> 8. WhatsApp</span><i class="fas fa-chevron-down chevron"></i></button>
-                    <div class="manual-content"><div class="manual-body"><ul class="step-list"><li class="step-item"><div class="step-number">1</div><div class="step-text">Paste WhatsApp group invite links.</div></li><li class="step-item"><div class="step-number">2</div><div class="step-text">Click Apply Changes to save.</div></li></ul></div></div>
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-tasks manual-icon"></i> 7. Exercise Checksheets</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Tasks tab allows you to track student exercise completion with a simple check/uncheck system.</p>
+                            <div class="step-box">
+                                <div class="step-title">📚 Subject Selection</div>
+                                <div class="step-desc">Select the subject from the dropdown. The list is populated from your registered subjects.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📅 Month Selection</div>
+                                <div class="step-desc">Choose the month to load or save exercise data for that period.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">✅ Mark Exercise</div>
+                                <div class="step-desc">For each student, you can mark three exercises (1st, 2nd, 3rd) as <strong>✅ Correct</strong> or <strong>❌ Wrong</strong>. Click the icon to toggle. Green indicates correct, red indicates wrong.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">🔄 Auto-Save</div>
+                                <div class="step-desc">Each click automatically saves the data to Firebase. No manual save needed.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">🚨 Wrong Exercise Alert</div>
+                                <div class="step-desc">If a student gets a wrong mark on the second exercise and also had a wrong on the first, or if they get a wrong on the third exercise, the system automatically copies a pre-formatted alert message and opens WhatsApp to send it to the parent.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📜 View Previous Months</div>
+                                <div class="step-desc">Use the "View Previous Months" dropdown to load and view historical exercise data.</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 8. Homework -->
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-book manual-icon"></i> 8. Homework Broadcasting</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Homework tab provides a dedicated workspace for creating and sending assignments.</p>
+                            <div class="step-box">
+                                <div class="step-title">✍️ Write Assignment</div>
+                                <div class="step-desc">Type the full assignment details in the text area. Include clear instructions, deadlines, and any additional resources.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">🎤 Voice Dictation</div>
+                                <div class="step-desc">Click <strong>"Dictate (Voice)"</strong> to use Sinhala speech recognition. Speak clearly and your words will be transcribed into the text area.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📤 Share via WhatsApp</div>
+                                <div class="step-desc">Click <strong>"Share via WhatsApp"</strong> to copy a formatted message to your clipboard and open WhatsApp Web. The message includes the class name, date, teacher name, and assignment details.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Schedule -->
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-calendar-alt manual-icon"></i> 9. Timetable Management</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Schedule tab allows you to upload and manage class timetables using OCR technology.</p>
+                            <div class="step-box">
+                                <div class="step-title">📸 Upload Timetable Image</div>
+                                <div class="step-desc">Click the upload area and select a clear image of your timetable. The system uses OCR to extract class labels (e.g., "10A", "9B") for each day and period.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📋 View Extracted Schedule</div>
+                                <div class="step-desc">The timetable is displayed with days of the week and three periods. Current day and period are highlighted automatically.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">💾 Save Schedule</div>
+                                <div class="step-desc">Click <strong>"Save Schedule Grid"</strong> to store the timetable in Firebase. The saved schedule will be loaded automatically when you log in.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">⏰ Automatic Class Switching</div>
+                                <div class="step-desc">The platform automatically detects the current time and day, and switches your workspace to the matching grade and class based on the timetable.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. WhatsApp -->
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fab fa-whatsapp manual-icon"></i> 10. WhatsApp Integration</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <p>The Groups tab lets you store and manage WhatsApp group invite links for each section.</p>
+                            <div class="step-box">
+                                <div class="step-title">🔗 Paste Group Links</div>
+                                <div class="step-desc">For each section (A, B, C, D), paste the WhatsApp group invite link or the phone number with country code (e.g., <code>+94771234567</code>).</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">💾 Apply Changes</div>
+                                <div class="step-desc">Click <strong>"Apply Changes"</strong> to save all links to Firebase. These links are used when sending alerts and homework broadcasts.</div>
+                            </div>
+                            <div class="step-box">
+                                <div class="step-title">📤 Auto-Open WhatsApp</div>
+                                <div class="step-desc">When you send alerts or homework, the platform automatically opens WhatsApp Web with the correct link or phone number prepared.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. Technical Notes -->
+                <div class="manual-category">
+                    <button class="manual-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-cogs manual-icon"></i> 11. Technical Notes & Tips</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="manual-content">
+                        <div class="manual-body">
+                            <ul>
+                                <li><strong>Data Storage:</strong> All data is stored in Firebase Firestore. Changes sync in real-time across all devices.</li>
+                                <li><strong>OCR Accuracy:</strong> For best results, use clear, well-lit images with readable text. Handwritten text may have lower accuracy.</li>
+                                <li><strong>Voice Recognition:</strong> Uses the Web Speech API with Sinhala language support (<code>si-LK</code>). Works best in Chrome browsers.</li>
+                                <li><strong>WhatsApp Integration:</strong> Opens WhatsApp Web in a new tab. The message is automatically copied to your clipboard.</li>
+                                <li><strong>Responsive Design:</strong> The platform is fully responsive and works on desktops, tablets, and mobile phones.</li>
+                                <li><strong>Security:</strong> Authentication is handled by Firebase Auth. Each teacher's data is private and separate.</li>
+                            </ul>
+                            <p style="margin-top:12px;padding:12px;background:rgba(99,102,241,0.08);border-radius:8px;border:1px solid rgba(99,102,241,0.15);">
+                                <strong>💡 Pro Tip:</strong> Use the <span class="highlight">Grade & Class selectors</span> at the top of every page to quickly switch between your classes. All tabs will automatically update to show data for the selected class.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -1142,7 +1473,11 @@
         function toggleAccordion(el) {
             el.classList.toggle('active');
             const c = el.nextElementSibling;
-            c.style.maxHeight = c.style.maxHeight ? '0px' : c.scrollHeight + 'px';
+            if (c.style.maxHeight) {
+                c.style.maxHeight = null;
+            } else {
+                c.style.maxHeight = c.scrollHeight + "px";
+            }
         }
 
         function getFullClassName() { return `${currentGrade}${currentClass}`; }
@@ -1316,6 +1651,8 @@
             document.getElementById('homeworkGradeClass').innerText = getFullClassName();
             document.getElementById('gradeSelect').value = currentGrade;
             document.getElementById('classSelect').value = currentClass;
+            document.getElementById('analysisGradeSelect').value = currentGrade;
+            document.getElementById('analysisClassSelect').value = currentClass;
             populateMarksSubjectDropdown();
             displayStudentsTable();
             displayMarksTable();
@@ -1327,13 +1664,11 @@
 
         function changeGrade() { 
             currentGrade = document.getElementById('gradeSelect').value; 
-            // Also update analysis grade selector
             document.getElementById('analysisGradeSelect').value = currentGrade;
             updateAllDisplays(); 
         }
         function changeClass() { 
             currentClass = document.getElementById('classSelect').value; 
-            // Also update analysis class selector
             document.getElementById('analysisClassSelect').value = currentClass;
             updateAllDisplays(); 
         }
@@ -1484,6 +1819,26 @@
             await firebase.firestore().collection('exercises').doc(`${fullClass}_${subject}_${month}`).set(exerciseData);
             displayExercisesTable();
             showSuccess(`Marked ${time} as ${status}`);
+            
+            // Auto-send alert if wrong and conditions met
+            if (status === 'wrong') {
+                const student = students[`${currentGrade}_${currentClass}`]?.find(s => s.id === studentId);
+                if (student) {
+                    if ((time === 'second' && exerciseData[studentId].first === 'wrong') || time === 'third') {
+                        await sendExerciseAlert(student, time);
+                    }
+                }
+            }
+        }
+
+        async function sendExerciseAlert(student, time) {
+            const subject = document.getElementById('taskSubjectSelect').value;
+            const message = `📢 *Exercise Alert - ${getFullClassName()}*\n\nYour child *${student.name}* needs extra support with *${subject}* exercises (step: ${time}).\n\nPlease assist at home.\n\nThank you!`;
+            await navigator.clipboard.writeText(message);
+            let phone = student.parent_phone ? student.parent_phone.toString().replace(/[^0-9]/g, '') : '';
+            if (phone) { window.open(`https://wa.me/${phone}`, '_blank'); }
+            else { window.open('https://web.whatsapp.com/', '_blank'); }
+            showSuccess(`Alert copied for ${student.name}`);
         }
 
         async function loadHistoricalExercises() {
@@ -1562,7 +1917,26 @@
         function renderTimetableGrid() {
             const grid = document.getElementById('timetableGrid');
             if (!extractedTimetable) { grid.innerHTML = '<div class="empty-state">No schedule</div>'; return; }
-            grid.innerHTML = extractedTimetable.map(d => `<div class="timetable-card"><h4>${d.day}</h4><p>Period 1: ${d.period1}</p><p>Period 2: ${d.period2}</p><p>Period 3: ${d.period3}</p></div>`).join('');
+            const daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            const today = daysOfWeek[new Date().getDay()];
+            const period = getCurrentPeriod();
+            grid.innerHTML = extractedTimetable.map(d => {
+                const isToday = d.day.toLowerCase() === today.toLowerCase();
+                return `<div class="timetable-card ${isToday ? 'current-active-day' : ''}">
+                    <h4>${d.day} ${isToday ? '⭐ Today' : ''}</h4>
+                    <p class="${isToday && period === 1 ? 'active-period-highlight' : ''}">Period 1: ${d.period1}</p>
+                    <p class="${isToday && period === 2 ? 'active-period-highlight' : ''}">Period 2: ${d.period2}</p>
+                    <p class="${isToday && period === 3 ? 'active-period-highlight' : ''}">Period 3: ${d.period3}</p>
+                </div>`;
+            }).join('');
+        }
+
+        function getCurrentPeriod() {
+            const h = new Date().getHours();
+            if (h >= 8 && h < 10) return 1;
+            if (h >= 10 && h < 12) return 2;
+            if (h >= 12 && h < 14) return 3;
+            return 0;
         }
 
         async function saveTimetableToDatabase() {
@@ -1633,7 +2007,6 @@
             const section = document.getElementById('analysisClassSelect').value;
             const subject = document.getElementById('analysisSubjectSelect').value;
             
-            // Build query
             let marksQuery = firebase.firestore().collection('marks').where('grade', '==', grade);
             if (section !== 'all') {
                 marksQuery = marksQuery.where('classLetter', '==', section);
@@ -1642,10 +2015,8 @@
             
             let marks = [];
             marksSnapshot.forEach(doc => { marks.push({ id: doc.id, ...doc.data() }); });
-            
             if (subject) { marks = marks.filter(m => m.subject === subject); }
             
-            // Get student names for the selected grade/section
             let studentNames = {};
             if (section === 'all') {
                 ['A','B','C','D'].forEach(sec => {
@@ -1659,7 +2030,6 @@
                 }
             }
             
-            // Process latest marks per student
             const studentMarks = {};
             marks.forEach(m => {
                 if (!studentMarks[m.student_id]) studentMarks[m.student_id] = [];
@@ -1674,7 +2044,6 @@
             
             const markValues = Object.values(latestMarks);
             
-            // Update UI
             document.getElementById('analysisStudentCount').textContent = markValues.length;
             
             if (markValues.length > 0) {
@@ -1685,7 +2054,6 @@
                 document.getElementById('analysisHighest').textContent = highest + '%';
                 document.getElementById('analysisLowest').textContent = lowest + '%';
                 
-                // Top and bottom students
                 let topStudent = '', topMark = -1, bottomStudent = '', bottomMark = 101;
                 Object.keys(latestMarks).forEach(sid => {
                     const name = studentNames[sid] || 'Unknown';
@@ -1696,11 +2064,9 @@
                 document.getElementById('analysisTopStudent').textContent = topStudent + ' (' + topMark + '%)';
                 document.getElementById('analysisBottomStudent').textContent = bottomStudent + ' (' + bottomMark + '%)';
                 
-                // Update charts
                 updatePieChart(markValues);
                 updateBarChart(grade, subject);
                 
-                // Low performers
                 const minRange = parseInt(document.getElementById('lowRangeMin').value) || 0;
                 const maxRange = parseInt(document.getElementById('lowRangeMax').value) || 50;
                 const lowCount = markValues.filter(m => m >= minRange && m <= maxRange).length;
@@ -1718,7 +2084,6 @@
                 if (analysisBarChart) { analysisBarChart.destroy(); analysisBarChart = null; }
             }
             
-            // Section-wise and grade-wide analysis (always run these)
             await runSectionWiseAnalysis(grade, subject);
             await runGradeWideAnalysis(subject);
         }
@@ -1940,6 +2305,7 @@
         function showError(msg) { const d = document.getElementById('errorMessage'); d.innerHTML = msg; d.style.display = 'block'; setTimeout(() => d.style.display = 'none', 3000); }
         function showSuccess(msg) { const d = document.createElement('div'); d.className = 'success-message'; d.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`; document.body.appendChild(d); setTimeout(() => d.remove(), 2500); }
 
+        // Expose functions to window
         window.switchAuthTab = switchAuthTab; window.register = register; window.login = login; window.logout = logout;
         window.changeGrade = changeGrade; window.changeClass = changeClass;
         window.addStudentManually = addStudentManually; window.deleteStudent = deleteStudent; window.editStudent = editStudent;
